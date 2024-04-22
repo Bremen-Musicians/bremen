@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import '@/styles/reset.css';
 
 export default function Home() {
-  return <></>;
+  return <div>나는 홈</div>;
 }
