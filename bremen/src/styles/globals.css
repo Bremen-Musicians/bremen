@@ -25,7 +25,9 @@
     #00000010,
     #00000010,
     #00000080
-  );
+    );
+    --background-color: linear-gradient(#001533, #00147B);
+    --origin-pink-color: #FE97c7;
 
   --callout-rgb: 238, 240, 241;
   --callout-border-rgb: 172, 175, 176;
