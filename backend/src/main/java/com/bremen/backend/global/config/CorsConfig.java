@@ -17,7 +17,7 @@ public class CorsConfig {
 
 		config.setAllowCredentials(true);
 		config.setAllowedOrigins(
-			List.of("http://localhost:3000", "https://localhost:3000", "https://j10a702.p.ssafy.io",
+			List.of("http://localhost:3000", "https://localhost:3000", "https://k10a104.p.ssafy.io",
 				"http://k10a104.p.ssafy.io"));
 		config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 		config.setAllowedHeaders(List.of("*"));
