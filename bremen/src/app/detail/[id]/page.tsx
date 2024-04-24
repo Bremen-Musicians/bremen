@@ -1,9 +1,9 @@
 import Footer from '@/components/Common/Footer';
 
-export default function Page() {
+export default function page() {
   return (
     <div>
-      나는 채팅
+      동영상 상세 페이지
       <Footer />
     </div>
   );
