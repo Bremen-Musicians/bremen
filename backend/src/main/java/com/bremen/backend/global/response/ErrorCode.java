@@ -15,7 +15,7 @@ public enum ErrorCode {
 	//409 CONFLICT 중복된 리소스
 
 	//500 INTERNAL SERVER ERROR
-	INTERNAL_SERVER_ERROR(500, "서버 에러입니다. 서버 팀에 연락주세요!");
+	INTERNAL_SERVER_ERROR(500, "서버 에러입니다.");
 
 	private final int status;
 	private final String message;
