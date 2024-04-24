@@ -1,8 +1,90 @@
-.container{
-    // background-color: var(--background-color);
-    height: 200px;
-    width: 200px;
-    font-size: 25px;
-    // color: var(--origin-pink-color);
-    background-color: linear-gradient(#001533, #00147B);
+.firstContainer{
+    height: 24vmin;
+    overflow:hidden;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    position: fixed; /* 추가 */
+    left: 50%; /* 추가 */
+    transform: translateX(-50%);
+    bottom :0;
+}
+// .oval{
+//     width: min(100vh, 100vw);
+//     background-color: var(--header-background-color);
+//     height: 34vmin;
+//     border-radius: 100% 100% 0 0
+// }
+
+.shape{
+    width: min(136vh, 136vw);
+    height: 28vmin;
+    border-radius: 50% 50% 0 0;
+    background-color: var(--header-background-color);
+    overflow: hidden;
+    margin-top: 3vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4vmin;
+}
+// @media(max-width: 490px) and (max-height: 197px){
+//     .shape{
+//         width: 490px;
+//         height: 197px;
+//     }
+// }
+
+// div {
+//     width: 100vmin; /* 뷰포트의 너비와 높이 중 작은 쪽의 1/100을 넘는 값을 사용 */
+//     height: 100vmin; /* 뷰포트의 너비와 높이 중 작은 쪽의 1/100을 넘는 값을 사용 */
+//     background-color: red;
+//   }
+  
+//   /* 100vmin을 넘는 값을 150픽셀로 변경 */
+//   @media (min-width: 150px) and (min-height: 150px) {
+//     div {
+//       width: 150px; /* 150픽셀 */
+//       height: 150px; /* 150픽셀 */
+//     }
+//   }
+  
+
+.Container{
+    margin-top: 4.5vmin;
+    width: 100vmin;
+    // background-color: var(--header-background-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 2.5vmin;
+    text-align: center;
+    align-items: center;
+    height: 12vmin;
+    padding-bottom: 6px;
+}
+
+
+.image{
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+.home{
+    color: var(--origin-pink-color);
+}
+.search{
+    color: var(--origin-yellow-color);
+}
+.upload{
+    color:var(--origin-green-color);
+}
+.challenge{
+    color: var(--origin-blue-color);
+}
+.mypage{
+    color: var(--origin-beige-color);
 }
