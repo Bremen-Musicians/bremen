@@ -1,10 +1,14 @@
 import styles from '@/components/detail/ReplyHighlight.module.scss';
 import Video from '@/components/Common/Video';
 
-export default function replyHighlight() {
+export default function replyHighlight({
+  replyHandler,
+}: {
+  replyHandler: () => void;
+}) {
   return (
     <>
-      <div className={styles.cell}>
+      <div className={styles.cell} onClick={replyHandler}>
         <div className={styles.title}>
           <p>댓글</p>
           <p>40</p>

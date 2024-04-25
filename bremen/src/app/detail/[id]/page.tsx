@@ -1,6 +1,8 @@
+'use client';
+
 import Footer from '@/components/Common/Footer';
 import styles from '@/app/detail/[id]/page.module.scss';
-import ReplyHighlight from '@/components/detail/ReplyHighlight';
+import ReplyArea from '@/components/detail/ReplyArea';
 
 export default function Page() {
   return (
@@ -42,7 +44,7 @@ export default function Page() {
         댓글 창이 열려 있을 때에는 Replies component가 활성화
          -> 여기서 한 depth 더 들어가면 하나의 댓글과 답댓글을 확인할 수 있는 component가 활성화
       */}
-      <ReplyHighlight />
+      <ReplyArea />
 
       <Footer />
     </>

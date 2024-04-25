@@ -23,8 +23,7 @@
     color: #d9d9d9;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100%; /* 필요한 경우 최대 너비 설정 */
+    text-overflow: ellipsis;  /* 말줄임 적용 */
 }
 
 .profileimg {
