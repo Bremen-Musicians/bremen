@@ -32,6 +32,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(
 				auth -> auth
 					.requestMatchers(PERMIT_URL_ARRAY).permitAll()
+					.requestMatchers(HttpMethod.GET, "/api/v1/members/*").permitAll()
 					.requestMatchers(HttpMethod.GET, "/error").permitAll()
 					.requestMatchers(HttpMethod.POST, "/error").permitAll()
 					.anyRequest().authenticated()
