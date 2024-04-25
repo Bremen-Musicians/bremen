@@ -1,0 +1,57 @@
+.agreement{
+    text-decoration: underline;
+    text-underline-offset: auto;
+    font-size: 3.5vmin;
+}
+
+.modalContainer{
+    padding: 10px;
+}
+
+.title{
+    font-size: 5.5vmin;
+}
+
+.modalContent{
+    font-size: 3.5vmin;
+    padding-left: 3.5vmin;
+}
+
+.subheading{
+    font-weight: bold;
+}
+
+.agreement{
+    font-size: 3.5vmin;
+}
+
+.checkContent{
+    font-size: 3vmin;
+    text-decoration: underline;
+    text-underline-offset: auto;
+}
+
+@media (min-width: 450px) {
+    .title{
+        font-size: 24px;
+    }
+    
+    .modalContent{
+        font-size: 16px;
+        padding-left: 16px;
+    }
+    
+    .subheading{
+        font-weight: bold;
+    }
+    
+    .agreement{
+        font-size: 16px;
+    }
+    
+    .checkContent{
+        font-size: 14px;
+        text-decoration: underline;
+        text-underline-offset: auto;
+    }
+}
