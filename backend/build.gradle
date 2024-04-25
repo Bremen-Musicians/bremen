@@ -27,9 +27,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-
+    testImplementation 'org.springframework.security:spring-security-test'
 
     // lombok
     implementation 'org.projectlombok:lombok:1.18.22'
@@ -56,6 +57,7 @@ dependencies {
 
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
 
 }
 
