@@ -32,6 +32,9 @@ public class Member {
 	@NotNull
 	@Column(unique = true)
 	private String username;
+
+	private String password;
+
 	private String introduce;
 	@NotNull
 	private String nickname;
