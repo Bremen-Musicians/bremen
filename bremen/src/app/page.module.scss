@@ -1,0 +1,19 @@
+.challenge {
+    width: 100%;
+    height: calc(100vw * 4 / 3);
+    background-color: #66bb11;
+}
+
+.shortstitle {
+    margin: 16px 20px 10px 20px;
+    font-size: x-large;
+    font-weight: 800;
+}
+
+.videolist {
+    margin: 6px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
