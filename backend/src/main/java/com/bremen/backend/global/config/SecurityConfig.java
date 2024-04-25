@@ -16,10 +16,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final CorsConfig corsConfig;
+	private static final String HEAD = "/api/v1";
 	private static final String[] PERMIT_URL_ARRAY = {
 		/* swagger v3 */
 		"/v3/api-docs/**",
 		"/swagger-ui/**"
+	};
+	private static final String[] GET_PERMIT_URL_ARRAY = {
+		HEAD + "/members/*"
+	};
+
+	private static final String[] POST_PERMIT_URL_ARRAY = {
+		HEAD + "/members/"
 	};
 
 	@Bean
@@ -32,9 +40,9 @@ public class SecurityConfig {
 			.authorizeHttpRequests(
 				auth -> auth
 					.requestMatchers(PERMIT_URL_ARRAY).permitAll()
-					.requestMatchers(HttpMethod.GET, "/api/v1/members/*").permitAll()
-					.requestMatchers(HttpMethod.GET, "/error").permitAll()
-					.requestMatchers(HttpMethod.POST, "/error").permitAll()
+					.requestMatchers("/error").permitAll()
+					.requestMatchers(HttpMethod.GET, GET_PERMIT_URL_ARRAY).permitAll()
+					.requestMatchers(HttpMethod.POST, POST_PERMIT_URL_ARRAY).permitAll()
 					.anyRequest().authenticated()
 			).cors(
 				cors -> cors.configurationSource(corsConfig.corsConfigurationSource())
