@@ -2,6 +2,7 @@ package com.bremen.backend.domain.member.service;
 
 import org.springframework.stereotype.Service;
 
+import com.bremen.backend.domain.member.dto.MemberRequest;
 import com.bremen.backend.domain.member.dto.MemberResponse;
 import com.bremen.backend.domain.member.entity.Member;
 import com.bremen.backend.domain.member.mapper.MemberMapper;
@@ -22,6 +23,12 @@ public class MemberServiceImpl implements MemberService {
 			)
 		);
 		return MemberMapper.INSTANCE.memberToMemberResponse(member);
+	}
+
+	@Override
+	public MemberResponse addMember(MemberRequest member) {
+		Member savedMember = memberRepository.save(MemberMapper.INSTANCE.memberRequestToMember(member));
+		return MemberMapper.INSTANCE.memberToMemberResponse(savedMember);
 	}
 
 }
