@@ -129,9 +129,10 @@ public class MemberControllerTest {
 
 	@Test
 	public void 유저삭제() throws Exception {
-		
+		when(memberService.removeMember(member.getId())).thenReturn(member.getId());
+
 		mockMvc.perform(
-				delete("/api/v1/members/{id}", member.getId())
+				delete("/api/v1/members/{id}", member.getId()).with(csrf())
 			)
 			.andExpect(status().isOk());
 	}
