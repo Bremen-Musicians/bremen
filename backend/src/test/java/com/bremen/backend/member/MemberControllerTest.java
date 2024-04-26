@@ -127,4 +127,13 @@ public class MemberControllerTest {
 			);
 	}
 
+	@Test
+	public void 유저삭제() throws Exception {
+		
+		mockMvc.perform(
+				delete("/api/v1/members/{id}", member.getId())
+			)
+			.andExpect(status().isOk());
+	}
+
 }
