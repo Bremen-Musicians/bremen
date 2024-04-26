@@ -1,9 +1,16 @@
 'use client';
 
 import styles from '@/app/detail/[id]/page.module.scss';
+import Tag from '@/components/Common/Tag';
 import ReplyArea from '@/components/detail/ReplyArea';
+import {useState} from 'react';
 
 export default function Page() {
+  const [isLiked, setLiked] = useState(false);
+  const toggleLiked = () => {
+    setLiked(!isLiked);
+  };
+
   return (
     <>
       {/* 영상 재생 영역 */}
@@ -34,7 +41,22 @@ export default function Page() {
         </div>
 
         {/* 좋아요 버튼 및 태그 */}
-        <div></div>
+        <div className={styles.taglist}>
+          {isLiked ? (
+            <div className={styles.liked} onClick={toggleLiked}>
+              따봉 4
+            </div>
+          ) : (
+            <div className={styles.disliked} onClick={toggleLiked}>
+              따봉 3
+            </div>
+          )}
+          <Tag />
+          <Tag />
+          <Tag />
+          <Tag />
+          <Tag />
+        </div>
       </div>
 
       {/* 댓글 영역 */}

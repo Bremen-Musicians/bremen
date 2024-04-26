@@ -4,7 +4,7 @@ import ReReply from '@/components/detail/ReReply';
 export default function ReReplies() {
   return (
     <>
-      <div>
+      <div className={styles.rereplylist}>
         {/* 원본 댓글 */}
         <div className={styles.reply}>
           <div className={styles.profileimg} />
