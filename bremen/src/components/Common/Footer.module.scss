@@ -9,12 +9,12 @@
     transform: translateX(-50%);
     bottom :0;
 }
-// .oval{
-//     width: min(100vh, 100vw);
-//     background-color: var(--header-background-color);
-//     height: 34vmin;
-//     border-radius: 100% 100% 0 0
-// }
+@media (min-width: 450px) {
+    .firstContainer{
+        height: 20vmin;
+        overflow: hidden;
+    }
+}
 
 .shape{
     width: min(136vh, 136vw);
@@ -28,26 +28,7 @@
     align-items: center;
     padding-top: 4vmin;
 }
-// @media(max-width: 490px) and (max-height: 197px){
-//     .shape{
-//         width: 490px;
-//         height: 197px;
-//     }
-// }
 
-// div {
-//     width: 100vmin; /* 뷰포트의 너비와 높이 중 작은 쪽의 1/100을 넘는 값을 사용 */
-//     height: 100vmin; /* 뷰포트의 너비와 높이 중 작은 쪽의 1/100을 넘는 값을 사용 */
-//     background-color: red;
-//   }
-  
-//   /* 100vmin을 넘는 값을 150픽셀로 변경 */
-//   @media (min-width: 150px) and (min-height: 150px) {
-//     div {
-//       width: 150px; /* 150픽셀 */
-//       height: 150px; /* 150픽셀 */
-//     }
-//   }
   
 
 .Container{
