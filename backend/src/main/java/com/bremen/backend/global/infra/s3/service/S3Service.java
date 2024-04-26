@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
@@ -44,6 +45,19 @@ public class S3Service {
 		}
 
 		return objectKey;
+	}
+
+	/* DELETE */
+	public void deleteObject(String objectKey) {
+		try {
+			DeleteObjectRequest dor = DeleteObjectRequest.builder()
+				.bucket(bucket)
+				.key(objectKey)
+				.build();
+			s3Client.deleteObject(dor);
+		} catch (S3Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static String makeFileName() {
