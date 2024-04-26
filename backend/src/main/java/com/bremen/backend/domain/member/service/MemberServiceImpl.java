@@ -11,9 +11,11 @@ import com.bremen.backend.domain.member.mapper.MemberMapper;
 import com.bremen.backend.domain.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 	private final MemberRepository memberRepository;
 
@@ -32,7 +34,8 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberResponse addMember(MemberRequest memberRequest) {
-		Member savedMember = memberRepository.save(MemberMapper.INSTANCE.memberRequestToMember(memberRequest));
+		Member member = MemberMapper.INSTANCE.memberRequestToMember(memberRequest);
+		Member savedMember = memberRepository.save(member);
 		return MemberMapper.INSTANCE.memberToMemberResponse(savedMember);
 	}
 
