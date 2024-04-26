@@ -1,0 +1,129 @@
+.firstCon{
+    font-style: white;
+}
+
+.agreement{
+    margin-top: 3.5vmin;
+    text-decoration: underline;
+    text-underline-offset: auto;
+    font-size: 3.5vmin;
+    color: white;
+}
+
+.modalContainer{
+    padding: 10px;
+}
+
+.title{
+    font-size: 5.5vmin;
+}
+
+.modalContent{
+    font-size: 3.5vmin;
+    padding-left: 3.5vmin;
+}
+
+.subheading{
+    font-weight: bold;
+}
+
+.agreement{
+    font-size: 3.5vmin;
+}
+
+.checkContent{
+    font-size: 3vmin;
+    text-decoration: underline;
+    text-underline-offset: auto;
+}
+.bremen{
+    width: 16vmin;
+    height: 20vmin;
+    position: fixed;
+    left: 50%; /* 추가 */
+    transform: translateX(-50%);
+    bottom :19vmin;
+}
+.inputTag{
+    display: flex;
+        flex-direction: column;
+        height: 60vh;
+        align-items: center;
+        justify-content: space-around;
+    }
+    
+    .inputContainer{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        height: 70vh;
+    }
+    
+    
+    .submit{
+        width: 15vmin;
+        height: 9vmin;
+        border-radius: 10px;
+        font-size: 3.5vmin;
+    }
+
+    .modalAgreement{
+        font-size: 4vmin;
+    }
+
+@media (min-width: 450px) {
+    .title{
+        font-size: 24px;
+    }
+    
+    .modalContent{
+        font-size: 16px;
+        padding-left: 16px;
+    }
+    
+    .subheading{
+        font-weight: bold;
+    }
+    
+    .agreement{
+        font-size: 16px;
+    }
+    
+    .modalAgreement{
+        font-size: 18px;
+    }
+
+    .checkContent{
+        font-size: 14px;
+        text-decoration: underline;
+        text-underline-offset: auto;
+    }
+
+    .bremen{
+        bottom: 15vmin;
+    }
+
+    .submit{
+        width: 68px;
+        height: 40px;
+        font-size: 20px;
+    }
+
+    .inputTag{
+        display: flex;
+            flex-direction: column;
+            height: 48vh;
+            align-items: center;
+            justify-content: space-around;
+        }
+        
+        .inputContainer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            height: 65vh;
+        }
+}
+
