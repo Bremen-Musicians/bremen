@@ -11,7 +11,7 @@ public enum ErrorCode {
 	INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
 
 	//404 NOT_FOUND 잘못된 리소스 접근
-
+	NOT_FOUND_USER(404, "해당하는 사용자가 없습니다."),
 	//409 CONFLICT 중복된 리소스
 
 	//500 INTERNAL SERVER ERROR
