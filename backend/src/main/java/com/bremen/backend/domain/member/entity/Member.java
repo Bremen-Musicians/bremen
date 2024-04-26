@@ -79,4 +79,8 @@ public class Member {
 		this.introduce = memberUpdateRequest.getIntroduce();
 		this.nickname = memberUpdateRequest.getNickname();
 	}
+
+	public void deleteUser() {
+		this.deleteTime = LocalDateTime.now();
+	}
 }
