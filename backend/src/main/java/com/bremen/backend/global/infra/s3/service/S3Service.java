@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
@@ -26,9 +27,24 @@ public class S3Service {
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
+	/* Get */
+	public String getURL(String keyName) {
+		String URL = "";
+		try {
+			GetUrlRequest request = GetUrlRequest.builder()
+				.bucket(bucket)
+				.key(keyName)
+				.build();
+
+			URL = s3Client.utilities().getUrl(request).toString();
+		} catch (S3Exception e) {
+			e.printStackTrace();
+		}
+		return URL;
+	}
+
 	/* UPLOAD */
 	public String streamUpload(String dirName, MultipartFile file) throws IOException {
-		// objectKey - The Object to upload (파일명을 포함한 full URL)
 		String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 		String objectKey = dirName + "/" + makeFileName() + "." + extension;
 
