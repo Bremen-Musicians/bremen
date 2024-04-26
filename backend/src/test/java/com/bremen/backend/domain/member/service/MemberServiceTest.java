@@ -76,7 +76,6 @@ class MemberServiceTest {
 		Member m = memberService.getMemberById(member.getId());
 
 		//then
-
 		assertThat(m.getId()).isEqualTo(member.getId());
 	}
 
@@ -85,6 +84,7 @@ class MemberServiceTest {
 		//given
 		MemberRequest memberRequest = MemberMapper.INSTANCE.memberToMemberRequest(member);
 		when(memberRepository.save(any(Member.class))).thenReturn(member);
+
 		//when
 		MemberResponse memberResponse = memberService.addMember(memberRequest);
 
