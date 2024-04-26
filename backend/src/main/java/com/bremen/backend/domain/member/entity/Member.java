@@ -18,6 +18,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,6 +29,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Member {
 	@Id
 	@Column(name = "id")
@@ -82,5 +84,6 @@ public class Member {
 
 	public void deleteUser() {
 		this.deleteTime = LocalDateTime.now();
+		this.isDeleted = true;
 	}
 }
