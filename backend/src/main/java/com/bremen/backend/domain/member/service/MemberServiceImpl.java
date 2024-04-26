@@ -54,6 +54,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	@Transactional
 	public Long removeMember(Long memberId) {
 		Member member = getMemberById(memberId);
 		member.deleteUser();
