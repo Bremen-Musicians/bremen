@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.bremen.backend.domain.member.controller.MemberController;
 import com.bremen.backend.domain.member.dto.MemberRequest;
 import com.bremen.backend.domain.member.dto.MemberResponse;
+import com.bremen.backend.domain.member.dto.MemberUpdateRequest;
 import com.bremen.backend.domain.member.entity.Member;
 import com.bremen.backend.domain.member.mapper.MemberMapper;
 import com.bremen.backend.domain.member.service.MemberService;
@@ -59,7 +60,8 @@ public class MemberControllerTest {
 	@Test
 	public void 유저조회() throws Exception {
 
-		when(memberService.findMember(member.getId())).thenReturn(MemberMapper.INSTANCE.memberToMemberResponse(member));
+		when(memberService.findMemberById(member.getId())).thenReturn(
+			MemberMapper.INSTANCE.memberToMemberResponse(member));
 
 		mockMvc.perform(
 				get("/api/v1/members/{id}", member.getId())
@@ -97,6 +99,31 @@ public class MemberControllerTest {
 			)
 			.andExpect(
 				jsonPath("$.data.nickname").value(member.getNickname())
+			);
+	}
+
+	@Test
+	public void 유저수정() throws Exception {
+		String nickname = "modify";
+		MemberUpdateRequest memberUpdateRequest = MemberMapper.INSTANCE.memberToMemberUpdateRequest(member);
+		memberUpdateRequest.setNickname(nickname);
+
+		member.modifyUserInformation(memberUpdateRequest);
+		// 수정할 입력값을 받아요
+		String json = objectMapper.writeValueAsString(memberUpdateRequest);
+
+		when(memberService.modifyMember(memberUpdateRequest)).thenReturn(
+			MemberMapper.INSTANCE.memberToMemberResponse(member));
+
+		mockMvc
+			.perform(
+				patch("/api/v1/members").contentType(MediaType.APPLICATION_JSON).content(json).with(csrf())
+			)
+			.andExpect(
+				status().isOk()
+			)
+			.andExpect(
+				jsonPath("$.data.nickname").value(nickname)
 			);
 	}
 
