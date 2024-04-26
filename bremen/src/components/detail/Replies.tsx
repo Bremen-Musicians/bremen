@@ -11,34 +11,33 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
 
   return (
     <>
-      <div className={styles.replylist}>
-        <div className={styles.title}>
-          {openReReply ? (
-            <>
-              <p>답글</p>
-              <p onClick={handleReReply}>X</p>
-            </>
-          ) : (
-            <>
-              <p>댓글</p>
-              <p onClick={replyHandler}>X</p>
-            </>
-          )}
-        </div>
-
+      <div className={styles.title}>
         {openReReply ? (
-          <ReReplies />
+          <>
+            <p>답글</p>
+            <p onClick={handleReReply}>X</p>
+          </>
         ) : (
           <>
-            <Reply reReplyHandler={handleReReply} />
-            <Reply reReplyHandler={handleReReply} />
-            <Reply reReplyHandler={handleReReply} />
-            <Reply reReplyHandler={handleReReply} />
-            <Reply reReplyHandler={handleReReply} />
-            <Reply reReplyHandler={handleReReply} />
+            <p>댓글</p>
+            <p onClick={replyHandler}>X</p>
           </>
         )}
       </div>
+
+      {openReReply ? (
+        <ReReplies />
+      ) : (
+        <div className={styles.replylist}>
+          <Reply reReplyHandler={handleReReply} />
+          <Reply reReplyHandler={handleReReply} />
+          <Reply reReplyHandler={handleReReply} />
+          <Reply reReplyHandler={handleReReply} />
+          <Reply reReplyHandler={handleReReply} />
+          <Reply reReplyHandler={handleReReply} />
+        </div>
+      )}
+
       {!openReReply && (
         <>
           <div className={styles.replyinput}>
