@@ -5,10 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bremen.backend.domain.member.dto.MemberRequest;
@@ -28,8 +28,8 @@ public class MemberController {
 
 	private final MemberService memberService;
 
-	@GetMapping("/{id}")
-	ResponseEntity<CustomResponse<MemberResponse>> memberDetails(@PathVariable("id") Long id) {
+	@GetMapping()
+	ResponseEntity<CustomResponse<MemberResponse>> memberDetails(@RequestParam("id") Long id) {
 		MemberResponse memberResponse = memberService.findMemberById(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "조회 성공", memberResponse));
 	}
@@ -46,8 +46,8 @@ public class MemberController {
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 수정되었습니다", memberResponse));
 	}
 
-	@DeleteMapping("{id}")
-	ResponseEntity<CustomResponse<Long>> memberRemove(@PathVariable("id") Long id) {
+	@DeleteMapping()
+	ResponseEntity<CustomResponse<Long>> memberRemove(@RequestParam("id") Long id) {
 		Long memberId = memberService.removeMember(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 삭제되었습니다", memberId));
 	}

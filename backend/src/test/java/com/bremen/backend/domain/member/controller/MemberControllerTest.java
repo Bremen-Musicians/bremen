@@ -63,7 +63,7 @@ public class MemberControllerTest {
 			MemberMapper.INSTANCE.memberToMemberResponse(member));
 
 		mockMvc.perform(
-				get("/api/v1/members/{id}", member.getId())
+				get("/api/v1/members").param("id", String.valueOf(1))
 			)
 			.andExpect(
 				status().isOk()
