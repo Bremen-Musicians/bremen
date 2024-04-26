@@ -2,6 +2,7 @@ package com.bremen.backend.domain.member.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,4 +46,9 @@ public class MemberController {
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 수정되었습니다", memberResponse));
 	}
 
+	@DeleteMapping("{id}")
+	ResponseEntity<CustomResponse<Long>> memberRemove(@PathVariable("id") Long id) {
+		Long memberId = memberService.removeMember(id);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 삭제되었습니다", memberId));
+	}
 }
