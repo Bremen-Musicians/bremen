@@ -1,0 +1,53 @@
+.reply {
+    margin: 20px 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: #d9d9d9;
+}
+
+.replier {
+    align-items: center;
+    margin: 0 0 5px;
+}
+
+.profileimg {
+    margin: 2px;
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    border-radius: 100%;
+    background-color: var(--origin-blue-color);
+}
+
+.pagebottom {
+    height: 50px;
+}
+
+.rereplyinput {
+    background-color: var(--header-background-color);
+    padding: 10px 5px;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+
+    input {
+        padding: 5px 10px;
+        width: 100%;
+        height: 30px;
+        border-radius: 15px;
+    }
+
+    div {
+        width: 60px;
+        height: 30px;
+        background-color: var(--origin-blue-color);
+        color: #d9d9d9;
+        text-align: center;
+        align-content: center;
+        border-radius: 15px;
+    }
+}
