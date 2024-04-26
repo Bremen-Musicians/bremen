@@ -48,4 +48,11 @@ public class MemberServiceImpl implements MemberService {
 		return MemberMapper.INSTANCE.memberToMemberResponse(member);
 	}
 
+	@Override
+	public Long removeMember(Long memberId) {
+		Member member = getMemberById(memberId);
+		member.deleteUser();
+		return member.getId();
+	}
+
 }

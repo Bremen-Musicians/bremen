@@ -14,4 +14,6 @@ public interface MemberService {
 
 	MemberResponse modifyMember(MemberUpdateRequest memberUpdateRequest);
 
+	Long removeMember(Long memberId);
+
 }
