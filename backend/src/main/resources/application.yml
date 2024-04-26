@@ -54,5 +54,5 @@ cloud:
       bucket: ${aws.s3.bucket}
     stack.auto: false
     region.static: ap-northeast-2
-    ${aws.s3.key.access}
+    accessKey: ${aws.s3.key.access}
     secretKey: ${aws.s3.key.secret}
