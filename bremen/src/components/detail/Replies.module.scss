@@ -9,7 +9,7 @@
     justify-content: space-between;
     font-size: large;
     font-weight: 600;
-    color: #d9d9d9;
+    color: var(--light-gray-color);
 }
 
 .pagebottom {
@@ -37,7 +37,7 @@
         width: 60px;
         height: 30px;
         background-color: var(--origin-blue-color);
-        color: #d9d9d9;
+        color: var(--light-gray-color);
         text-align: center;
         align-content: center;
         border-radius: 15px;

@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: row;
     gap: 8px;
-    color: #d9d9d9;
+    color: var(--light-gray-color);
 }
 
 .replier {
@@ -45,7 +45,7 @@
         width: 60px;
         height: 30px;
         background-color: var(--origin-blue-color);
-        color: #d9d9d9;
+        color: var(--light-gray-color);
         text-align: center;
         align-content: center;
         border-radius: 15px;
