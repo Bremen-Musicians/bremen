@@ -11,9 +11,9 @@ export default function ReplyArea() {
   return (
     <div>
       {openReply ? (
-        <ReplyHighlight replyHandler={handleReply} />
-      ) : (
         <Replies replyHandler={handleReply} />
+      ) : (
+        <ReplyHighlight replyHandler={handleReply} />
       )}
     </div>
   );

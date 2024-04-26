@@ -1,6 +1,6 @@
 import styles from '@/components/detail/Reply.module.scss';
 
-export default function Reply() {
+export default function Reply({reReplyHandler}: {reReplyHandler: () => void}) {
   return (
     <div className={styles.reply}>
       <div className={styles.profileimg} />
@@ -14,7 +14,9 @@ export default function Reply() {
           열심히 연습할게요 화이팅!
         </div>
         {/* 답글 버튼 */}
-        <p>답글 달기</p>
+        <p className={styles.rereplybtn} onClick={reReplyHandler}>
+          답글 달기
+        </p>
       </div>
     </div>
   );

@@ -1,20 +1,14 @@
-.reply {
-    margin: 20px 10px;
+.rereply {
+    margin: 20px 10px 20px 30px;
     display: flex;
     flex-direction: row;
     gap: 8px;
     color: #d9d9d9;
 }
 
-.replier {
+.rereplier {
     align-items: center;
     margin: 0 0 5px;
-}
-
-.rereplybtn {
-    margin: 5px 0;
-    color: var(--light-blue-color);
-    text-decoration: underline;
 }
 
 .profileimg {
@@ -23,5 +17,5 @@
     height: 35px;
     min-width: 35px;
     border-radius: 100%;
-    background-color: var(--origin-blue-color);
+    background-color: var(--origin-pink-color);
 }
