@@ -7,10 +7,11 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.bremen.backend.domain.member.dto.MemberRequest;
 import com.bremen.backend.domain.member.dto.MemberResponse;
@@ -19,7 +20,10 @@ import com.bremen.backend.domain.member.entity.Member;
 import com.bremen.backend.domain.member.mapper.MemberMapper;
 import com.bremen.backend.domain.member.repository.MemberRepository;
 
-@SpringBootTest
+import lombok.extern.slf4j.Slf4j;
+
+@ExtendWith(MockitoExtension.class)
+@Slf4j
 class MemberServiceTest {
 
 	@InjectMocks
@@ -39,8 +43,6 @@ class MemberServiceTest {
 		String nickname = "test";
 		String profile = "image";
 
-		String modifyNickname = "modify";
-
 		member = Member.builder()
 			.id(id)
 			.username(username)
@@ -50,14 +52,6 @@ class MemberServiceTest {
 			.profileImage(profile)
 			.build();
 
-		modifyMember = Member.builder()
-			.id(id)
-			.username(username)
-			.password(password)
-			.introduce(intro)
-			.nickname(modifyNickname)
-			.profileImage(profile)
-			.build();
 	}
 
 	@Test
@@ -90,8 +84,7 @@ class MemberServiceTest {
 	void addMember() {
 		//given
 		MemberRequest memberRequest = MemberMapper.INSTANCE.memberToMemberRequest(member);
-		when(memberRepository.save(member)).thenReturn(member);
-
+		when(memberRepository.save(any(Member.class))).thenReturn(member);
 		//when
 		MemberResponse memberResponse = memberService.addMember(memberRequest);
 
@@ -102,14 +95,35 @@ class MemberServiceTest {
 	@Test
 	void modifyMember() {
 		//given
+		Member exMember = Member.builder()
+			.id(member.getId())
+			.username(member.getUsername())
+			.password(member.getPassword())
+			.introduce(member.getIntroduce())
+			.nickname(member.getNickname())
+			.profileImage(member.getProfileImage())
+			.build();
+
+		String modifyNickname = "modify";
+		Member modifyMember = Member.builder()
+			.id(member.getId())
+			.username(member.getUsername())
+			.password(member.getPassword())
+			.introduce(member.getIntroduce())
+			.nickname(modifyNickname)
+			.profileImage(member.getProfileImage())
+			.build();
+
 		MemberUpdateRequest memberUpdateRequest = MemberMapper.INSTANCE.memberToMemberUpdateRequest(modifyMember);
 
 		when(memberRepository.findById(memberUpdateRequest.getId())).thenReturn(Optional.of(member));
+
 		//when
 		MemberResponse memberResponse = memberService.modifyMember(memberUpdateRequest);
 
 		//then
-		assertThat(member.getNickname()).isNotEqualTo(memberResponse.getNickname());
+		assertThat(memberResponse).isNotNull();
+		assertThat(exMember.getNickname()).isNotEqualTo(memberResponse.getNickname());
 	}
 
 	@Test
