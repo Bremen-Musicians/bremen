@@ -9,6 +9,8 @@ import com.bremen.backend.domain.member.dto.MemberUpdateRequest;
 import com.bremen.backend.domain.member.entity.Member;
 import com.bremen.backend.domain.member.mapper.MemberMapper;
 import com.bremen.backend.domain.member.repository.MemberRepository;
+import com.bremen.backend.global.CustomException;
+import com.bremen.backend.global.response.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Member getMemberById(Long memberId) {
 		Member member = memberRepository.findById(memberId)
-			.orElseThrow(() -> new RuntimeException("해당 사용자가 존재하지 않습니다."));
+			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 		return member;
 	}
 
