@@ -1,4 +1,4 @@
-package com.bremen.backend.member;
+package com.bremen.backend.domain.member.controller;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -14,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.bremen.backend.domain.member.controller.MemberController;
 import com.bremen.backend.domain.member.dto.MemberRequest;
 import com.bremen.backend.domain.member.dto.MemberResponse;
 import com.bremen.backend.domain.member.dto.MemberUpdateRequest;
