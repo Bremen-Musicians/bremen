@@ -45,11 +45,9 @@ public class MemberServiceImpl implements MemberService {
 	@Transactional
 	public MemberResponse modifyMember(MemberUpdateRequest memberUpdateRequest) {
 		Member member = getMemberById(memberUpdateRequest.getId());
-
 		member.modifyUserInformation(
 			memberUpdateRequest
 		);
-
 		return MemberMapper.INSTANCE.memberToMemberResponse(member);
 	}
 
