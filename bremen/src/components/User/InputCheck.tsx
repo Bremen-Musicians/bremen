@@ -124,10 +124,10 @@ const InputCheck = ({
         borderColor={borderColor()}
         borderLightColor={borderLightColor()}
       />
-      {borderColor() === 'none' ? (
-        <Vacant></Vacant>
-      ) : (
+      {borderColor() === 'var(--origin-red-color)' ? (
         <ErrorMessage>{wrongMessage}</ErrorMessage>
+      ) : (
+        <Vacant></Vacant>
       )}
     </div>
   );

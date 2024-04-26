@@ -49,6 +49,9 @@ const SignUp = () => {
 
   // TODO: 서버 확인 추가
   const nicknameCheck = () => {
+    if (isNickname.length > 10 || isNickname.length < 3) {
+      return false;
+    }
     return true;
   };
 
@@ -110,10 +113,10 @@ const SignUp = () => {
           />
           <InputCheck
             detail="닉네임"
-            placeHolderContent="중복되지 않은 닉네임을 입력하세요"
+            placeHolderContent="중복되지 않은 3~10자 이내의 닉네임을 입력하세요"
             isPass={nicknameCheck()}
             setValue={setIsNickname}
-            maxLength={8}
+            maxLength={10}
             wrongMessage="다른 닉네임을 입력하세요"
             type="text"
             content={isNickname !== ''}
@@ -187,7 +190,7 @@ const SignUp = () => {
                 </ul>
               </ol>
               <br />
-              <div className={styles.agreement}>
+              <div className={styles.modalAgreement}>
                 위 내용을 확인하시고 동의해 주시기 바랍니다.
               </div>
               <br />
