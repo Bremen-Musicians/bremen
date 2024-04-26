@@ -1,6 +1,5 @@
 'use client';
 
-import Footer from '@/components/Common/Footer';
 import styles from '@/app/detail/[id]/page.module.scss';
 import ReplyArea from '@/components/detail/ReplyArea';
 
@@ -45,8 +44,6 @@ export default function Page() {
          -> 여기서 한 depth 더 들어가면 하나의 댓글과 답댓글을 확인할 수 있는 component가 활성화
       */}
       <ReplyArea />
-
-      <Footer />
     </>
   );
 }
