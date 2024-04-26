@@ -5,6 +5,7 @@ import org.mapstruct.factory.Mappers;
 
 import com.bremen.backend.domain.member.dto.MemberRequest;
 import com.bremen.backend.domain.member.dto.MemberResponse;
+import com.bremen.backend.domain.member.dto.MemberUpdateRequest;
 import com.bremen.backend.domain.member.entity.Member;
 
 @Mapper
@@ -16,4 +17,6 @@ public interface MemberMapper {
 	Member memberRequestToMember(MemberRequest memberRequest);
 
 	MemberRequest memberToMemberRequest(Member member);
+
+	MemberUpdateRequest memberToMemberUpdateRequest(Member member);
 }
