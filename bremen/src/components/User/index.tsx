@@ -123,7 +123,7 @@ const SignUp = () => {
           />
           <InputCheck
             detail="비밀번호"
-            placeHolderContent="영어, 숫자, 특수문자를 조합하여&#13;&#10;8자리~15자리를 입력하세요"
+            placeHolderContent="영어, 숫자, 특수문자를 조합하여 8자리~15자리를 입력하세요"
             isPass={passwordCheck()}
             setValue={setIsPassword}
             maxLength={15}
@@ -215,11 +215,11 @@ const SignUp = () => {
         </button>
       </div>
       <Image
+        src="/bremenWalk.png"
+        width={300}
+        height={300}
+        alt="브레멘"
         className={styles.bremen}
-        src="/bremenStand.png"
-        alt="bremen"
-        width={100}
-        height={100}
       />
     </div>
   );
