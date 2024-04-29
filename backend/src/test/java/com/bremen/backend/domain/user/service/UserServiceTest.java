@@ -72,10 +72,10 @@ class UserServiceTest {
 		when(userRepository.findById(user.getId())).then((InvocationOnMock invocation) -> Optional.of(user));
 
 		//when
-		User m = userService.getUserById(user.getId());
+		User u = userService.getUserById(user.getId());
 
 		//then
-		assertThat(m.getId()).isEqualTo(user.getId());
+		assertThat(u.getId()).isEqualTo(user.getId());
 	}
 
 	@Test
