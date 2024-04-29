@@ -70,14 +70,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void duplicateUsername(String username) {
 		boolean exist = userRepository.existsByUsername(username);
-		if (exist)
-			throw new RuntimeException("중복되는 이메일입니다");
+		if (exist) {
+			throw new CustomException(ErrorCode.CONFLICT_USER);
+		}
+
 	}
 
 	@Override
 	public void duplicateNickname(String nickname) {
 		boolean exist = userRepository.existsByNickname(nickname);
-		if (exist)
-			throw new RuntimeException("중복되는 닉네임입니다");
+		if (exist) {
+			throw new CustomException(ErrorCode.CONFLICT_USER);
+		}
+
 	}
 }

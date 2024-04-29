@@ -12,8 +12,13 @@ public interface UserService {
 
 	UserResponse addUser(UserRequest userRequest);
 
+	User addUser(User user);
+
 	UserResponse modifyUser(UserUpdateRequest userUpdateRequest);
 
 	Long removeUser(Long memberId);
 
+	void duplicateUsername(String username);
+
+	void duplicateNickname(String nickname);
 }
