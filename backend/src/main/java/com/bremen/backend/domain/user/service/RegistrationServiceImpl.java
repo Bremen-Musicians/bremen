@@ -8,6 +8,8 @@ import com.bremen.backend.domain.user.dto.UserRegistrationRequest;
 import com.bremen.backend.domain.user.dto.UserResponse;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.mapper.UserMapper;
+import com.bremen.backend.global.CustomException;
+import com.bremen.backend.global.response.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,6 +22,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	@Transactional
 	public UserResponse register(UserRegistrationRequest userRegistrationRequest) {
+
+		if (!userRegistrationRequest.isAgree()) {
+			throw new CustomException(ErrorCode.REQUIRED_AGREE);
+		}
 
 		User user = UserMapper.INSTANCE.userRegistrationToUser(userRegistrationRequest);
 		// 유저 정보를 입력받음
