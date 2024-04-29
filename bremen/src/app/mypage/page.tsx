@@ -1,3 +1,9 @@
+import MyPage from '@/components/MyPage';
+
 export default function Page() {
-  return <div>나는 마이페이지</div>;
+  return (
+    <div>
+      <MyPage />
+    </div>
+  );
 }
