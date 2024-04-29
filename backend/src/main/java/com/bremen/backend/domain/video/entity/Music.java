@@ -25,10 +25,12 @@ public class Music {
 	private Long id;
 
 	@NotNull
-	@Column(length = 100)
+	@Column(name = "title", length = 100)
 	private String title;
 
+	@Column(name = "composer")
 	private String composer;
 
+	@Column(name = "singer")
 	private String singer;
 }
