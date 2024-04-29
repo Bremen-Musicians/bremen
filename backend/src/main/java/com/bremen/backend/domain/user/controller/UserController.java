@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bremen.backend.domain.user.dto.UserLoginRequest;
+import com.bremen.backend.domain.user.dto.UserLoginResponse;
 import com.bremen.backend.domain.user.dto.UserProfileRequest;
 import com.bremen.backend.domain.user.dto.UserRegistrationRequest;
 import com.bremen.backend.domain.user.dto.UserResponse;
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
+import com.bremen.backend.domain.user.service.AuthService;
 import com.bremen.backend.domain.user.service.ProfileService;
 import com.bremen.backend.domain.user.service.RegistrationService;
 import com.bremen.backend.domain.user.service.UserService;
@@ -32,6 +35,7 @@ public class UserController {
 	private final UserService userService;
 	private final RegistrationService registrationService;
 	private final ProfileService profileService;
+	private final AuthService authService;
 
 	@GetMapping()
 	ResponseEntity<CustomResponse<UserResponse>> userDetails(@RequestParam("id") Long id) {
@@ -62,5 +66,26 @@ public class UserController {
 	ResponseEntity<CustomResponse<Long>> userRemove(@RequestParam("id") Long id) {
 		Long memberId = userService.removeUser(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 삭제되었습니다", memberId));
+	}
+
+	@GetMapping("/check")
+	public CustomResponse<String> duplicateCheck(
+		@RequestParam(value = "username", required = false) String username,
+		@RequestParam(value = "nickname", required = false) String nickname) {
+		if (username != null) {
+			userService.duplicateUsername(username);
+			return new CustomResponse<>(HttpStatus.OK.value(), "이메일 중복체크 성공", "");
+		} else if (nickname != null) {
+			userService.duplicateNickname(nickname);
+			return new CustomResponse<>(HttpStatus.OK.value(), "닉네임 중복체크 성공", "");
+		} else {
+			return new CustomResponse<>(HttpStatus.BAD_REQUEST.value(), "올바르지 않은 요청", "");
+		}
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<CustomResponse<UserLoginResponse>> login(@RequestBody UserLoginRequest userLoginRequest) {
+		UserLoginResponse userLoginResponse = authService.login(userLoginRequest);
+		return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "로그인 성공", userLoginResponse));
 	}
 }
