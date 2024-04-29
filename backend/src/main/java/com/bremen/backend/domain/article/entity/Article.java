@@ -62,7 +62,7 @@ public class Article {
 
 	@CreationTimestamp
 	@Column(name = "create_time")
-	private LocalDateTime createTime = LocalDateTime.now();
+	private LocalDateTime createTime;
 
 	@Setter(AccessLevel.PROTECTED)
 	@Column(name = "delete_time")

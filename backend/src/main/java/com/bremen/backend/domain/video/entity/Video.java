@@ -33,7 +33,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Video {
-	@SuppressWarnings("checkstyle:RegexpMultiline")
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -68,7 +67,7 @@ public class Video {
 
 	@CreationTimestamp
 	@Column(name = "create_time")
-	private LocalDateTime createTime = LocalDateTime.now();
+	private LocalDateTime createTime;
 
 	@Setter(AccessLevel.PROTECTED)
 	@Column(name = "delete_time")
