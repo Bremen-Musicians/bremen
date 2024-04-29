@@ -69,17 +69,17 @@ public class UserController {
 	}
 
 	@GetMapping("/check")
-	public CustomResponse<String> duplicateCheck(
+	public ResponseEntity<CustomResponse<String>> duplicateCheck(
 		@RequestParam(value = "username", required = false) String username,
 		@RequestParam(value = "nickname", required = false) String nickname) {
 		if (username != null) {
 			userService.duplicateUsername(username);
-			return new CustomResponse<>(HttpStatus.OK.value(), "이메일 중복체크 성공", "");
+			return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "이메일 중복체크 성공", ""));
 		} else if (nickname != null) {
 			userService.duplicateNickname(nickname);
-			return new CustomResponse<>(HttpStatus.OK.value(), "닉네임 중복체크 성공", "");
+			return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "닉네임 중복체크 성공", ""));
 		} else {
-			return new CustomResponse<>(HttpStatus.BAD_REQUEST.value(), "올바르지 않은 요청", "");
+			return ResponseEntity.ok(new CustomResponse(HttpStatus.BAD_REQUEST.value(), "중복체크 실패", ""));
 		}
 	}
 
@@ -88,4 +88,5 @@ public class UserController {
 		UserLoginResponse userLoginResponse = authService.login(userLoginRequest);
 		return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "로그인 성공", userLoginResponse));
 	}
+
 }
