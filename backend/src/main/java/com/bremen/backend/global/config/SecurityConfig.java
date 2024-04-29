@@ -23,11 +23,11 @@ public class SecurityConfig {
 		"/swagger-ui/**"
 	};
 	private static final String[] GET_PERMIT_URL_ARRAY = {
-		HEAD + "/members/*"
+		HEAD + "/users/*"
 	};
 
 	private static final String[] POST_PERMIT_URL_ARRAY = {
-		HEAD + "/members/*"
+		HEAD + "/users/*"
 	};
 
 	@Bean
@@ -41,7 +41,7 @@ public class SecurityConfig {
 				auth -> auth
 					.requestMatchers(PERMIT_URL_ARRAY).permitAll()
 					.requestMatchers("/error").permitAll()
-					.requestMatchers("/api/v1/members").permitAll()
+					.requestMatchers("/api/v1/users").permitAll()
 					.requestMatchers(HttpMethod.GET, GET_PERMIT_URL_ARRAY).permitAll()
 					.requestMatchers(HttpMethod.POST, POST_PERMIT_URL_ARRAY).permitAll()
 					.anyRequest().authenticated()
