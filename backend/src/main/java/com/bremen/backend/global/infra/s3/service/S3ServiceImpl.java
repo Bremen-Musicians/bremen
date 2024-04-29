@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bremen.backend.global.CustomException;
+import com.bremen.backend.global.response.ErrorCode;
+
 import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -39,7 +42,7 @@ public class S3ServiceImpl implements S3Service {
 
 			URL = s3Client.utilities().getUrl(request).toString();
 		} catch (S3Exception e) {
-			e.printStackTrace();
+			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
 		}
 		return URL;
 	}
@@ -59,7 +62,7 @@ public class S3ServiceImpl implements S3Service {
 			s3Client.putObject(putObjectRequest, getFileRequestBody(file));
 
 		} catch (S3Exception e) {
-			e.printStackTrace();
+			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
 		}
 
 		return objectKey;
@@ -75,7 +78,7 @@ public class S3ServiceImpl implements S3Service {
 				.build();
 			s3Client.deleteObject(dor);
 		} catch (S3Exception e) {
-			e.printStackTrace();
+			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
 		}
 	}
 
