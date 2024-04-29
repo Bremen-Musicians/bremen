@@ -1,4 +1,4 @@
-package com.bremen.backend.domain.member.controller;
+package com.bremen.backend.domain.user.controller;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
@@ -14,28 +14,28 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.bremen.backend.domain.member.dto.MemberRequest;
-import com.bremen.backend.domain.member.dto.MemberResponse;
-import com.bremen.backend.domain.member.dto.MemberUpdateRequest;
-import com.bremen.backend.domain.member.entity.Member;
-import com.bremen.backend.domain.member.mapper.MemberMapper;
-import com.bremen.backend.domain.member.service.MemberService;
+import com.bremen.backend.domain.user.dto.UserRequest;
+import com.bremen.backend.domain.user.dto.UserResponse;
+import com.bremen.backend.domain.user.dto.UserUpdateRequest;
+import com.bremen.backend.domain.user.entity.User;
+import com.bremen.backend.domain.user.mapper.UserMapper;
+import com.bremen.backend.domain.user.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
 
-@WebMvcTest(MemberController.class)
+@WebMvcTest(UserController.class)
 @WithMockUser(roles = "USER")
 @Slf4j
-public class MemberControllerTest {
+public class UserControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 	@MockBean
-	private MemberService memberService;
+	private UserService userService;
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
-	static private Member member;
+	static private User user;
 
 	@BeforeAll
 	public static void 세팅() {
@@ -46,7 +46,7 @@ public class MemberControllerTest {
 		String nickname = "test";
 		String profile = "image";
 
-		member = Member.builder()
+		user = User.builder()
 			.id(id)
 			.username(username)
 			.password(password)
@@ -59,8 +59,8 @@ public class MemberControllerTest {
 	@Test
 	public void 유저조회() throws Exception {
 
-		when(memberService.findMemberById(member.getId())).thenReturn(
-			MemberMapper.INSTANCE.memberToMemberResponse(member));
+		when(userService.findUserById(user.getId())).thenReturn(
+			UserMapper.INSTANCE.userToUserResponse(user));
 
 		mockMvc.perform(
 				get("/api/v1/members").param("id", String.valueOf(1))
@@ -69,10 +69,10 @@ public class MemberControllerTest {
 				status().isOk()
 			)
 			.andExpect(
-				jsonPath("$.data.nickname").value(member.getNickname())
+				jsonPath("$.data.nickname").value(user.getNickname())
 			)
 			.andExpect(
-				jsonPath("$.data.introduce").value(member.getIntroduce())
+				jsonPath("$.data.introduce").value(user.getIntroduce())
 			);
 
 	}
@@ -80,12 +80,12 @@ public class MemberControllerTest {
 	@Test
 	public void 유저생성() throws Exception {
 
-		MemberResponse memberResponse = MemberMapper.INSTANCE.memberToMemberResponse(member);
-		MemberRequest memberRequest = MemberMapper.INSTANCE.memberToMemberRequest(member);
+		UserResponse userResponse = UserMapper.INSTANCE.userToUserResponse(user);
+		UserRequest userRequest = UserMapper.INSTANCE.userToUserRequest(user);
 
-		String json = objectMapper.writeValueAsString(memberRequest);
+		String json = objectMapper.writeValueAsString(userRequest);
 
-		when(memberService.addMember(memberRequest)).thenReturn(memberResponse);
+		when(userService.addUser(userRequest)).thenReturn(userResponse);
 
 		mockMvc.perform(
 				post("/api/v1/members").contentType(MediaType.APPLICATION_JSON).content(json).with(csrf())
@@ -94,25 +94,25 @@ public class MemberControllerTest {
 				status().isOk()
 			)
 			.andExpect(
-				jsonPath("$.data.username").value(member.getUsername())
+				jsonPath("$.data.username").value(user.getUsername())
 			)
 			.andExpect(
-				jsonPath("$.data.nickname").value(member.getNickname())
+				jsonPath("$.data.nickname").value(user.getNickname())
 			);
 	}
 
 	@Test
 	public void 유저수정() throws Exception {
 		String nickname = "modify";
-		MemberUpdateRequest memberUpdateRequest = MemberMapper.INSTANCE.memberToMemberUpdateRequest(member);
-		memberUpdateRequest.setNickname(nickname);
+		UserUpdateRequest userUpdateRequest = UserMapper.INSTANCE.userToUserUpdateRequest(user);
+		userUpdateRequest.setNickname(nickname);
 
-		member.modifyUserInformation(memberUpdateRequest);
+		user.modifyUserInformation(userUpdateRequest);
 		// 수정할 입력값을 받아요
-		String json = objectMapper.writeValueAsString(memberUpdateRequest);
+		String json = objectMapper.writeValueAsString(userUpdateRequest);
 
-		when(memberService.modifyMember(memberUpdateRequest)).thenReturn(
-			MemberMapper.INSTANCE.memberToMemberResponse(member));
+		when(userService.modifyUser(userUpdateRequest)).thenReturn(
+			UserMapper.INSTANCE.userToUserResponse(user));
 
 		mockMvc
 			.perform(
@@ -128,10 +128,10 @@ public class MemberControllerTest {
 
 	@Test
 	public void 유저삭제() throws Exception {
-		when(memberService.removeMember(member.getId())).thenReturn(member.getId());
+		when(userService.removeUser(user.getId())).thenReturn(user.getId());
 
 		mockMvc.perform(
-				delete("/api/v1/members/{id}", member.getId()).with(csrf())
+				delete("/api/v1/members/{id}", user.getId()).with(csrf())
 			)
 			.andExpect(status().isOk());
 	}

@@ -1,12 +1,15 @@
-package com.bremen.backend.domain.member.entity;
+package com.bremen.backend.domain.user.entity;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import com.bremen.backend.domain.member.dto.MemberUpdateRequest;
+import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,7 +33,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Member {
+public class User implements UserDetails {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,14 +79,39 @@ public class Member {
 		this.password = password;
 	}
 
-	public void modifyUserInformation(MemberUpdateRequest memberUpdateRequest) {
-		this.profileImage = memberUpdateRequest.getProfileImage();
-		this.introduce = memberUpdateRequest.getIntroduce();
-		this.nickname = memberUpdateRequest.getNickname();
+	public void modifyUserInformation(UserUpdateRequest userUpdateRequest) {
+		this.profileImage = userUpdateRequest.getProfileImage();
+		this.introduce = userUpdateRequest.getIntroduce();
+		this.nickname = userUpdateRequest.getNickname();
 	}
 
 	public void deleteUser() {
 		this.deleteTime = LocalDateTime.now();
 		this.isDeleted = true;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return false;
 	}
 }
