@@ -12,7 +12,7 @@ import com.bremen.backend.domain.user.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-	@Query("SELECT m FROM User m WHERE m.id = :id AND m.isDeleted = false")
+	@Query("SELECT u FROM User u WHERE u.id = :id AND u.isDeleted = false")
 	Optional<User> findById(@Param("id") Long id);
 
 	Optional<User> findByUsername(String username);
