@@ -1,0 +1,96 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 70vh;
+    margin-top: 10vh;
+    justify-content: space-evenly;
+}
+
+.title{
+    color: white;
+  font-size: 5.5vmin;
+  text-align: center;
+  padding-bottom: 3vmin;
+}
+
+.inputTag{
+    width: 54vmin;
+    height: 12vmin;
+    border: transparent;
+    background-color: var(--light-gray-color);
+    border-radius: 10px;
+    font-size: 3.5vmin;
+    padding-left:10px;
+}
+
+.button{
+    width: 15vmin;
+    height: 9vmin;
+    border-radius: 10px;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    border: transparent;
+    background-color: var(--light-gray-color);
+}
+
+.vacant{
+    height: 4vmin;
+}
+
+.goSignup{
+    font-size: 3.5vmin;
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: auto;
+    padding-top: 10px;
+}
+.error{
+    font-size: 4vmin;
+    color: var(--origin-yellow-color);
+}
+
+.bremen{
+    width: 16vmin;
+    height: 20vmin;
+    position: fixed;
+    left: 50%; /* 추가 */
+    transform: translateX(-50%);
+    bottom :19vmin;
+}
+
+@media (min-width: 450px) {
+    .bremen{
+        bottom: 15vmin;
+    }
+    .title{
+      font-size: 24px;
+      padding-bottom: 10px;
+    }
+    .container{
+        height: 60vh;
+        margin-top: 30px;
+    }
+
+    .inputTag{
+        width: 48vmin;
+        height: 6vmin;
+        font-size: 16px;
+    }
+
+    .button{
+        width: 98px;
+        height: 45px;
+        font-size: 20px;
+    }
+    .vacant{
+        height: 22px;
+    }
+    
+    .goSignup{
+        font-size: 16px;
+    }
+    .error{
+        font-size: 16px;
+    }
+}

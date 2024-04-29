@@ -1,9 +1,10 @@
 import Footer from '@/components/Common/Footer';
+import LoginIndex from '@/components/User/LoginIndex';
 
 export default function Page() {
   return (
     <div>
-      나는 로그인
+      <LoginIndex />
       <Footer />
     </div>
   );

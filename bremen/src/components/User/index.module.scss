@@ -36,13 +36,15 @@
     text-decoration: underline;
     text-underline-offset: auto;
 }
+
 .bremen{
-    width: 16vmin;
-    height: 20vmin;
+    width: 50vmin;
+    height: auto;
     position: fixed;
     left: 50%; /* 추가 */
     transform: translateX(-50%);
-    bottom :19vmin;
+    bottom :17.5vmin;
+    z-index: 10;
 }
 .inputTag{
     display: flex;
@@ -53,11 +55,12 @@
     }
     
     .inputContainer{
+        margin: 40px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-evenly;
-        height: 70vh;
+        justify-content: space-around;
+        height: 75vh;
     }
     
     
@@ -66,6 +69,11 @@
         height: 9vmin;
         border-radius: 10px;
         font-size: 3.5vmin;
+        font-weight: bold;
+        border: transparent;
+        &:disabled{
+            background-color: var(--disabled-button-color);
+        }
     }
 
     .modalAgreement{
@@ -99,9 +107,8 @@
         text-decoration: underline;
         text-underline-offset: auto;
     }
-
     .bremen{
-        bottom: 15vmin;
+        bottom: 14vmin;
     }
 
     .submit{
@@ -113,7 +120,7 @@
     .inputTag{
         display: flex;
             flex-direction: column;
-            height: 48vh;
+            height: 50vh;
             align-items: center;
             justify-content: space-around;
         }
@@ -122,8 +129,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-evenly;
+            justify-content: space-between;
             height: 65vh;
+            margin-top: 60px;
         }
 }
 

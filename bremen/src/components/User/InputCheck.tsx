@@ -42,15 +42,16 @@ const CheckInput = styled.input<{
     top: 50%;
     transform: translateY(-50%);
     left: 0;
-    width: 100%;
+    width: 90%;
   }
 
   @media (min-width: 450px) {
     font-size: 16px;
-    width: 45vmin;
-    height: 5.5vmin;
+    width: 48vmin;
+    height: 6vmin;
     &::placeholder {
       font-size: 12px;
+      width: 100%;
     }
   }
 `;
