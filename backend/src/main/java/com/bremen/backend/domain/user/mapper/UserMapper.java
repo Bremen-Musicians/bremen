@@ -3,6 +3,7 @@ package com.bremen.backend.domain.user.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import com.bremen.backend.domain.user.dto.UserRegistrationRequest;
 import com.bremen.backend.domain.user.dto.UserRequest;
 import com.bremen.backend.domain.user.dto.UserResponse;
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
@@ -19,5 +20,7 @@ public interface UserMapper {
 	UserRequest userToUserRequest(User user);
 
 	UserUpdateRequest userToUserUpdateRequest(User user);
+
+	User userRegistrationToUser(UserRegistrationRequest userRegistrationRequest);
 
 }
