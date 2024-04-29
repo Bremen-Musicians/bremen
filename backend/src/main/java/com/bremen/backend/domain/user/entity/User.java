@@ -40,46 +40,56 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column(name = "username", unique = true)
 	@NotNull
-	@Column(unique = true)
 	private String username;
 
+	@Column(name = "password")
 	@Setter(AccessLevel.PROTECTED)
 	private String password;
 
+	@Column(name = "introduce")
 	@Setter(AccessLevel.PROTECTED)
 	private String introduce;
 
+	@Column(name = "nickname", unique = true)
 	@NotNull
-	@Column(unique = true)
 	@Setter(AccessLevel.PROTECTED)
 	private String nickname;
 
+	@Column(name = "profile_image")
 	@Setter(AccessLevel.PROTECTED)
 	private String profileImage;
 
+	@Column(name = "follower_cnt")
 	@ColumnDefault("0")
 	private int followerCnt;
 
+	@Column(name = "follow_cnt")
 	@ColumnDefault("0")
 	private int followCnt;
 
+	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
 	@ColumnDefault("false")
 	@NotNull
-	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
 	@Setter(AccessLevel.PROTECTED)
 	private boolean isDeleted;
 
+	@Column(name = "is_agree", columnDefinition = "TINYINT(1)")
 	@ColumnDefault("false")
 	@NotNull
-	@Column(name = "is_agree", columnDefinition = "TINYINT(1)")
 	@Setter(AccessLevel.PROTECTED)
 	private boolean isAgree;
 
+	@Column(name = "create_time")
 	@CreationTimestamp
 	private LocalDateTime createTime;
+
+	@Column(name = "delete_time")
 	@Setter(AccessLevel.PROTECTED)
 	private LocalDateTime deleteTime;
+
+	@Column(name = "update_time")
 	@UpdateTimestamp
 	private LocalDateTime updateTime;
 
