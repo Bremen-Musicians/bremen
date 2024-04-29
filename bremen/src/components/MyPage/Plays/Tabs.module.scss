@@ -1,0 +1,20 @@
+// .line {
+//     height: 1px;
+//     width: calc(100vw - 40px);
+//     display: flex;
+//     align-content: center;
+//     border-top: 1px solid var(--light-gray-color);
+// }
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+
+    .tab {
+        width: 50vw;
+        color: var(--light-gray-color);
+        text-align: center;
+        align-content: center;
+    }
+}
