@@ -16,6 +16,7 @@
  --light-pink-color: #FFA6CF;
  --light-beige-color: #F4E7D0;
  --white-font-color: #fff;
+ --disabled-button-color: #d7d7d7;
 }
 
 @media (prefers-color-scheme: dark) {
