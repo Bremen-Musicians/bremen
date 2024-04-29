@@ -47,3 +47,12 @@ springdoc:
     operationsSorter: method
     disable-swagger-default-url: true
     display-request-duration: true
+
+cloud:
+  aws:
+    s3:
+      bucket: ${aws.s3.bucket}
+    stack.auto: false
+    region.static: ap-northeast-2
+    accessKey: ${aws.s3.key.access}
+    secretKey: ${aws.s3.key.secret}
