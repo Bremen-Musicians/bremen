@@ -14,6 +14,7 @@ import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
@@ -21,6 +22,7 @@ import software.amazon.awssdk.services.s3.model.GetUrlRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class S3ServiceImpl implements S3Service {
@@ -39,9 +41,9 @@ public class S3ServiceImpl implements S3Service {
 				.bucket(bucket)
 				.key(keyName)
 				.build();
-
 			URL = s3Client.utilities().getUrl(request).toString();
 		} catch (S3Exception e) {
+			log.error("[{}]:{}", e.statusCode(), e.getMessage());
 			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
 		}
 		return URL;
@@ -58,10 +60,9 @@ public class S3ServiceImpl implements S3Service {
 				.bucket(bucket)
 				.key(objectKey)
 				.build();
-
 			s3Client.putObject(putObjectRequest, getFileRequestBody(file));
-
 		} catch (S3Exception e) {
+			log.error("[{}]:{}", e.statusCode(), e.getMessage());
 			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
 		}
 
@@ -78,6 +79,7 @@ public class S3ServiceImpl implements S3Service {
 				.build();
 			s3Client.deleteObject(dor);
 		} catch (S3Exception e) {
+			log.error("[{}]:{}", e.statusCode(), e.getMessage());
 			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
 		}
 	}
