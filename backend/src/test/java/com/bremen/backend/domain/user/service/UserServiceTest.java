@@ -27,12 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 class UserServiceTest {
 
 	@InjectMocks
-	private UserServiceImpl memberService;
+	private UserServiceImpl userService;
 
 	@Mock
 	private UserRepository userRepository;
 	static private User user;
-	static private User modifyUser;
 
 	@BeforeAll
 	public static void 세팅() {
@@ -55,12 +54,12 @@ class UserServiceTest {
 	}
 
 	@Test
-	void findMemberById() {
+	void 유저데이터조회() {
 		// given
 		when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
 		// when
-		UserResponse userResponse = memberService.findUserById(user.getId());
+		UserResponse userResponse = userService.findUserById(user.getId());
 
 		// then
 		assertThat(userResponse).isNotNull();
@@ -68,32 +67,32 @@ class UserServiceTest {
 	}
 
 	@Test
-	void getMemberById() {
+	void 유저데이터가져오기() {
 		//given
 		when(userRepository.findById(user.getId())).then((InvocationOnMock invocation) -> Optional.of(user));
 
 		//when
-		User m = memberService.getUserById(user.getId());
+		User m = userService.getUserById(user.getId());
 
 		//then
 		assertThat(m.getId()).isEqualTo(user.getId());
 	}
 
 	@Test
-	void addMember() {
+	void 유저추가() {
 		//given
 		UserRequest userRequest = UserMapper.INSTANCE.userToUserRequest(user);
 		when(userRepository.save(any(User.class))).thenReturn(user);
 
 		//when
-		UserResponse userResponse = memberService.addUser(userRequest);
+		UserResponse userResponse = userService.addUser(userRequest);
 
 		//then
 		assertThat(userResponse.getUsername()).isEqualTo(user.getUsername());
 	}
 
 	@Test
-	void modifyMember() {
+	void 유저수정() {
 		//given
 		User exUser = User.builder()
 			.id(user.getId())
@@ -119,7 +118,7 @@ class UserServiceTest {
 		when(userRepository.findById(userUpdateRequest.getId())).thenReturn(Optional.of(user));
 
 		//when
-		UserResponse userResponse = memberService.modifyUser(userUpdateRequest);
+		UserResponse userResponse = userService.modifyUser(userUpdateRequest);
 
 		//then
 		assertThat(userResponse).isNotNull();
@@ -127,12 +126,12 @@ class UserServiceTest {
 	}
 
 	@Test
-	void removeMember() {
+	void 유저삭제() {
 		//given
 		when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
 
 		//when
-		Long removedId = memberService.removeUser(user.getId());
+		Long removedId = userService.removeUser(user.getId());
 
 		//then
 		assertThat(user.getId()).isEqualTo(removedId);

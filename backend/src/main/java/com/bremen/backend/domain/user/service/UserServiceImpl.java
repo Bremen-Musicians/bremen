@@ -22,23 +22,31 @@ public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
 
 	@Override
-	public UserResponse findUserById(Long memberId) {
-		User user = getUserById(memberId);
+	public UserResponse findUserById(Long userId) {
+		User user = getUserById(userId);
 		return UserMapper.INSTANCE.userToUserResponse(user);
 	}
 
 	@Override
-	public User getUserById(Long memberId) {
-		User user = userRepository.findById(memberId)
+	public User getUserById(Long userId) {
+		User user = userRepository.findById(userId)
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 		return user;
 	}
 
 	@Override
+	@Transactional
 	public UserResponse addUser(UserRequest userRequest) {
 		User user = UserMapper.INSTANCE.userRequestToUser(userRequest);
 		User savedUser = userRepository.save(user);
 		return UserMapper.INSTANCE.userToUserResponse(savedUser);
+	}
+
+	@Override
+	@Transactional
+	public User addUser(User user) {
+		User savedUser = userRepository.save(user);
+		return savedUser;
 	}
 
 	@Override
@@ -53,10 +61,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public Long removeUser(Long memberId) {
-		User user = getUserById(memberId);
+	public Long removeUser(Long userId) {
+		User user = getUserById(userId);
 		user.deleteUser();
 		return user.getId();
 	}
 
+	@Override
+	public void duplicateUsername(String username) {
+		boolean exist = userRepository.existsByUsername(username);
+		if (exist)
+			throw new RuntimeException("중복되는 이메일입니다");
+	}
+
+	@Override
+	public void duplicateNickname(String nickname) {
+		boolean exist = userRepository.existsByNickname(nickname);
+		if (exist)
+			throw new RuntimeException("중복되는 닉네임입니다");
+	}
 }

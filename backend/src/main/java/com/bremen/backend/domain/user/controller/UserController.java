@@ -29,25 +29,25 @@ public class UserController {
 	private final UserService userService;
 
 	@GetMapping()
-	ResponseEntity<CustomResponse<UserResponse>> memberDetails(@RequestParam("id") Long id) {
+	ResponseEntity<CustomResponse<UserResponse>> userDetails(@RequestParam("id") Long id) {
 		UserResponse userResponse = userService.findUserById(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "조회 성공", userResponse));
 	}
 
 	@PostMapping()
-	ResponseEntity<CustomResponse<UserResponse>> memberAdd(@RequestBody UserRequest userRequest) {
+	ResponseEntity<CustomResponse<UserResponse>> userAdd(@RequestBody UserRequest userRequest) {
 		UserResponse userResponse = userService.addUser(userRequest);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 추가되었습니다", userResponse));
 	}
 
 	@PatchMapping()
-	ResponseEntity<CustomResponse<UserResponse>> memberModify(@RequestBody UserUpdateRequest userUpdateRequest) {
+	ResponseEntity<CustomResponse<UserResponse>> userModify(@RequestBody UserUpdateRequest userUpdateRequest) {
 		UserResponse userResponse = userService.modifyUser(userUpdateRequest);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 수정되었습니다", userResponse));
 	}
 
 	@DeleteMapping()
-	ResponseEntity<CustomResponse<Long>> memberRemove(@RequestParam("id") Long id) {
+	ResponseEntity<CustomResponse<Long>> userRemove(@RequestParam("id") Long id) {
 		Long memberId = userService.removeUser(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 삭제되었습니다", memberId));
 	}

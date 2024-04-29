@@ -63,7 +63,7 @@ public class UserControllerTest {
 			UserMapper.INSTANCE.userToUserResponse(user));
 
 		mockMvc.perform(
-				get("/api/v1/members").param("id", String.valueOf(1))
+				get("/api/v1/users").param("id", String.valueOf(1))
 			)
 			.andExpect(
 				status().isOk()
@@ -88,7 +88,7 @@ public class UserControllerTest {
 		when(userService.addUser(userRequest)).thenReturn(userResponse);
 
 		mockMvc.perform(
-				post("/api/v1/members").contentType(MediaType.APPLICATION_JSON).content(json).with(csrf())
+				post("/api/v1/users").contentType(MediaType.APPLICATION_JSON).content(json).with(csrf())
 			)
 			.andExpect(
 				status().isOk()
@@ -116,7 +116,7 @@ public class UserControllerTest {
 
 		mockMvc
 			.perform(
-				patch("/api/v1/members").contentType(MediaType.APPLICATION_JSON).content(json).with(csrf())
+				patch("/api/v1/users").contentType(MediaType.APPLICATION_JSON).content(json).with(csrf())
 			)
 			.andExpect(
 				status().isOk()
@@ -131,7 +131,7 @@ public class UserControllerTest {
 		when(userService.removeUser(user.getId())).thenReturn(user.getId());
 
 		mockMvc.perform(
-				delete("/api/v1/members/{id}", user.getId()).with(csrf())
+				delete("/api/v1/users/{id}", user.getId()).with(csrf())
 			)
 			.andExpect(status().isOk());
 	}
