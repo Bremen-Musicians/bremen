@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,18 +69,25 @@ public class UserController {
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "유저가 성공적으로 삭제되었습니다", memberId));
 	}
 
-	@GetMapping("/check")
-	public ResponseEntity<CustomResponse<String>> duplicateCheck(
-		@RequestParam(value = "username", required = false) String username,
-		@RequestParam(value = "nickname", required = false) String nickname) {
+	@GetMapping("/check-username")
+	public ResponseEntity<CustomResponse<String>> duplicateCheckEmail(
+		@RequestParam(value = "username") String username) {
 		if (username != null) {
 			userService.duplicateUsername(username);
 			return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "이메일 중복체크 성공", ""));
-		} else if (nickname != null) {
+		} else {
+			return ResponseEntity.ok(new CustomResponse(HttpStatus.BAD_REQUEST.value(), "이메일이 중복입니다", ""));
+		}
+	}
+
+	@GetMapping("/check-nickname")
+	public ResponseEntity<CustomResponse<String>> duplicateCheckNickname(
+		@RequestParam(value = "nickname") String nickname) {
+		if (nickname != null) {
 			userService.duplicateNickname(nickname);
 			return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "닉네임 중복체크 성공", ""));
 		} else {
-			return ResponseEntity.ok(new CustomResponse(HttpStatus.BAD_REQUEST.value(), "중복체크 실패", ""));
+			return ResponseEntity.ok(new CustomResponse(HttpStatus.BAD_REQUEST.value(), "닉네임이 중복입니다", ""));
 		}
 	}
 
@@ -89,4 +97,10 @@ public class UserController {
 		return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "로그인 성공", userLoginResponse));
 	}
 
+	@GetMapping("/logout")
+	public CustomResponse<String> logout(@RequestHeader("Authorization") String accessToken,
+		@RequestHeader("Refresh-Token") String refreshToken) {
+		authService.logout(accessToken, refreshToken);
+		return new CustomResponse<>(HttpStatus.OK.value(), "logout 성공!", "");
+	}
 }
