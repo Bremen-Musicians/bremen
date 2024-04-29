@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.bremen.backend.domain.user.dto.UserProfileRequest;
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 
 import jakarta.persistence.Column;
@@ -66,11 +67,18 @@ public class User implements UserDetails {
 	@ColumnDefault("false")
 	@NotNull
 	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
+	@Setter(AccessLevel.PROTECTED)
 	private boolean isDeleted;
+
+	@ColumnDefault("false")
+	@NotNull
+	@Column(name = "is_agree", columnDefinition = "TINYINT(1)")
+	@Setter(AccessLevel.PROTECTED)
+	private boolean isAgree;
 
 	@CreationTimestamp
 	private LocalDateTime createTime;
-	@UpdateTimestamp
+	@Setter(AccessLevel.PROTECTED)
 	private LocalDateTime deleteTime;
 	@UpdateTimestamp
 	private LocalDateTime updateTime;
@@ -80,14 +88,23 @@ public class User implements UserDetails {
 	}
 
 	public void modifyUserInformation(UserUpdateRequest userUpdateRequest) {
-		this.profileImage = userUpdateRequest.getProfileImage();
-		this.introduce = userUpdateRequest.getIntroduce();
-		this.nickname = userUpdateRequest.getNickname();
+		this.setProfileImage(userUpdateRequest.getProfileImage());
+		this.setIntroduce(userUpdateRequest.getIntroduce());
+		this.setNickname(userUpdateRequest.getNickname());
+	}
+
+	public void modifyUserProfile(UserProfileRequest userProfileRequest) {
+		this.setProfileImage(userProfileRequest.getProfileImage());
+		this.setIntroduce(userProfileRequest.getIntroduce());
 	}
 
 	public void deleteUser() {
-		this.deleteTime = LocalDateTime.now();
-		this.isDeleted = true;
+		this.setDeleted(true);
+		this.setDeleteTime(LocalDateTime.now());
+	}
+
+	public void agreeUser() {
+		this.setAgree(true);
 	}
 
 	@Override
