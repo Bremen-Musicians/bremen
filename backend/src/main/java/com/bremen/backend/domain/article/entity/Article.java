@@ -37,11 +37,12 @@ public class Article {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 100)
+	@Column(name = "title", length = 100)
 	@NotNull
 	@Setter(AccessLevel.PROTECTED)
 	private String title;
 
+	@Column(name = "content")
 	@NotNull
 	@Setter(AccessLevel.PROTECTED)
 	private String content;
