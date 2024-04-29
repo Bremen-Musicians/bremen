@@ -24,7 +24,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public UserResponse register(UserRegistrationRequest userRegistrationRequest) {
 
 		if (!userRegistrationRequest.isAgree()) {
-			throw new CustomException(ErrorCode.REQUIRED_AGREE);
+			throw new CustomException(ErrorCode.TERMS_OF_SERVICE_AGREEMENT_REQUIRED_ERROR);
 		}
 
 		User user = UserMapper.INSTANCE.userRegistrationToUser(userRegistrationRequest);
