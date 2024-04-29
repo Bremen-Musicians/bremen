@@ -25,6 +25,6 @@ public class Instrument {
 	private Long id;
 
 	@NotNull
-	@Column(length = 30)
+	@Column(name = "name", length = 30)
 	private String name;
 }
