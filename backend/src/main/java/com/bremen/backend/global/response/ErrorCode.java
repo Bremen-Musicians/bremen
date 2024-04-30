@@ -9,10 +9,11 @@ public enum ErrorCode {
 
 	//400 BAD_REQUEST 잘못된 요청
 	INVALID_PARAMETER(400, "파라미터 값을 확인해주세요."),
+	INVALID_FILE_PARAMETER(400, "파일의 값을 확인해주세요."),
 	TERMS_OF_SERVICE_AGREEMENT_REQUIRED_ERROR(400, "약관에 동의하지않으면 서비스를 이용할 수 없습니다."),
 
 	//403
-	UNAUTHORIZED_ERROR(403, "접근 권한을 확인해주세요."),
+	UNAUTHORIZED_S3_ERROR(403, "S3 접근 권한을 확인해주세요."),
 
 	//404 NOT_FOUND 잘못된 리소스 접근
 	NOT_FOUND_USER(404, "해당하는 사용자가 없습니다."),
