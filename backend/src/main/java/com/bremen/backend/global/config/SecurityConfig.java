@@ -10,6 +10,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.bremen.backend.global.filter.ExceptionHandlerFilter;
+import com.bremen.backend.global.filter.JwtFilter;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	private final CorsConfig corsConfig;
+	private final JwtFilter jwtFilter;
+	private final ExceptionHandlerFilter exceptionHandlerFilter;
 	private static final String HEAD = "/api/v1";
 	private static final String[] PERMIT_URL_ARRAY = {
 		/* swagger v3 */
@@ -49,7 +55,14 @@ public class SecurityConfig {
 					.anyRequest().authenticated()
 			).cors(
 				cors -> cors.configurationSource(corsConfig.corsConfigurationSource())
-			);
+			)
+			.addFilterBefore(
+				jwtFilter, UsernamePasswordAuthenticationFilter.class
+			)
+			.addFilterBefore(
+				exceptionHandlerFilter, JwtFilter.class
+			)
+		;
 
 		return httpSecurity.build();
 	}
