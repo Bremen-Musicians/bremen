@@ -92,7 +92,7 @@ public class S3ServiceImpl implements S3Service {
 
 		// UUID
 		String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-		return uuid + date;
+		return uuid + "-" + date;
 	}
 
 	private static RequestBody getFileRequestBody(MultipartFile file) throws IOException {
