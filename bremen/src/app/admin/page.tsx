@@ -1,9 +1,10 @@
 import Footer from '@/components/Common/Footer';
+import AdminPage from '@/components/Admin';
 
 export default function Page() {
   return (
     <div>
-      나는 관리자
+      <AdminPage />
       <Footer />
     </div>
   );
