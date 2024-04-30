@@ -61,14 +61,14 @@
 
 @media (min-width: 450px) {
     .bremen{
-        bottom: 15vmin;
+        display: none;
     }
     .title{
-      font-size: 24px;
+      font-size: 30px;
       padding-bottom: 10px;
     }
     .container{
-        height: 60vh;
+        height: 80vh;
         margin-top: 30px;
     }
 

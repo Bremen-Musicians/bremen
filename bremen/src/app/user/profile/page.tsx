@@ -1,3 +1,9 @@
+import ProfileIndex from '@/components/User/ProfileIndex';
+
 export default function Page() {
-  return <div>나는 프로필 처음 입력</div>;
+  return (
+    <div>
+      <ProfileIndex />
+    </div>
+  );
 }

@@ -8,11 +8,12 @@ import useUserInfoStore, {IUserInfo} from '@/stores/UserInfo';
 const Profile = styled.div`
   width: 7vmin;
   height: 7vmin;
-  background-color: olive;
   border-radius: 50%;
   overflow: hidden;
   margin-top: 1vmin;
   margin-bottom: 1vmin;
+  display: flex;
+  background-color: white;
 `;
 
 const FootProfile = () => {

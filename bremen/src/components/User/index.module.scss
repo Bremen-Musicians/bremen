@@ -108,7 +108,7 @@
         text-underline-offset: auto;
     }
     .bremen{
-        bottom: 14vmin;
+        display: none;
     }
 
     .submit{
@@ -120,7 +120,7 @@
     .inputTag{
         display: flex;
             flex-direction: column;
-            height: 50vh;
+            height: 70vh;
             align-items: center;
             justify-content: space-around;
         }
@@ -130,7 +130,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            height: 65vh;
+            height: 80vh;
             margin-top: 60px;
         }
 }
