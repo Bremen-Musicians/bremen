@@ -2,7 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/components/Common/Header.module.scss';
 import FootProfile from '@/components/Common/FooterProfile';
-// import Logo from '/bremen/public/mainLogo.png'
+
+const islogin = false; // 이 값을 변경하여 테스트해보세요
 
 const Header = () => {
   return (
@@ -43,13 +44,19 @@ const Header = () => {
           </div>
         </div>
         <div className={styles.rightContainer}>
-          <div className={styles.mypage}>
-            <Link href="/mypage">
-              <div className={styles.img}>
-                <FootProfile />
-              </div>
-            </Link>
-          </div>
+          {islogin ? (
+            <div className={styles.mypage}>
+              <Link href="/mypage">
+                <div className={styles.img}>
+                  <FootProfile />
+                </div>
+              </Link>
+            </div>
+          ) : (
+            <div className={styles.login}>
+              <Link href="/user/login">로그인</Link>
+            </div>
+          )}
           <div className={styles.bell}>
             <Link href="/" className={styles.bell}>
               <Image
