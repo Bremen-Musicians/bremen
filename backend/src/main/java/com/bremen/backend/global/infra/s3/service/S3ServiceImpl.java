@@ -44,14 +44,14 @@ public class S3ServiceImpl implements S3Service {
 			URL = s3Client.utilities().getUrl(request).toString();
 		} catch (S3Exception e) {
 			log.error("[{}]:{}", e.statusCode(), e.getMessage());
-			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
+			throw new CustomException(ErrorCode.UNAUTHORIZED_S3_ERROR);
 		}
 		return URL;
 	}
 
 	/* UPLOAD */
 	@Override
-	public String streamUpload(String dirName, MultipartFile file) throws IOException {
+	public String streamUpload(String dirName, MultipartFile file) {
 		String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 		String objectKey = dirName + "/" + makeFileName() + "." + extension;
 
@@ -63,7 +63,9 @@ public class S3ServiceImpl implements S3Service {
 			s3Client.putObject(putObjectRequest, getFileRequestBody(file));
 		} catch (S3Exception e) {
 			log.error("[{}]:{}", e.statusCode(), e.getMessage());
-			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
+			throw new CustomException(ErrorCode.UNAUTHORIZED_S3_ERROR);
+		} catch (IOException e) {
+			throw new CustomException(ErrorCode.INVALID_FILE_PARAMETER);
 		}
 
 		return objectKey;
@@ -80,7 +82,7 @@ public class S3ServiceImpl implements S3Service {
 			s3Client.deleteObject(dor);
 		} catch (S3Exception e) {
 			log.error("[{}]:{}", e.statusCode(), e.getMessage());
-			throw new CustomException(ErrorCode.UNAUTHORIZED_ERROR);
+			throw new CustomException(ErrorCode.UNAUTHORIZED_S3_ERROR);
 		}
 	}
 
