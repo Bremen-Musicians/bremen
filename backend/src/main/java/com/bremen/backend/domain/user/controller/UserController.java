@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -96,10 +97,10 @@ public class UserController {
 		return ResponseEntity.ok(new CustomResponse(HttpStatus.OK.value(), "로그인 성공", userLoginResponse));
 	}
 
-	// @GetMapping("/logout")
-	// public CustomResponse<String> logout(@RequestHeader("Authorization") String accessToken,
-	// 	@RequestHeader("Refresh-Token") String refreshToken) {
-	// 	authService.logout(accessToken, refreshToken);
-	// 	return new CustomResponse<>(HttpStatus.OK.value(), "logout 성공!", "");
-	// }
+	@GetMapping("/logout")
+	public CustomResponse<String> logout(@RequestHeader("Authorization") String accessToken,
+		@RequestHeader("Refresh-Token") String refreshToken) {
+		authService.logout(accessToken, refreshToken);
+		return new CustomResponse<>(HttpStatus.OK.value(), "logout 성공!", "");
+	}
 }

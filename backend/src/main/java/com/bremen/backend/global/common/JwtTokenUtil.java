@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.bremen.backend.domain.user.entity.User;
+import com.bremen.backend.domain.user.service.BlackTokenService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -26,7 +27,10 @@ public class JwtTokenUtil {
 	private final long REFRESH_TOKEN_VALID_PERIOD = 1000L * 60 * 60 * 24 * 7; // refresh token의 기한은 일주일
 	private SecretKey key;
 
-	public JwtTokenUtil(@Value("${jwt.secret}") String secretKey) {
+	private final BlackTokenService blackTokenService;
+
+	public JwtTokenUtil(@Value("${jwt.secret}") String secretKey, BlackTokenService blackTokenService) {
+		this.blackTokenService = blackTokenService;
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
@@ -115,5 +119,9 @@ public class JwtTokenUtil {
 		Claims claims = Jwts.parserBuilder().setSigningKey(key).build()
 			.parseClaimsJws(jwt).getBody();
 		return claims;
+	}
+
+	public void isLogoutToken(String token) {
+		blackTokenService.findByToken(token);
 	}
 }
