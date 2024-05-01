@@ -16,11 +16,13 @@ import com.bremen.backend.domain.user.dto.UserLoginRequest;
 import com.bremen.backend.domain.user.dto.UserLoginResponse;
 import com.bremen.backend.domain.user.dto.UserProfileRequest;
 import com.bremen.backend.domain.user.dto.UserRegistrationRequest;
+import com.bremen.backend.domain.user.dto.UserReissueResponse;
 import com.bremen.backend.domain.user.dto.UserResponse;
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 import com.bremen.backend.domain.user.service.AuthService;
 import com.bremen.backend.domain.user.service.ProfileService;
 import com.bremen.backend.domain.user.service.RegistrationService;
+import com.bremen.backend.domain.user.service.ReissueService;
 import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.global.response.CustomResponse;
 
@@ -37,6 +39,7 @@ public class UserController {
 	private final RegistrationService registrationService;
 	private final ProfileService profileService;
 	private final AuthService authService;
+	private final ReissueService reissueService;
 
 	@GetMapping()
 	ResponseEntity<CustomResponse<UserResponse>> userDetails(@RequestParam("id") Long id) {
@@ -102,5 +105,11 @@ public class UserController {
 		@RequestHeader("Refresh-Token") String refreshToken) {
 		authService.logout(accessToken, refreshToken);
 		return new CustomResponse<>(HttpStatus.OK.value(), "logout 성공!", "");
+	}
+
+	@GetMapping("/reissue")
+	public ResponseEntity<CustomResponse<UserReissueResponse>> reissueToken(@RequestHeader("Refresh-Token")String refreshToken){
+		UserReissueResponse userReissueResponse = reissueService.reissueAccessToken(refreshToken);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(),"새로운 액세스 토큰 발급 성공!",userReissueResponse));
 	}
 }
