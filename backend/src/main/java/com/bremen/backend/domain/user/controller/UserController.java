@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bremen.backend.domain.user.dto.UserLoginRequest;
 import com.bremen.backend.domain.user.dto.UserLoginResponse;
 import com.bremen.backend.domain.user.dto.UserProfileRequest;
+import com.bremen.backend.domain.user.dto.UserProfileUpdateRequest;
+import com.bremen.backend.domain.user.dto.UserProfileUpdateResponse;
 import com.bremen.backend.domain.user.dto.UserRegistrationRequest;
 import com.bremen.backend.domain.user.dto.UserReissueResponse;
 import com.bremen.backend.domain.user.dto.UserResponse;
@@ -108,8 +110,10 @@ public class UserController {
 	}
 
 	@GetMapping("/reissue")
-	public ResponseEntity<CustomResponse<UserReissueResponse>> reissueToken(@RequestHeader("Refresh-Token")String refreshToken){
+	public ResponseEntity<CustomResponse<UserReissueResponse>> tokenReissue(@RequestHeader("Refresh-Token")String refreshToken){
 		UserReissueResponse userReissueResponse = reissueService.reissueAccessToken(refreshToken);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(),"새로운 액세스 토큰 발급 성공!",userReissueResponse));
 	}
+
+
 }
