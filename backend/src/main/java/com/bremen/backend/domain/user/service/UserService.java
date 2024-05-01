@@ -9,6 +9,7 @@ public interface UserService {
 	UserResponse findUserById(Long memberId);
 
 	User getUserById(Long memberId);
+	User getUserByUsername(String username);
 
 	UserResponse addUser(UserRequest userRequest);
 

@@ -29,9 +29,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User getUserById(Long userId) {
-		User user = userRepository.findById(userId)
+		return userRepository.findById(userId)
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
-		return user;
+	}
+
+	@Override
+	public User getUserByUsername(String username) {
+		return userRepository.findByUsername(username).orElseThrow(
+			() -> new CustomException(ErrorCode.NOT_FOUND_USER)
+		);
 	}
 
 	@Override
