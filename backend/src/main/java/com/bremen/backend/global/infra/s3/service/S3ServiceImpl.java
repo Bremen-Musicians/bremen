@@ -51,10 +51,9 @@ public class S3ServiceImpl implements S3Service {
 
 	/* UPLOAD */
 	@Override
-	public String streamUpload(String dirName, MultipartFile file) {
+	public String streamUpload(String dirName, MultipartFile file) throws IOException {
 		String extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
 		String objectKey = dirName + "/" + makeFileName() + "." + extension;
-
 		try {
 			PutObjectRequest putObjectRequest = PutObjectRequest.builder()
 				.bucket(bucket)
@@ -64,10 +63,7 @@ public class S3ServiceImpl implements S3Service {
 		} catch (S3Exception e) {
 			log.error("[{}]:{}", e.statusCode(), e.getMessage());
 			throw new CustomException(ErrorCode.UNAUTHORIZED_S3_ERROR);
-		} catch (IOException e) {
-			throw new CustomException(ErrorCode.INVALID_FILE_PARAMETER);
 		}
-
 		return objectKey;
 	}
 
