@@ -1,5 +1,9 @@
 package com.bremen.backend.domain.user.service;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,6 +42,17 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(username).orElseThrow(
 			() -> new CustomException(ErrorCode.NOT_FOUND_USER)
 		);
+	}
+
+	@Override
+	public User getUserByToken() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			String username = authentication.getPrincipal().toString();
+			return getUserByUsername(username);
+		} else {
+			throw new UsernameNotFoundException("잘못된 요청입니다");
+		}
 	}
 
 	@Override

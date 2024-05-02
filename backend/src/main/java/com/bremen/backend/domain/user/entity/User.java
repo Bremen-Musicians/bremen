@@ -9,7 +9,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.bremen.backend.domain.user.dto.UserProfileRequest;
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 
 import jakarta.persistence.Column;
@@ -103,9 +102,16 @@ public class User implements UserDetails {
 		this.setNickname(userUpdateRequest.getNickname());
 	}
 
-	public void modifyUserProfile(UserProfileRequest userProfileRequest) {
-		this.setProfileImage(userProfileRequest.getProfileImage());
-		this.setIntroduce(userProfileRequest.getIntroduce());
+	public void modifyUserProfile(String profileImage, String introduce) {
+		this.setProfileImage(profileImage);
+		this.setNickname(nickname);
+		this.setIntroduce(introduce);
+	}
+
+	public void modifyUserProfile(String nickname, String profileImage, String introduce) {
+		this.setProfileImage(profileImage);
+		this.setNickname(nickname);
+		this.setIntroduce(introduce);
 	}
 
 	public void deleteUser() {
