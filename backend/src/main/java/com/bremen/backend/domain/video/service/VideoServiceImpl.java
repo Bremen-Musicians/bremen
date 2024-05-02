@@ -36,4 +36,12 @@ public class VideoServiceImpl implements VideoService {
 		Video savedVideo = videoRepository.save(video);
 		return VideoMapper.INSTANCE.videoToVideoResponse(savedVideo);
 	}
+
+	@Override
+	@Transactional
+	public Long removeVideo(Long videoId) {
+		Video video = getVideoById(videoId);
+		video.deleteVideo();
+		return video.getId();
+	}
 }
