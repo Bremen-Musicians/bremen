@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.video.dto.VideoRequest;
 import com.bremen.backend.domain.video.dto.VideoResponse;
@@ -35,7 +34,6 @@ public class VideoServiceTest {
 
 	static private Video video;
 	static private User user;
-	static private Article article;
 	static private Instrument instrument;
 	static private Music music;
 
@@ -77,21 +75,11 @@ public class VideoServiceTest {
 			.profileImage(profile)
 			.build();
 
-		// 게시글
-		String content = "test content";
-		article = Article.builder()
-			.id(id)
-			.title(title)
-			.content(content)
-			.user(user)
-			.build();
-
 		// 영상
 		video = Video.builder()
 			.id(id)
 			.videoUrl(url)
 			.imageUrl(url)
-			.article(article)
 			.user(user)
 			.music(music)
 			.instrument(instrument)
