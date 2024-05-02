@@ -6,7 +6,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -78,10 +77,6 @@ public class Video {
 	@UpdateTimestamp
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "article_id")
-	private Article article;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")

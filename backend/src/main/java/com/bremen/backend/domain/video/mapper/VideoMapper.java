@@ -14,13 +14,11 @@ public interface VideoMapper {
 
 	VideoResponse videoToVideoResponse(Video video);
 
-	@Mapping(target = "article.id", source = "videoRequest.articleId")
 	@Mapping(target = "user.id", source = "videoRequest.userId")
 	@Mapping(target = "music.id", source = "videoRequest.musicId")
 	@Mapping(target = "instrument.id", source = "videoRequest.instrumentId")
 	Video videoRequestToVideo(VideoRequest videoRequest);
 
-	@Mapping(target = "articleId", source = "video.article.id")
 	@Mapping(target = "userId", source = "video.user.id")
 	@Mapping(target = "musicId", source = "video.music.id")
 	@Mapping(target = "instrumentId", source = "video.instrument.id")
