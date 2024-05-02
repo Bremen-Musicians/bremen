@@ -48,7 +48,7 @@ public class ProfileServiceImpl implements ProfileService {
 			user.modifyUserProfile(userProfileUpdateRequest.getNickname(), url,
 				userProfileUpdateRequest.getIntroduce());
 		}
-		return UserMapper.INSTANCE.userToUserProfileUpdateRequest(user);
+		return UserMapper.INSTANCE.userToUserProfileUpdateResponse(user);
 	}
 
 	@Override
