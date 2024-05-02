@@ -127,4 +127,16 @@ public class VideoServiceTest {
 		assertThat(videoResponse.getVideoUrl()).isEqualTo(videoRequest.getVideoUrl());
 		verify(videoRepository, times(1)).save(any(Video.class));
 	}
+
+	@Test
+	void removeVideo() {
+		// given
+		when(videoRepository.findById(video.getId())).thenReturn(Optional.of(video));
+
+		// when
+		Long removedId = videoService.removeVideo(video.getId());
+
+		//then
+		assertThat(removedId).isEqualTo(video.getId());
+	}
 }
