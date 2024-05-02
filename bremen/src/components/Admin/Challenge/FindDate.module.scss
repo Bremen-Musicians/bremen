@@ -1,0 +1,50 @@
+.findsongarea {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--light-gray-color);
+    width: 100%;
+
+    .date {
+        min-width: 20vw;
+        font-size: small;
+    }
+
+    .searchbox {
+        border: 1px solid var(--light-gray-color);
+        margin-left: 10px;
+        padding: 5px;
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    .wave {
+        margin-left: 10px;
+    }
+
+    input {
+        padding: 0 5px;
+        border: none;
+        background-color: #001533;
+        color: var(--light-gray-color);
+        width: 100%;
+        font-size: small;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 1; // 원하는 라인수
+        -webkit-box-orient: vertical;
+    }
+
+    input:focus {
+        outline: none;
+    }
+}
+
+.ex {
+    color: var(--light-gray-color);
+    font-size: smaller;
+    display: flex;
+    text-align: right;
+}
