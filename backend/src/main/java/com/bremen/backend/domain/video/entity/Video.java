@@ -38,10 +38,12 @@ public class Video {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@Column(name = "video_url", length = 2083)
 	@Setter(AccessLevel.PROTECTED)
 	private String videoUrl;
 
+	@NotNull
 	@Column(name = "image_url", length = 2083)
 	@Setter(AccessLevel.PROTECTED)
 	private String imageUrl;
