@@ -14,10 +14,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.user.entity.User;
+import com.bremen.backend.domain.video.dto.VideoRequest;
 import com.bremen.backend.domain.video.dto.VideoResponse;
 import com.bremen.backend.domain.video.entity.Instrument;
 import com.bremen.backend.domain.video.entity.Music;
 import com.bremen.backend.domain.video.entity.Video;
+import com.bremen.backend.domain.video.mapper.VideoMapper;
 import com.bremen.backend.domain.video.repository.VideoRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -109,5 +111,20 @@ public class VideoServiceTest {
 
 		// then
 		assertThat(videoResponse).isNotNull();
+	}
+
+	// Add
+	@Test
+	void addVideo() {
+		// given
+		VideoRequest videoRequest = VideoMapper.INSTANCE.videoToVideoRequest(video);
+
+		// when
+		when(videoRepository.save(any(Video.class))).thenReturn(video);
+		VideoResponse videoResponse = videoService.addVideo(videoRequest);
+
+		//then
+		assertThat(videoResponse.getVideoUrl()).isEqualTo(videoRequest.getVideoUrl());
+		verify(videoRepository, times(1)).save(any(Video.class));
 	}
 }
