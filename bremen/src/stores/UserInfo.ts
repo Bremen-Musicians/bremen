@@ -10,6 +10,8 @@ interface IUserInfo {
   setZustandToken: (newToken: string) => void;
   zustandRFToken: string;
   setZustandRFToken: (newRFToken: string) => void;
+  zustandEmail: string;
+  setZustandEmail: (newEmail: string) => void;
 }
 
 const useUserInfoStore = create<IUserInfo>()(
@@ -26,6 +28,8 @@ const useUserInfoStore = create<IUserInfo>()(
       zustandRFToken: '',
       setZustandRFToken: (newRFToken: string) =>
         set({zustandRFToken: newRFToken}),
+      zustandEmail: '',
+      setZustandEmail: (newEmail: string) => set({zustandEmail: newEmail}),
     }),
     {
       name: 'userInfo',

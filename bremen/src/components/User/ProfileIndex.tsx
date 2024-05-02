@@ -5,9 +5,12 @@
 import {useRouter} from 'next/navigation';
 import {useState} from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
+import axios from 'axios';
 import ImageUp from '@/components/Common/ImageUp';
 import ProfileInput from '@/components/User/ProfileInput';
 import useUserInfoStore from '@/stores/UserInfo';
+import styles from '@/components/User/ProfileIndex.module.scss';
 
 // TODO: 서버에서 랜덤이미지 받기
 // TODO: 주스탠드 부르기, 저장, 서버 전송
@@ -48,54 +51,67 @@ const NextButton = styled.button`
 `;
 
 const ProfileIndex = () => {
-  const [userImg, setUserImg] = useState<string>('');
   const [profileContent, setProfileContent] = useState<string>('');
-  const {zustandUserImage, setZustandUserImage} = useUserInfoStore();
+  const {zustandEmail} = useUserInfoStore();
+
+  const number = Math.floor(Math.random() * 5 + 1);
+  const initialImg = `/basicImage/no_image_${number}.png`;
+  const [userImg, setUserImg] = useState<string>(initialImg);
 
   const router = useRouter();
 
   const handleClick = () => {
-    setZustandUserImage(userImg);
     // TODO: zustandUserImage, profileContent 보내기
-    if (userImg.includes('no_image_')) {
-      // TODO: axios 다른 형태로 보내기
+    let sendImage = userImg;
+    if (userImg.includes('/basicImage/no_image_')) {
+      sendImage = `no_image_${number}.png`;
     }
-    // axios
-    //   .post(`${process.env.NEXT_PUBLIC_BASE_URL}/user/profile`, zustandUserImage, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //       'Content-Type': 'multipart/form-data',
-    //     },
-    //   })
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(Error => {
-    //     console.error(Error);
-    //   });
-    setZustandUserImage(''); // 초기화
+    const profileData = {
+      username: zustandEmail,
+      profileImage: sendImage,
+      introduce: profileContent,
+    };
+    axios
+      .post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
+        profileData,
+      )
+      .then(response => {
+        // eslint-disable-next-line no-console
+        console.log(response);
+      })
+      .catch(Error => {
+        // eslint-disable-next-line no-console
+        console.error(Error);
+      });
     router.push('/user/login');
   };
 
-  const number = Math.floor(Math.random() * 5 + 1);
-  const initialImg = `/basicImage/no_image_${number}.png`;
-
   return (
-    <Container>
-      <div>
-        <Title>프로필 이미지</Title>
-        <ImageUp
-          buttonDetail="사진 등록"
-          setUserImg={setUserImg}
-          initialImg={initialImg}
-        />
-      </div>
-      <div>
-        <Title>프로필 작성</Title>
-        <ProfileInput setProfileContent={setProfileContent} />
-      </div>
-      <NextButton onClick={handleClick}>다음</NextButton>
-    </Container>
+    <div>
+      <Container>
+        <div>
+          <Title>프로필 이미지</Title>
+          <ImageUp
+            buttonDetail="사진 등록"
+            setUserImg={setUserImg}
+            initialImg={initialImg}
+          />
+        </div>
+        <div>
+          <Title>프로필 작성</Title>
+          <ProfileInput setProfileContent={setProfileContent} />
+        </div>
+        <NextButton onClick={handleClick}>다음</NextButton>
+      </Container>
+      <Image
+        src="/bremenWalk.png"
+        width={300}
+        height={300}
+        alt="브레멘"
+        className={styles.bremen}
+      />
+    </div>
   );
 };
 export default ProfileIndex;

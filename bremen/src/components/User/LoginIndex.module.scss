@@ -2,9 +2,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 70vh;
+    height: 80vh;
+    
+    
+}
+.secondCon{
+    display: flex;
+    flex-direction: column;
     margin-top: 10vh;
     justify-content: space-evenly;
+    height: 70vh;
+    align-items: center;
 }
 
 .title{
@@ -32,6 +40,7 @@
     font-weight: bold;
     border: transparent;
     background-color: var(--light-gray-color);
+    cursor: pointer;
 }
 
 .vacant{
@@ -69,7 +78,6 @@
     }
     .container{
         height: 80vh;
-        margin-top: 30px;
     }
 
     .inputTag{

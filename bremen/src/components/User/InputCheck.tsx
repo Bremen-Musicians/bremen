@@ -1,5 +1,6 @@
 'use client';
 
+import {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 const Title = styled.div`
@@ -83,20 +84,32 @@ const InputCheck = ({
 }: {
   detail: string;
   placeHolderContent: string;
-  isPass: boolean;
+  isPass: boolean | Promise<boolean>;
   setValue: (newvalue: string) => void;
   maxLength: number;
   wrongMessage: string;
   type: string;
   content: boolean;
 }) => {
+  const [isValidated, setIsValidated] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isPass instanceof Promise) {
+      isPass
+        .then(isValid => setIsValidated(isValid))
+        .catch(() => setIsValidated(false));
+    } else {
+      setIsValidated(isPass);
+    }
+  }, [isPass]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newNickname = event.target.value;
     setValue(newNickname);
   };
 
   const borderColor = () => {
-    if (isPass && content) {
+    if (isValidated && content) {
       return 'var(--origin-green-color)';
     }
     if (content) {
@@ -105,7 +118,7 @@ const InputCheck = ({
     return 'none';
   };
   const borderLightColor = () => {
-    if (isPass && content) {
+    if (isValidated && content) {
       return 'var(--light-green-color)';
     }
     if (content) {
