@@ -36,6 +36,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 
 	@Override
+	@Transactional
 	public UserProfileUpdateResponse modifyUserProfile(MultipartFile profileImage,
 		UserProfileUpdateRequest userProfileUpdateRequest) throws IOException {
 		User user = userService.getUserByToken();
