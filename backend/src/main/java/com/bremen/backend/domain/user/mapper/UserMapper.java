@@ -24,6 +24,6 @@ public interface UserMapper {
 
 	User userRegistrationToUser(UserRegistrationRequest userRegistrationRequest);
 
-	UserProfileUpdateResponse userToUserProfileUpdateRequest(User user);
+	UserProfileUpdateResponse userToUserProfileUpdateResponse(User user);
 
 }
