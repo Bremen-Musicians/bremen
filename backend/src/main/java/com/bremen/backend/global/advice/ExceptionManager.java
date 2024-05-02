@@ -1,5 +1,7 @@
 package com.bremen.backend.global.advice;
 
+import java.io.IOException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -26,6 +28,11 @@ public class ExceptionManager {
 	protected ResponseEntity handleCustomException(CustomException ex) {
 		return new ResponseEntity(new ErrorResponse(ex.getErrorCode().getStatus(), ex.getErrorCode().getMessage()),
 			HttpStatus.valueOf(ex.getErrorCode().getStatus()));
+	}
+
+	@ExceptionHandler({IOException.class})
+	protected ResponseEntity handleIOException(IOException ex) {
+		return new ResponseEntity(new ErrorResponse(400, ex.getMessage()), HttpStatus.CONFLICT);
 	}
 
 }
