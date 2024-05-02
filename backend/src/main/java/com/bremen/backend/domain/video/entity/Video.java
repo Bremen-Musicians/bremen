@@ -95,4 +95,8 @@ public class Video {
 	@JoinColumn(name = "instrument_id")
 	private Instrument instrument;
 
+	public void deleteVideo() {
+		this.setDeleted(true);
+		this.setDeleteTime(LocalDateTime.now());
+	}
 }

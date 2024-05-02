@@ -10,4 +10,6 @@ public interface VideoService {
 	Video getVideoById(Long videoId);
 
 	VideoResponse addVideo(VideoRequest videoRequest);
+
+	Long removeVideo(Long videoId);
 }
