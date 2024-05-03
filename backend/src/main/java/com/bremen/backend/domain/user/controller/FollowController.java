@@ -20,17 +20,15 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "Follow", description = "팔로우 API")
 public class FollowController {
 	private final FollowService followService;
+
 	@GetMapping("/follow")
 	@Operation(summary = "해당 ID를 가진 사람을 팔로우합니다.")
-	public ResponseEntity<CustomResponse<String>> follow(@RequestParam(value="id")Long id){
-		followService.follow(id);
-		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(),"팔로우 성공",""));
-	}
+	public ResponseEntity<CustomResponse<String>> follow(@RequestParam(value = "id") Long id) {
+		if (followService.followUser(id)) {
+			return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "팔로우 성공", ""));
+		} else {
+			return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "언팔로우 성공", ""));
+		}
 
-	@GetMapping("/unfollow")
-	@Operation(summary = "해당 ID를 가진 사람을 언팔로우합니다.")
-	public ResponseEntity<CustomResponse<String>> unfollow(@RequestParam(value="id")Long id){
-		followService.unfollow(id);
-		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(),"언팔로우 성공",""));
 	}
 }
