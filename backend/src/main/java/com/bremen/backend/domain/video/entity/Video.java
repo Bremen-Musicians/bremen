@@ -6,7 +6,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.user.entity.User;
 
 import jakarta.persistence.Column;
@@ -38,10 +37,12 @@ public class Video {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@NotNull
 	@Column(name = "video_url", length = 2083)
 	@Setter(AccessLevel.PROTECTED)
 	private String videoUrl;
 
+	@NotNull
 	@Column(name = "image_url", length = 2083)
 	@Setter(AccessLevel.PROTECTED)
 	private String imageUrl;
@@ -78,10 +79,6 @@ public class Video {
 	private LocalDateTime updateTime;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "article_id")
-	private Article article;
-
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
 	private User user;
 
@@ -93,4 +90,18 @@ public class Video {
 	@JoinColumn(name = "instrument_id")
 	private Instrument instrument;
 
+	public void setSavedVideo(User user, String imageUrl) {
+		this.user = user;
+		this.imageUrl = imageUrl;
+	}
+
+	public void setSavedVideo(boolean isHighlight, String videoUrl) {
+		this.isHighlight = isHighlight;
+		this.videoUrl = videoUrl;
+	}
+
+	public void deleteVideo() {
+		this.setDeleted(true);
+		this.setDeleteTime(LocalDateTime.now());
+	}
 }
