@@ -5,7 +5,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public class NotificationMessage {
+public abstract class NotificationMessage {
 	private String username;
 	private String message;
 }
