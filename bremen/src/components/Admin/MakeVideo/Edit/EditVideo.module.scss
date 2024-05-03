@@ -1,0 +1,70 @@
+.page {
+    padding: 20px 0;
+    overflow: hidden;
+}
+
+.title {
+    font-size: larger;
+    font-weight: 700;
+    color: var(--light-gray-color);
+    margin-left: 20px;
+}
+
+.editarea {
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+}
+
+.video {
+    width: 45vw;
+    height: 80vw;
+    background-color: var(--light-blue-color);
+}
+
+.volume {
+    margin: 0 3vw;
+    text-align: center;
+
+    span {
+        color: var(--light-gray-color);
+    }
+
+    .range {
+        margin-top: 10px;
+        width: 10vw;
+        height: 70vw;
+        background-color: var(--light-yellow-color);
+    }
+}
+
+.cut {
+    padding-top: 30vw;
+
+    .cutbtn {
+        background-color: var(--light-green-color);
+        width: 30vw;
+        height: 30vw;
+    }
+}
+
+.list {
+    overflow: scroll;
+    height: calc(100vh - 92vw - 114px);
+}
+
+.nextbtn {
+    background-color: var(--origin-blue-color);
+    color: var(--light-gray-color);
+    font-size: large;
+    font-weight: 600;
+    margin-left: auto;
+    margin-top: 10px;
+    margin-right: 10px;
+    height: 12vw;
+    width: 20vw;
+    text-align: center;
+    align-content: center;
+    border-radius: 3vw;
+}

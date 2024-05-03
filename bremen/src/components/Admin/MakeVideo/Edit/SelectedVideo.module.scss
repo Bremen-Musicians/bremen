@@ -1,0 +1,17 @@
+.instrument {
+    color: var(--light-gray-color);
+    margin-left: 20px;
+}
+
+.editarea {
+    display: flex;
+    flex-direction: row;
+    margin: 10px 20px 20px;
+    gap: 10px;
+}
+
+.icon {
+    color: var(--light-gray-color);
+    font-size: xx-large;
+    align-content: center;
+}
