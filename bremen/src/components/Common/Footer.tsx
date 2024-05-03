@@ -7,7 +7,6 @@ const Footer = () => {
   return (
     <div className={styles.firstContainer}>
       <div className={styles.shape}>
-        <div className={styles.oval} />
         <div className={styles.Container}>
           <div className={styles.home}>
             <Link href="/">

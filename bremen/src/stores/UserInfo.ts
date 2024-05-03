@@ -6,17 +6,30 @@ interface IUserInfo {
   setZustandUserImage: (newImage: string) => void;
   zustandUserNickname: string;
   setZustandUserNickname: (newNickname: string) => void;
+  zustandToken: string;
+  setZustandToken: (newToken: string) => void;
+  zustandRFToken: string;
+  setZustandRFToken: (newRFToken: string) => void;
+  zustandEmail: string;
+  setZustandEmail: (newEmail: string) => void;
 }
 
 const useUserInfoStore = create<IUserInfo>()(
   persist(
     set => ({
-      zustandUserImage: '/basicProfile.png',
+      zustandUserImage: '',
       setZustandUserImage: (newImage: string) =>
         set({zustandUserImage: newImage}),
       zustandUserNickname: '',
       setZustandUserNickname: (newNickname: string) =>
         set({zustandUserNickname: newNickname}),
+      zustandToken: '',
+      setZustandToken: (newToken: string) => set({zustandToken: newToken}),
+      zustandRFToken: '',
+      setZustandRFToken: (newRFToken: string) =>
+        set({zustandRFToken: newRFToken}),
+      zustandEmail: '',
+      setZustandEmail: (newEmail: string) => set({zustandEmail: newEmail}),
     }),
     {
       name: 'userInfo',
