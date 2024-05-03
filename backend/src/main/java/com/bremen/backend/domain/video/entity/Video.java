@@ -90,6 +90,10 @@ public class Video {
 	@JoinColumn(name = "instrument_id")
 	private Instrument instrument;
 
+	public void setHighlight(boolean highlight) {
+		this.isHighlight = highlight;
+	}
+
 	public void setWriter(User user) {
 		this.user = user;
 	}

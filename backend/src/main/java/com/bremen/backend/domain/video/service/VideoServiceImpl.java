@@ -58,9 +58,11 @@ public class VideoServiceImpl implements VideoService {
 		if (highlightFile != null && !highlightFile.isEmpty()) {
 			videoUrl = s3Service.streamUpload("video", highlightFile);
 			video.setVideo(videoUrl);
+			video.setHighlight(true);
 			videoRepository.save(video);
 		}
 		videoUrl = s3Service.streamUpload("video", videoFile);
+		video.setHighlight(false);
 		video.setVideo(videoUrl);
 
 		Video savedVideo = videoRepository.save(video);
