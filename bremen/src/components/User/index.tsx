@@ -1,11 +1,16 @@
+/* eslint-disable no-console */
+
 'use client';
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import Image from 'next/image';
 import {useRouter} from 'next/navigation';
+import axios from 'axios';
 import styles from '@/components/User/index.module.scss';
 import ModalForm from '@/components/Common/ModalForm';
 import InputCheck from '@/components/User/InputCheck';
+import {ICheck, ISignUpResponse} from '@/types/UserResponse';
+import useUserInfoStore from '@/stores/UserInfo';
 
 const SignUp = () => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -15,7 +20,12 @@ const SignUp = () => {
   const [isEmail, setIsEmail] = useState<string>('');
   const [isPassword, setIsPassword] = useState<string>('');
   const [isPasswordCheck, setIsPasswordCheck] = useState<string>('');
+  const [emailErrorMessage, setEmailErrorMessage] =
+    useState<string>('올바른 이메일 형식을 입력하세요');
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
+
   const router = useRouter();
+  const {setZustandEmail} = useUserInfoStore();
 
   const handleRightClick = () => {
     if (!isOpened && !isRight) {
@@ -39,20 +49,45 @@ const SignUp = () => {
     setIsRight(!isRight);
   };
 
-  // TODO: 서버 확인 추가
-  const emailCheck = () => {
+  const emailCheck = (): Promise<boolean> => {
     if (!isEmail.includes('@')) {
-      return false;
+      return Promise.resolve(false);
     }
-    return true;
+
+    return axios
+      .get<ICheck>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/check-username?username=${isEmail}`,
+      )
+      .then(response => {
+        const isValid = response.status >= 200 && response.status < 300;
+        console.log(response.status);
+        console.log('isValid', isValid);
+        return isValid;
+      })
+      .catch(error => {
+        console.error('Email-check: ', error);
+        setEmailErrorMessage('이메일이 중복됩니다.');
+        return false;
+      });
   };
 
-  // TODO: 서버 확인 추가
-  const nicknameCheck = () => {
+  const nicknameCheck = (): Promise<boolean> => {
     if (isNickname.length > 10 || isNickname.length < 3) {
-      return false;
+      return Promise.resolve(false);
     }
-    return true;
+
+    return axios
+      .get<ICheck>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/check-nickname?nickname=${isNickname}`,
+      )
+      .then(response => {
+        const isValid = response.status >= 200 && response.status < 300;
+        return isValid;
+      })
+      .catch(error => {
+        console.error('Nickname check error: ', error);
+        return false;
+      });
   };
 
   const passwordCheck = () => {
@@ -79,10 +114,13 @@ const SignUp = () => {
     return false;
   };
 
-  const submitStyle = () => {
+  const submitStyle = async (): Promise<boolean> => {
+    const isEmailValid = await emailCheck();
+    const isNicknameValid = await nicknameCheck();
+
     if (
-      emailCheck() &&
-      nicknameCheck() &&
+      isEmailValid &&
+      isNicknameValid &&
       passwordCheck() &&
       passwordDuplicateCheck() &&
       isRight
@@ -91,10 +129,37 @@ const SignUp = () => {
     }
     return true;
   };
+  useEffect(() => {
+    submitStyle()
+      .then(isDisabled => setIsSubmitDisabled(isDisabled))
+      .catch(() => setIsSubmitDisabled(true));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEmail, isNickname, isPassword, isPasswordCheck, isRight]);
 
+  const doSignUp = async () => {
+    try {
+      const signupData = {
+        username: isEmail,
+        password: isPassword,
+        nickname: isNickname,
+        agree: true,
+      };
+      const response = await axios.post<ISignUpResponse>(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`,
+        signupData,
+      );
+      if (response.data.status >= 200 && response.data.status < 300) {
+        setZustandEmail(isEmail);
+        router.push('/user/profile');
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('회원가입 에러: ', error);
+    }
+  };
   // TODO: 서버 전송
   const handleSubmit = () => {
-    router.push('/user/profile');
+    doSignUp().catch(error => console.error('회원가입 에러: ', error));
   };
 
   return (
@@ -104,17 +169,29 @@ const SignUp = () => {
           <InputCheck
             detail="이메일"
             placeHolderContent="중복되지 않은 이메일을 입력하세요"
-            isPass={emailCheck()}
+            isPass={
+              isEmail.includes('@')
+                ? emailCheck()
+                    .then(isValid => isValid)
+                    .catch(() => false)
+                : false
+            }
             setValue={setIsEmail}
             maxLength={30}
-            wrongMessage="올바른 이메일 형식을 입력하세요"
+            wrongMessage={emailErrorMessage}
             type="text"
             content={isEmail !== ''}
           />
           <InputCheck
             detail="닉네임"
             placeHolderContent="중복되지 않은 3~10자 이내의 닉네임을 입력하세요"
-            isPass={nicknameCheck()}
+            isPass={
+              isNickname.length <= 10 && isNickname.length >= 3
+                ? nicknameCheck()
+                    .then(isValid => isValid)
+                    .catch(() => false)
+                : false
+            }
             setValue={setIsNickname}
             maxLength={10}
             wrongMessage="다른 닉네임을 입력하세요"
@@ -207,7 +284,7 @@ const SignUp = () => {
           </ModalForm>
         </div>
         <button
-          disabled={submitStyle()}
+          disabled={isSubmitDisabled}
           className={styles.submit}
           onClick={handleSubmit}
         >

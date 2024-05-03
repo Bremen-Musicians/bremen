@@ -1,5 +1,6 @@
 'use client';
 
+import {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 const Title = styled.div`
@@ -7,10 +8,12 @@ const Title = styled.div`
   font-size: 5.5vmin;
   text-align: center;
   @media (min-width: 450px) {
-    font-size: 20px;
-    padding-bottom: 2px;
+    font-size: 28px;
+    padding-bottom: 7px;
   }
 `;
+
+// TODO: 패딩 주기
 const CheckInput = styled.input<{
   borderColor: string;
   borderLightColor: string;
@@ -31,12 +34,11 @@ const CheckInput = styled.input<{
   background-origin: border-box;
   background-clip: content-box, border-box;
   border: 3px solid transparent;
-  padding: 0;
   display: flex;
   align-items: center;
   &::placeholder {
     padding-left: 10px;
-    font-size: 2.5vmin;
+    font-size: min(12px, 2.5vmin);
     white-space: pre-line;
     position: absolute;
     top: 50%;
@@ -48,9 +50,8 @@ const CheckInput = styled.input<{
   @media (min-width: 450px) {
     font-size: 16px;
     width: 48vmin;
-    height: 6vmin;
+    height: 7vmin;
     &::placeholder {
-      font-size: 12px;
       width: 100%;
     }
   }
@@ -83,20 +84,32 @@ const InputCheck = ({
 }: {
   detail: string;
   placeHolderContent: string;
-  isPass: boolean;
+  isPass: boolean | Promise<boolean>;
   setValue: (newvalue: string) => void;
   maxLength: number;
   wrongMessage: string;
   type: string;
   content: boolean;
 }) => {
+  const [isValidated, setIsValidated] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isPass instanceof Promise) {
+      isPass
+        .then(isValid => setIsValidated(isValid))
+        .catch(() => setIsValidated(false));
+    } else {
+      setIsValidated(isPass);
+    }
+  }, [isPass]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newNickname = event.target.value;
     setValue(newNickname);
   };
 
   const borderColor = () => {
-    if (isPass && content) {
+    if (isValidated && content) {
       return 'var(--origin-green-color)';
     }
     if (content) {
@@ -105,7 +118,7 @@ const InputCheck = ({
     return 'none';
   };
   const borderLightColor = () => {
-    if (isPass && content) {
+    if (isValidated && content) {
       return 'var(--light-green-color)';
     }
     if (content) {
