@@ -48,22 +48,17 @@ public class VideoServiceImpl implements VideoService {
 
 		// 작성자
 		User user = userService.getUserByToken();
-		video.setWriter(user);
-
-		// 썸네일
 		imageUrl = s3Service.streamUpload("thumbnail", thumbnailFile);
-		video.setImage(imageUrl);
+		video.setSavedVideo(user, imageUrl);
 
 		// 영상
 		if (highlightFile != null && !highlightFile.isEmpty()) {
 			videoUrl = s3Service.streamUpload("video", highlightFile);
-			video.setVideo(videoUrl);
-			video.setHighlight(true);
+			video.setSavedVideo(true, videoUrl);
 			videoRepository.save(video);
 		}
 		videoUrl = s3Service.streamUpload("video", videoFile);
-		video.setHighlight(false);
-		video.setVideo(videoUrl);
+		video.setSavedVideo(false, videoUrl);
 
 		Video savedVideo = videoRepository.save(video);
 		return VideoMapper.INSTANCE.videoToVideoResponse(savedVideo);

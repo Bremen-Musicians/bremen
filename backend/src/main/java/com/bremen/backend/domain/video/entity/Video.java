@@ -90,19 +90,13 @@ public class Video {
 	@JoinColumn(name = "instrument_id")
 	private Instrument instrument;
 
-	public void setHighlight(boolean highlight) {
-		this.isHighlight = highlight;
-	}
-
-	public void setWriter(User user) {
+	public void setSavedVideo(User user, String imageUrl) {
 		this.user = user;
-	}
-
-	public void setImage(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
 
-	public void setVideo(String videoUrl) {
+	public void setSavedVideo(boolean isHighlight, String videoUrl) {
+		this.isHighlight = isHighlight;
 		this.videoUrl = videoUrl;
 	}
 
