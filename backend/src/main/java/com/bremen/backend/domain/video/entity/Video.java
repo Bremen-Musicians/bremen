@@ -90,6 +90,18 @@ public class Video {
 	@JoinColumn(name = "instrument_id")
 	private Instrument instrument;
 
+	public void setWriter(User user) {
+		this.user = user;
+	}
+
+	public void setImage(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public void setVideo(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
+
 	public void deleteVideo() {
 		this.setDeleted(true);
 		this.setDeleteTime(LocalDateTime.now());
