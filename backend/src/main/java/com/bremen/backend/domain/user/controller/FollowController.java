@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bremen.backend.domain.user.service.FollowService;
+import com.bremen.backend.domain.user.service.FollowUserService;
 import com.bremen.backend.global.response.CustomResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -19,12 +19,12 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/users")
 @Tag(name = "Follow", description = "팔로우 API")
 public class FollowController {
-	private final FollowService followService;
+	private final FollowUserService followUserService;
 
 	@GetMapping("/follow")
 	@Operation(summary = "해당 ID를 가진 사람을 팔로우합니다.")
 	public ResponseEntity<CustomResponse<String>> follow(@RequestParam(value = "id") Long id) {
-		if (followService.followUser(id)) {
+		if (followUserService.followUser(id)) {
 			return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "팔로우 성공", ""));
 		} else {
 			return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "언팔로우 성공", ""));
