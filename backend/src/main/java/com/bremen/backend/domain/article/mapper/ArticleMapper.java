@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.entity.Article;
 
@@ -18,4 +19,6 @@ public interface ArticleMapper {
 	@Mapping(target = "imageUrl", source = "article.video.imageUrl")
 	ArticleResponse articleToArticleResponse(Article article);
 
+	@Mapping(target = "video.id", source = "articleRequest.videoId")
+	Article articleRequestToArticle(ArticleRequest articleRequest);
 }
