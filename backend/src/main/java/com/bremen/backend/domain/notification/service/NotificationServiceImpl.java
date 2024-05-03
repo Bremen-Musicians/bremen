@@ -1,9 +1,11 @@
 package com.bremen.backend.domain.notification.service;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -12,6 +14,10 @@ import com.bremen.backend.domain.notification.message.FollowNotificationMessage;
 import com.bremen.backend.domain.notification.message.NotificationMessage;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,15 +43,20 @@ public class NotificationServiceImpl implements NotificationService {
 			.message(message)
 			.build();
 
-		kafkaTemplate.send("alert", notificationMessage);
+		kafkaTemplate.send("alarm", notificationMessage);
 
 	}
-	public SseEmitter subscribe() {
+	public SseEmitter subscribe() throws IOException {
 		User user = userService.getUserByToken();
 		SseEmitter emitter = new SseEmitter();
 		emitters.put(user.getUsername(), emitter);
 		emitter.onCompletion(() -> emitters.remove(user.getUsername()));
 		emitter.onTimeout(() -> emitters.remove(user.getUsername()));
+
+		emitter.send(SseEmitter.event()
+			.name("connect")
+			.data("connected!"));
+
 		return emitter;
 	}
 
@@ -59,4 +70,20 @@ public class NotificationServiceImpl implements NotificationService {
 			}
 		}
 	}
+
+	@KafkaListener(topics = "alarm", groupId = "consumer")
+	public void receiveNotification(String json){
+		Gson gson = new Gson();
+		JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
+
+		// JSON에 있는 필드를 확인하여 적절한 서브클래스로 변환
+		if (jsonObject.has("followerUsername")) {
+			FollowNotificationMessage notification = gson.fromJson(json, FollowNotificationMessage.class);
+			sendNotification(notification.getUsername(), notification.getMessage());
+			// FollowNotification 객체로 처리
+		}
+
+
+	}
+
 }
