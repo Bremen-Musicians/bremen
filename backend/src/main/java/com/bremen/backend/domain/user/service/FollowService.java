@@ -13,6 +13,5 @@ public interface FollowService {
 	void follow(User follow, User follower);
 
 	void unfollow(User follow, User follower);
-
-	boolean followUser(Long followingId);
+	
 }

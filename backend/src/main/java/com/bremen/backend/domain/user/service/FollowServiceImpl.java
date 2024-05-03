@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class FollowServiceImpl implements FollowService {
 	private final FollowRepository followRepository;
-	private final UserService userService;
 
 	@Override
 	@Transactional
@@ -55,25 +54,6 @@ public class FollowServiceImpl implements FollowService {
 
 		follower.removeFollow();
 		follow.removeFollower();
-	}
-
-	@Override
-	@Transactional
-	public boolean followUser(Long followingId) {
-		User follower = userService.getUserByToken(); // 토큰으로 현재 로그인한 유저 조회
-		User follow = userService.getUserById(followingId);
-
-		boolean isExist = followRepository.existsFollowByFollowAndFollower(follow, follower);
-
-		if (isExist) {
-			// 이미 팔로우 하고있다면
-			unfollow(follow, follower);
-			return false;
-		} else {
-			follow(follow, follower);
-			return true;
-		}
-
 	}
 
 }
