@@ -8,6 +8,8 @@ public interface FollowService {
 
 	void findByFollowAndFollower(User follow, User follower);
 
+	boolean isFollower(User follow, User follower);
+
 	void follow(User follow, User follower);
 
 	void unfollow(User follow, User follower);

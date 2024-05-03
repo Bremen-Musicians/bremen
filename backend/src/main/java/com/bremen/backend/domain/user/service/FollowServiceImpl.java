@@ -16,13 +16,20 @@ public class FollowServiceImpl implements FollowService {
 	private final UserService userService;
 
 	@Override
+	@Transactional
 	public void addFollow(Follow follow) {
 		followRepository.save(follow);
 	}
 
 	@Override
+	@Transactional
 	public void findByFollowAndFollower(User follow, User follower) {
 		followRepository.deleteFollowByFollowAndFollower(follow, follower);
+	}
+
+	@Override
+	public boolean isFollower(User follow, User follower) {
+		return followRepository.existsFollowByFollowAndFollower(follow, follower);
 	}
 
 	@Override
