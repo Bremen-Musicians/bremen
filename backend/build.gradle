@@ -63,6 +63,8 @@ dependencies {
     implementation platform('software.amazon.awssdk:bom:2.25.37')
     implementation 'software.amazon.awssdk:s3'
 
+    //kafka
+    implementation 'org.springframework.kafka:spring-kafka'
 }
 
 tasks.named('test') {
