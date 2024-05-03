@@ -19,7 +19,8 @@ spring:
       port: ${database.redis.port}
   kafka:
     bootstrap-servers: ${database.kafka.host}
-    group-id: "consumer"
+    consumer:
+      group-id: "consumer"
 
 logging:
   level:
