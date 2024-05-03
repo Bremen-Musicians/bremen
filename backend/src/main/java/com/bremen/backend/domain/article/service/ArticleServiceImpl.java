@@ -8,6 +8,7 @@ import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.mapper.ArticleMapper;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
+import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.domain.video.service.VideoService;
 import com.bremen.backend.global.CustomException;
@@ -49,5 +50,18 @@ public class ArticleServiceImpl implements ArticleService {
 		Article article = getArticleById(articleUpdateRequest.getId());
 		article.modifyArticle(articleUpdateRequest.getTitle(), articleUpdateRequest.getContent());
 		return ArticleMapper.INSTANCE.articleToArticleResponse(article);
+	}
+
+	@Override
+	@Transactional
+	public Long removeArticle(Long id) {
+		Article article = getArticleById(id);
+		User user = userService.getUserByToken();
+		if (!article.getUser().getId().equals(user.getId())) {
+			throw new CustomException(ErrorCode.UNAUTHORIZED_ARTICLE_ACCESS);
+		}
+		article.deleteArticle();
+		videoService.removeVideo(article.getVideo().getId());
+		return article.getId();
 	}
 }

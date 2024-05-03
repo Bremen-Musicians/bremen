@@ -14,4 +14,6 @@ public interface ArticleService {
 	ArticleResponse addArticle(ArticleRequest articleRequest);
 
 	ArticleResponse modifyArticle(ArticleUpdateRequest articleUpdateRequest);
+
+	Long removeArticle(Long id);
 }

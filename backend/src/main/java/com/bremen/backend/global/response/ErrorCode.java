@@ -14,6 +14,7 @@ public enum ErrorCode {
 
 	//403
 	UNAUTHORIZED_S3_ERROR(403, "S3 접근 권한을 확인해주세요."),
+	UNAUTHORIZED_ARTICLE_ACCESS(403, "게시글 삭제 권한이 없습니다."),
 
 	//404 NOT_FOUND 잘못된 리소스 접근
 	NOT_FOUND_USER(404, "해당하는 사용자가 없습니다."),

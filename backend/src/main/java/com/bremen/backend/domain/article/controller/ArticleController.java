@@ -2,6 +2,7 @@ package com.bremen.backend.domain.article.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +50,13 @@ public class ArticleController {
 		@RequestBody ArticleUpdateRequest articleUpdateRequest) {
 		ArticleResponse articleResponse = articleService.modifyArticle(articleUpdateRequest);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "게시글 수정 성공", articleResponse));
+	}
+
+	@DeleteMapping()
+	@Operation(summary = "게시글을 삭제합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<Long>> articleRemove(@RequestParam("id") Long id) {
+		Long articleId = articleService.removeArticle(id);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "게시글 삭제 성공", articleId));
 	}
 
 }

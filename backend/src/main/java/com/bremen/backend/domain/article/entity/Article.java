@@ -92,4 +92,9 @@ public class Article {
 		this.title = title;
 		this.content = content;
 	}
+
+	public void deleteArticle() {
+		this.setDeleted(true);
+		this.setDeleteTime(LocalDateTime.now());
+	}
 }
