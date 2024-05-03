@@ -19,6 +19,7 @@ import com.bremen.backend.global.response.CustomResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,7 +40,7 @@ public class ArticleController {
 
 	@PostMapping()
 	@Operation(summary = "게시글을 등록합니다.", description = "게시글의 제목, 내용, 영상의 id값을 파라미터로 받습니다.")
-	ResponseEntity<CustomResponse<ArticleResponse>> articleAdd(@RequestBody ArticleRequest articleRequest) {
+	ResponseEntity<CustomResponse<ArticleResponse>> articleAdd(@Valid @RequestBody ArticleRequest articleRequest) {
 		ArticleResponse articleResponse = articleService.addArticle(articleRequest);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "게시글 등록 성공", articleResponse));
 	}
@@ -47,7 +48,7 @@ public class ArticleController {
 	@PatchMapping()
 	@Operation(summary = "게시글을 수정합니다.", description = "게시글의 제목, 내용을 파라미터로 받습니다.")
 	ResponseEntity<CustomResponse<ArticleResponse>> articleModify(
-		@RequestBody ArticleUpdateRequest articleUpdateRequest) {
+		@Valid @RequestBody ArticleUpdateRequest articleUpdateRequest) {
 		ArticleResponse articleResponse = articleService.modifyArticle(articleUpdateRequest);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "게시글 수정 성공", articleResponse));
 	}
