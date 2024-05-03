@@ -62,10 +62,12 @@ public class User implements UserDetails {
 
 	@Column(name = "follower_cnt")
 	@ColumnDefault("0")
+	@Setter(AccessLevel.PRIVATE)
 	private int followerCnt;
 
 	@Column(name = "follow_cnt")
 	@ColumnDefault("0")
+	@Setter(AccessLevel.PRIVATE)
 	private int followCnt;
 
 	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
@@ -91,6 +93,26 @@ public class User implements UserDetails {
 	@Column(name = "update_time")
 	@UpdateTimestamp
 	private LocalDateTime updateTime;
+
+	public void addFollower(){
+		this.setFollowerCnt(this.getFollowerCnt()+1);
+	}
+
+	public void addFollow(){
+		this.setFollowCnt(this.getFollowerCnt()+1);
+	}
+
+	public void removeFollower(){
+		if(this.getFollowerCnt() > 0){
+			this.setFollowerCnt(this.getFollowerCnt()-1);
+		}
+	}
+
+	public void removeFollow(){
+		if(this.getFollowCnt() > 0){
+			this.setFollowCnt(this.getFollowCnt()-1);
+		}
+	}
 
 	public void modifyPassword(String password) {
 		this.password = password;

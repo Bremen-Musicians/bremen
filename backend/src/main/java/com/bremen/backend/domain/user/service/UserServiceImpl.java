@@ -3,7 +3,6 @@ package com.bremen.backend.domain.user.service;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserServiceImpl implements UserService {
 	private final UserRepository userRepository;
+	private final FollowService followService;
 
 	@Override
 	public UserResponse findUserById(Long userId) {
 		User user = getUserById(userId);
-		return UserMapper.INSTANCE.userToUserResponse(user);
+		User currUser;
+
+		UserResponse userResponse = UserMapper.INSTANCE.userToUserResponse(user);
+
+		try {
+			currUser = getUserByToken();
+			userResponse.setFollow(followService.isFollower(user, currUser));
+		} catch (IllegalStateException e) {
+			// 익명 유저 처리
+			userResponse.setFollow(false);
+		}
+		return userResponse;
 	}
 
 	@Override
@@ -51,7 +62,7 @@ public class UserServiceImpl implements UserService {
 			String username = authentication.getPrincipal().toString();
 			return getUserByUsername(username);
 		} else {
-			throw new UsernameNotFoundException("잘못된 요청입니다");
+			throw new IllegalStateException("유저가 로그인하지 않았습니다.");
 		}
 	}
 

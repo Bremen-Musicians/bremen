@@ -12,4 +12,5 @@ public class UserResponse {
 	private String profileImage;
 	private int followerCnt;
 	private int followCnt;
+	private boolean isFollow;
 }
