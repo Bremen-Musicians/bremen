@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
+import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.mapper.ArticleMapper;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
@@ -40,5 +41,13 @@ public class ArticleServiceImpl implements ArticleService {
 		article.saveArticle(userService.getUserByToken(), videoService.getVideoById(articleRequest.getVideoId()));
 		Article savedArticle = articleRepository.save(article);
 		return ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
+	}
+
+	@Override
+	@Transactional
+	public ArticleResponse modifyArticle(ArticleUpdateRequest articleUpdateRequest) {
+		Article article = getArticleById(articleUpdateRequest.getId());
+		article.modifyArticle(articleUpdateRequest.getTitle(), articleUpdateRequest.getContent());
+		return ArticleMapper.INSTANCE.articleToArticleResponse(article);
 	}
 }

@@ -87,4 +87,9 @@ public class Article {
 		this.user = user;
 		this.video = video;
 	}
+
+	public void modifyArticle(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
 }
