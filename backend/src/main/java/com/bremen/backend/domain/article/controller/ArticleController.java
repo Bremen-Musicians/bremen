@@ -17,6 +17,7 @@ import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.service.ArticleService;
+import com.bremen.backend.domain.article.service.LikeService;
 import com.bremen.backend.global.response.CustomResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "Article", description = "게시글 API")
 public class ArticleController {
 	private final ArticleService articleService;
+	private final LikeService likeService;
 
 	@GetMapping()
 	@Operation(summary = "게시글 아이디로 게시글을 조회합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
@@ -75,4 +77,10 @@ public class ArticleController {
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "조회 성공", articles));
 	}
 
+	@PostMapping("/like")
+	@Operation(summary = "게시글에 '좋아요/취소'기능을 수행합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<Integer>> toggleArticleLike(@RequestBody Long id) {
+		int likeCnt = likeService.toggleLikeArticle(id);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "좋아요/취소 기능 수행", likeCnt));
+	}
 }

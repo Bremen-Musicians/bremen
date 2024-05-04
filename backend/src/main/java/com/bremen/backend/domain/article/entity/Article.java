@@ -101,4 +101,12 @@ public class Article {
 	public void viewArticle() {
 		this.hitCnt++;
 	}
+
+	public void likeArticle() {
+		this.likeCnt++;
+	}
+
+	public void unlikeArticle() {
+		this.likeCnt--;
+	}
 }
