@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.service;
 
+import java.util.List;
+
 import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
@@ -16,4 +18,6 @@ public interface ArticleService {
 	ArticleResponse modifyArticle(ArticleUpdateRequest articleUpdateRequest);
 
 	Long removeArticle(Long id);
+
+	List<ArticleResponse> findEnsembleArticles(Long musicId, List<Long> instrumentsIds, String title, String nickname);
 }

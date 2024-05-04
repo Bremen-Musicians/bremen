@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -58,6 +60,19 @@ public class ArticleController {
 	ResponseEntity<CustomResponse<Long>> articleRemove(@RequestParam("id") Long id) {
 		Long articleId = articleService.removeArticle(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "게시글 삭제 성공", articleId));
+	}
+
+	@GetMapping("/ensemble")
+	@Operation(summary = "합주할 게시글들을 조회합니다.",
+		description = "합주할 곡의 Id값, 악기들의 id, 게시글의 제목(title, keyword), 사용자의 닉네임(user, keyword)을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<List<ArticleResponse>>> getArticles(
+		@RequestParam("musicId") Long musicId,
+		@RequestParam(value = "instrumentsIds", required = false) List<Long> instrumentsIds,
+		@RequestParam(value = "category", required = false) String category,
+		@RequestParam(value = "keyword", required = false) String keyword) {
+		List<ArticleResponse> articles = articleService.findEnsembleArticles(musicId, instrumentsIds, category,
+			keyword);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "조회 성공", articles));
 	}
 
 }

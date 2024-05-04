@@ -1,5 +1,8 @@
 package com.bremen.backend.domain.article.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.bremen.backend.domain.article.dto.ArticleRequest;
@@ -7,6 +10,7 @@ import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.mapper.ArticleMapper;
+import com.bremen.backend.domain.article.repository.ArticleQueryRepository;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
@@ -23,6 +27,7 @@ public class ArticleServiceImpl implements ArticleService {
 	private final ArticleRepository articleRepository;
 	private final UserService userService;
 	private final VideoService videoService;
+	private final ArticleQueryRepository articleQueryRepository;
 
 	@Override
 	public ArticleResponse findArticleById(Long articleId) {
@@ -63,5 +68,12 @@ public class ArticleServiceImpl implements ArticleService {
 		article.deleteArticle();
 		videoService.removeVideo(article.getVideo().getId());
 		return article.getId();
+	}
+
+	@Override
+	public List<ArticleResponse> findEnsembleArticles(Long musicId, List<Long> instrumentsIds, String category,
+		String keyword) {
+		List<Article> articles = articleQueryRepository.findEnsembleArticle(musicId, instrumentsIds, category, keyword);
+		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
 	}
 }
