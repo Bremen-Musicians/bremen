@@ -97,4 +97,8 @@ public class Article {
 		this.setDeleted(true);
 		this.setDeleteTime(LocalDateTime.now());
 	}
+
+	public void viewArticle() {
+		this.hitCnt++;
+	}
 }

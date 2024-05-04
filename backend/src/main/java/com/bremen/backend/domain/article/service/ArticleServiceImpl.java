@@ -31,7 +31,9 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public ArticleResponse findArticleById(Long articleId) {
-		return ArticleMapper.INSTANCE.articleToArticleResponse(getArticleById(articleId));
+		Article article = getArticleById(articleId);
+		article.viewArticle();
+		return ArticleMapper.INSTANCE.articleToArticleResponse(article);
 	}
 
 	@Override
