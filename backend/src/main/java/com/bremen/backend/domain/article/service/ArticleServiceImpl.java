@@ -38,7 +38,7 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	public Article getArticleById(Long articleId) {
-		return articleRepository.findByIdWithUserAndVideo(articleId)
+		return articleRepository.findById(articleId)
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_ARTICLE));
 	}
 
