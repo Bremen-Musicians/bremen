@@ -3,6 +3,7 @@ package com.bremen.backend.domain.article.repository;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.bremen.backend.domain.article.entity.Article;
 
@@ -21,10 +22,11 @@ public class ArticleQueryRepository {
 		jpql.append("JOIN FETCH a.user u JOIN FETCH a.video v JOIN FETCH v.music m ");
 		jpql.append("WHERE m.id = :musicId ");
 
-		if (instrumentIds != null && !instrumentIds.isEmpty()) {
+		if (instrumentIds != null) {
 			jpql.append("AND v.instrument.id in (:instrumentIds) ");
 		}
-		if (category != null && !category.isEmpty()) {
+		
+		if (StringUtils.hasText(category)) {
 			switch (category) {
 				case "title":
 					jpql.append("AND a.title LIKE :keyword ");
@@ -39,10 +41,12 @@ public class ArticleQueryRepository {
 		TypedQuery<Article> query = em.createQuery(jpql.toString(), Article.class);
 
 		query.setParameter("musicId", musicId);
-		if (instrumentIds != null && !instrumentIds.isEmpty()) {
+
+		if (instrumentIds != null) {
 			query.setParameter("instrumentIds", instrumentIds);
 		}
-		if (category != null && !category.isEmpty()) {
+
+		if (StringUtils.hasText(category)) {
 			query.setParameter("keyword", "%" + keyword + "%");
 		}
 
