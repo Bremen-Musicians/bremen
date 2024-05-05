@@ -28,14 +28,18 @@ public class SecurityConfig {
 	private static final String[] PERMIT_URL_ARRAY = {
 		/* swagger v3 */
 		"/v3/api-docs/**",
-		"/swagger-ui/**"
+		"/swagger-ui/**",
+		"/api/**",
+		HEAD + "/articles/*"
 	};
 	private static final String[] GET_PERMIT_URL_ARRAY = {
-		HEAD + "/users/*"
+		HEAD + "/users/*",
+		HEAD + "/articles/*"
 	};
 
 	private static final String[] POST_PERMIT_URL_ARRAY = {
-		HEAD + "/users/*"
+		HEAD + "/users/*",
+		HEAD + "/articles/*"
 	};
 
 	@Bean
