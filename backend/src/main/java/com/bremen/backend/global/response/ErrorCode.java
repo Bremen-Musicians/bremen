@@ -21,6 +21,7 @@ public enum ErrorCode {
 	NOT_FOUND_ACCESS_TOKEN(404, "액세스 토큰이 유효하지 않습니다."),
 	NOT_FOUND_REFRESH_TOKEN(404, "리프레시 토큰이 유효하지 않습니다."),
 	NOT_FOUND_VIDEO(404, "존재하지 않는 영상입니다."),
+	NOT_FOUND_MUSIC(404, "존재하지 않는 음악입니다."),
 	NOT_FOUND_ARTICLE(404, "존재하지 않는 게시글입니다."),
 	//409 CONFLICT 중복된 리소스
 	CONFLICT_USER(409, "중복된 유저입니다"),

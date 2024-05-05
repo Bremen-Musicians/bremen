@@ -14,10 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "challenge")
 @Entity
@@ -32,6 +34,7 @@ public class Challenge {
 	private Long id;
 
 	@NotNull
+	@Setter(AccessLevel.PROTECTED)
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "music_id")
 	private Music music;
@@ -43,4 +46,8 @@ public class Challenge {
 	@NotNull
 	@Column(name = "end_time")
 	private LocalDateTime endTime;
+
+	public void saveChallenge(Music music) {
+		setMusic(music);
+	}
 }
