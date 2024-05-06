@@ -82,4 +82,19 @@ public class Article {
 	@OneToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "video_id")
 	private Video video;
+
+	public void saveArticle(User user, Video video) {
+		this.user = user;
+		this.video = video;
+	}
+
+	public void modifyArticle(String title, String content) {
+		this.title = title;
+		this.content = content;
+	}
+
+	public void deleteArticle() {
+		this.setDeleted(true);
+		this.setDeleteTime(LocalDateTime.now());
+	}
 }
