@@ -37,12 +37,13 @@ public class Comment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "group_id")
+	@Setter(AccessLevel.PROTECTED)
 	private Comment group;
 
 	@NotNull
-	@Column(name = "content")
+	@Column(name = "content", length = 500)
 	private String content;
 
 	@NotNull
@@ -64,10 +65,18 @@ public class Comment {
 	private LocalDateTime updateTime;
 
 	@JoinColumn(name = "article_id")
+	@Setter(AccessLevel.PROTECTED)
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private Article article;
 
 	@JoinColumn(name = "member_id")
+	@Setter(AccessLevel.PROTECTED)
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	private User user;
+
+	public void saveComment(User user, Article article, Comment group) {
+		setUser(user);
+		setArticle(article);
+		setGroup(group);
+	}
 }
