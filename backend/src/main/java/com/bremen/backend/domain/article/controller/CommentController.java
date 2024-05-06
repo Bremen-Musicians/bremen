@@ -2,10 +2,12 @@ package com.bremen.backend.domain.article.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bremen.backend.domain.article.dto.CommentRequest;
@@ -42,4 +44,12 @@ public class CommentController {
 		CommentResponse commentResponse = commentService.modifyComment(commentRequest);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 수정 성공", commentResponse));
 	}
+
+	@DeleteMapping()
+	@Operation(summary = "댓글을 삭제합니다.", description = "댓글의 id값을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<Long>> commentRemove(@RequestParam("id") Long id) {
+		Long commentId = commentService.removeComment(id);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 삭제 성공", commentId));
+	}
+
 }

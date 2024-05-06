@@ -84,4 +84,9 @@ public class Comment {
 	public void modifyContent(String content) {
 		setContent(content);
 	}
+
+	public void deleteComment() {
+		setDeleted(true);
+		setDeleteTime(LocalDateTime.now());
+	}
 }

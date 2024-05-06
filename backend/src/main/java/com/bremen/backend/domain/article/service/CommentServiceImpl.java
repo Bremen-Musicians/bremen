@@ -57,4 +57,15 @@ public class CommentServiceImpl implements CommentService {
 		comment.modifyContent(commentRequest.getContent());
 		return CommentMapper.INSTANCE.commentToCommentResponse(comment);
 	}
+
+	@Override
+	@Transactional
+	public Long removeComment(Long id) {
+		Comment comment = getCommentById(id);
+		if (!comment.getUser().equals(userService.getUserByToken())) {
+			throw new CustomException(ErrorCode.UNAUTHORIZED_COMMENT_ACCESS);
+		}
+		comment.deleteComment();
+		return comment.getId();
+	}
 }
