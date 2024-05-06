@@ -1,10 +1,13 @@
 package com.bremen.backend.domain.article.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bremen.backend.domain.article.dto.CommentRequest;
 import com.bremen.backend.domain.article.dto.CommentResponse;
+import com.bremen.backend.domain.article.dto.CommentUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.entity.Comment;
 import com.bremen.backend.domain.article.mapper.CommentMapper;
@@ -19,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
+	private static final Logger log = LoggerFactory.getLogger(CommentServiceImpl.class);
 	private final CommentRepository commentRepository;
 	private final UserService userService;
 	private final ArticleService articleService;
@@ -41,5 +45,16 @@ public class CommentServiceImpl implements CommentService {
 			comment.saveComment(user, article, null);
 		}
 		return CommentMapper.INSTANCE.commentToCommentResponse(commentRepository.save(comment));
+	}
+
+	@Override
+	@Transactional
+	public CommentResponse modifyComment(CommentUpdateRequest commentRequest) {
+		Comment comment = getCommentById(commentRequest.getId());
+		if (!comment.getUser().equals(userService.getUserByToken())) {
+			throw new CustomException(ErrorCode.UNAUTHORIZED_COMMENT_ACCESS);
+		}
+		comment.modifyContent(commentRequest.getContent());
+		return CommentMapper.INSTANCE.commentToCommentResponse(comment);
 	}
 }

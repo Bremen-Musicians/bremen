@@ -43,6 +43,7 @@ public class Comment {
 	private Comment group;
 
 	@NotNull
+	@Setter(AccessLevel.PROTECTED)
 	@Column(name = "content", length = 500)
 	private String content;
 
@@ -78,5 +79,9 @@ public class Comment {
 		setUser(user);
 		setArticle(article);
 		setGroup(group);
+	}
+
+	public void modifyContent(String content) {
+		setContent(content);
 	}
 }
