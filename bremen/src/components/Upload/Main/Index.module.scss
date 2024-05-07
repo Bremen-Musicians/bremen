@@ -1,0 +1,70 @@
+.container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20vmin;
+}
+
+.videos{
+    padding-left: calc((0.1vw + 12px) / 4);
+    display: flex;
+    flex-direction: row;
+    gap: calc((0.1vw + 12px) / 4);
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.text{
+    width: 100%;
+    color: white;
+    font-size: 3vmin;
+}
+.desc{
+    width: 100%;
+    color: white;
+    font-size: 2.5vmin;
+}
+
+.buttonGroup{
+    display: flex;
+    padding-bottom: 10vmin;
+    gap: 10vmin
+}
+.buttonContainer{
+    height: calc( 50px + 125 / 9 * 1vmin);
+    width: calc( 50px + 125 / 9 * 1vmin);
+    background-color: var(--light-gray-color);
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+   }
+   
+   .buttonImg{
+       height: calc(100 / 12 * 1vmin + 28px);
+       width: calc(100 / 12 * 1vmin + 28px);
+   }
+   
+   .detail{
+       font-size: calc( 5 / 3 * 1vmin + 6px );
+       font-weight: bold;
+       width: fit-content;
+       margin: auto;
+   }
+
+@media (min-width: 450px) {
+.text{
+    font-size: 20px;
+}
+.desc{
+    font-size: 15px;
+}
+.videos{
+    padding-left: calc((12vw + 10px) / 5);
+    gap: calc((12vw + 10px) / 5);
+}
+
+}
