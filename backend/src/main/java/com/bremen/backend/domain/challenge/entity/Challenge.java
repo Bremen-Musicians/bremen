@@ -51,8 +51,7 @@ public class Challenge {
 	@Setter(AccessLevel.PROTECTED)
 	private String content;
 
-	public void saveChallenge(Music music, String content) {
+	public void saveChallenge(Music music) {
 		setMusic(music);
-		setContent(content);
 	}
 }

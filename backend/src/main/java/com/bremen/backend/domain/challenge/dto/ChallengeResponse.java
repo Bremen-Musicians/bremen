@@ -12,4 +12,5 @@ public class ChallengeResponse {
 	private String musicTitle;
 	private LocalDateTime startTime;
 	private LocalDateTime endTime;
+	private String content;
 }

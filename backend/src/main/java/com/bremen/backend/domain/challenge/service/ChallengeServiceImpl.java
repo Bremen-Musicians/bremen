@@ -1,10 +1,7 @@
 package com.bremen.backend.domain.challenge.service;
 
-import java.io.IOException;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
@@ -25,11 +22,9 @@ public class ChallengeServiceImpl implements ChallengeService {
 
 	@Override
 	@Transactional
-	public ChallengeResponse addChallenge(ChallengeRequest challengeRequest, MultipartFile content) throws IOException {
+	public ChallengeResponse addChallenge(ChallengeRequest challengeRequest) {
 		Challenge challenge = ChallengeMapper.INSTANCE.challengeRequestToChallenge(challengeRequest);
-		String contentUrl = "";
-		contentUrl = s3Service.streamUpload("challenge", content);
-		challenge.saveChallenge(musicService.getMusicById(challenge.getMusic().getId()), contentUrl);
+		challenge.saveChallenge(musicService.getMusicById(challenge.getMusic().getId()));
 		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(challengeRepository.save(challenge));
 	}
 }
