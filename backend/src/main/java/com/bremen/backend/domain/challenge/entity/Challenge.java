@@ -60,4 +60,9 @@ public class Challenge {
 		setMainImage(mainImage);
 		setChallengeImage(challengeImage);
 	}
+
+	public void modifyChallenge(String mainImage, String challengeImage) {
+		setMainImage(mainImage);
+		setChallengeImage(challengeImage);
+	}
 }
