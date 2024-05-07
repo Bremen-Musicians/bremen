@@ -35,8 +35,8 @@ public class Challenge {
 
 	@NotNull
 	@Setter(AccessLevel.PROTECTED)
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "music_id")
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Music music;
 
 	@NotNull
@@ -51,7 +51,8 @@ public class Challenge {
 	@Column(name = "content", length = 2083)
 	private String content;
 
-	public void saveChallenge(Music music) {
+	public void saveChallenge(Music music, String content) {
 		setMusic(music);
+		setContent(content);
 	}
 }
