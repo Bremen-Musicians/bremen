@@ -30,6 +30,7 @@ public class ArticleServiceImpl implements ArticleService {
 	private final ArticleQueryRepository articleQueryRepository;
 
 	@Override
+	@Transactional
 	public ArticleResponse findArticleById(Long articleId) {
 		Article article = getArticleById(articleId);
 		article.viewArticle();
