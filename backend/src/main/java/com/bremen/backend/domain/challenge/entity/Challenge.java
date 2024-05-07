@@ -47,6 +47,10 @@ public class Challenge {
 	@Column(name = "end_time")
 	private LocalDateTime endTime;
 
+	@Setter(AccessLevel.PROTECTED)
+	@Column(name = "content", length = 2083)
+	private String content;
+
 	public void saveChallenge(Music music) {
 		setMusic(music);
 	}
