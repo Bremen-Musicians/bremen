@@ -11,9 +11,6 @@ import com.bremen.backend.domain.article.entity.Article;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
-	@Query("SELECT a FROM Article a WHERE a.id = :id AND a.isDeleted = false ")
+	@Query("SELECT a FROM Article a JOIN FETCH a.user JOIN FETCH a.video WHERE a.id = :id AND a.isDeleted = false")
 	Optional<Article> findById(@Param("id") Long id);
-
-	@Query("SELECT a FROM Article a JOIN FETCH a.user JOIN FETCH a.video WHERE a.id = :articleId")
-	Optional<Article> findByIdWithUserAndVideo(@Param("articleId") Long articleId);
 }

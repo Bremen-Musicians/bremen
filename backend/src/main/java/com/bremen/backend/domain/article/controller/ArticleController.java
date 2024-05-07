@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +17,7 @@ import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.service.ArticleService;
+import com.bremen.backend.domain.article.service.LikeService;
 import com.bremen.backend.global.response.CustomResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @Tag(name = "Article", description = "게시글 API")
 public class ArticleController {
 	private final ArticleService articleService;
+	private final LikeService likeService;
 
 	@GetMapping()
 	@Operation(summary = "게시글 아이디로 게시글을 조회합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
@@ -60,4 +64,23 @@ public class ArticleController {
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "게시글 삭제 성공", articleId));
 	}
 
+	@GetMapping("/ensemble")
+	@Operation(summary = "합주할 게시글들을 조회합니다.",
+		description = "합주할 곡의 Id값, 악기들의 id, 게시글의 제목(title, keyword), 사용자의 닉네임(user, keyword)을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<List<ArticleResponse>>> getArticles(
+		@RequestParam("musicId") Long musicId,
+		@RequestParam(value = "instrumentsIds", required = false) List<Long> instrumentsIds,
+		@RequestParam(value = "category", required = false) String category,
+		@RequestParam(value = "keyword", required = false) String keyword) {
+		List<ArticleResponse> articles = articleService.findEnsembleArticles(musicId, instrumentsIds, category,
+			keyword);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "조회 성공", articles));
+	}
+
+	@PostMapping("/like")
+	@Operation(summary = "게시글에 '좋아요/취소'기능을 수행합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<Integer>> toggleArticleLike(@RequestBody Long id) {
+		int likeCnt = likeService.toggleLikeArticle(id);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "좋아요/취소 기능 수행", likeCnt));
+	}
 }
