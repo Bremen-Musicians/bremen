@@ -17,4 +17,6 @@ public interface ChallengeService {
 
 	ChallengeResponse modifyChallenge(Long id, MultipartFile mainImage, MultipartFile challengeImage) throws
 		IOException;
+
+	void removeChallenge(Long id);
 }

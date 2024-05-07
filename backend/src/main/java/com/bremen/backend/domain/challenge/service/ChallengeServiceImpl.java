@@ -62,4 +62,13 @@ public class ChallengeServiceImpl implements ChallengeService {
 		challenge.modifyChallenge(mainImageUrl, challengeImageUrl);
 		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(challenge);
 	}
+
+	@Override
+	@Transactional
+	public void removeChallenge(Long id) {
+		Challenge challenge = getChallengeById(id);
+		s3Service.deleteObject(challenge.getMainImage());
+		s3Service.deleteObject(challenge.getChallengeImage());
+		challengeRepository.delete(challenge);
+	}
 }
