@@ -37,10 +37,12 @@ public class LikeServiceImpl implements LikeService {
 		return likeRepository.existsByUserIdAndArticleId(userId, articleId);
 	}
 
+	@Transactional
 	public void addHeart(Heart heart) {
 		likeRepository.save(heart);
 	}
 
+	@Transactional
 	public void likeArticle(User user, Article article) {
 		Heart heart = Heart.builder()
 			.article(article)
@@ -51,6 +53,7 @@ public class LikeServiceImpl implements LikeService {
 		article.likeArticle();
 	}
 
+	@Transactional
 	public void unlikeArticle(User user, Article article) {
 		likeRepository.deleteHeartByUserIdAndArticleId(user.getId(), article.getId());
 
