@@ -47,9 +47,13 @@ public class Challenge {
 	@Column(name = "end_time")
 	private LocalDateTime endTime;
 
-	@Column(name = "content")
+	@Column(name = "main_image")
 	@Setter(AccessLevel.PROTECTED)
-	private String content;
+	private String mainImage;
+
+	@Column(name = "challenge_image")
+	@Setter(AccessLevel.PROTECTED)
+	private String challengeImage;
 
 	public void saveChallenge(Music music) {
 		setMusic(music);
