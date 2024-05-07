@@ -71,4 +71,13 @@ public class ChallengeServiceImpl implements ChallengeService {
 		s3Service.deleteObject(challenge.getChallengeImage());
 		challengeRepository.delete(challenge);
 	}
+
+	@Override
+	public ChallengeResponse findLatestChallenge() {
+		Challenge latestChallenge = challengeRepository.findFirstByOrderByEndTimeDesc();
+		if (latestChallenge == null) {
+			throw new CustomException(ErrorCode.NOT_FOUND_CHALLENGE);
+		}
+		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(latestChallenge);
+	}
 }

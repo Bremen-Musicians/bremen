@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -37,5 +38,13 @@ public class ChallengeController {
 		ChallengeResponse challengeResponse = challengeService.addChallenge(challengeRequest, mainImage,
 			challengeImage);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "챌린지가 정상적으로 등록되었습니다.", challengeResponse));
+	}
+
+	@GetMapping("/latest")
+	@Operation(summary = "최신 챌린지를 조회합니다.", description = "가장 최근에 등록된 챌린지를 조회합니다.")
+	ResponseEntity<CustomResponse<ChallengeResponse>> challengeDetailsLatest() {
+		ChallengeResponse challengeResponse = challengeService.findLatestChallenge();
+		return ResponseEntity.ok(
+			new CustomResponse<>(HttpStatus.OK.value(), "최신 챌린지를 정상적으로 조회하였습니다.", challengeResponse));
 	}
 }

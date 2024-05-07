@@ -36,7 +36,7 @@ public class Challenge {
 	@NotNull
 	@Setter(AccessLevel.PROTECTED)
 	@JoinColumn(name = "music_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Music music;
 
 	@NotNull

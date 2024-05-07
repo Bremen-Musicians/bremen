@@ -19,4 +19,6 @@ public interface ChallengeService {
 		IOException;
 
 	void removeChallenge(Long id);
+
+	ChallengeResponse findLatestChallenge();
 }
