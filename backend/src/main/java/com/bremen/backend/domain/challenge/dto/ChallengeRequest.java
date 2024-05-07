@@ -17,7 +17,4 @@ public class ChallengeRequest {
 
 	@NotNull(message = "종료일은 선택해주셔야 합니다.")
 	private LocalDateTime endTime;
-
-	@NotNull(message = "챌린지 내용은 입력해주셔야 합니다.")
-	private String content;
 }
