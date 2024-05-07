@@ -55,7 +55,9 @@ public class Challenge {
 	@Setter(AccessLevel.PROTECTED)
 	private String challengeImage;
 
-	public void saveChallenge(Music music) {
+	public void saveChallenge(Music music, String mainImage, String challengeImage) {
 		setMusic(music);
+		setMainImage(mainImage);
+		setChallengeImage(challengeImage);
 	}
 }
