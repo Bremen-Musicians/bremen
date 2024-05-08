@@ -32,7 +32,9 @@ public class SecurityConfig {
 	};
 	private static final String[] GET_PERMIT_URL_ARRAY = {
 		HEAD + "/users/*",
-		HEAD + "/articles/*"
+		HEAD + "/articles/*",
+		HEAD + "/articles",
+		HEAD + "/challenges/*"
 	};
 
 	private static final String[] POST_PERMIT_URL_ARRAY = {
