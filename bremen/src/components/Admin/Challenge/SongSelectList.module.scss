@@ -1,0 +1,16 @@
+.foundsong {
+    height: 50px;
+    margin: 10px 5px;
+    
+    span {
+        cursor: pointer;
+    }
+
+    .song {
+        font-weight: 600;
+    }
+
+    .singer {
+        font-size: small;
+    }
+}   
