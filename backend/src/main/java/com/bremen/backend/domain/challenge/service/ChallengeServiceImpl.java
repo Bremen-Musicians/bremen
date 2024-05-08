@@ -35,10 +35,8 @@ public class ChallengeServiceImpl implements ChallengeService {
 	public ChallengeResponse addChallenge(ChallengeRequest challengeRequest, MultipartFile mainImage,
 		MultipartFile challengeImage) throws IOException {
 		Challenge challenge = ChallengeMapper.INSTANCE.challengeRequestToChallenge(challengeRequest);
-		String mainImageUrl = "";
-		String challengeImageUrl = "";
-		mainImageUrl = s3Service.streamUpload("challenge", mainImage);
-		challengeImageUrl = s3Service.streamUpload("challenge", challengeImage);
+		String mainImageUrl = s3Service.streamUpload("challenge", mainImage);
+		String challengeImageUrl = s3Service.streamUpload("challenge", challengeImage);
 		challenge.saveChallenge(musicService.getMusicById(challenge.getMusic().getId()), mainImageUrl,
 			challengeImageUrl);
 		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(challengeRepository.save(challenge));
