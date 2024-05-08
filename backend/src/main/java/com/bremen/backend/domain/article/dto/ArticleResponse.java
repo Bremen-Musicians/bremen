@@ -13,6 +13,7 @@ public class ArticleResponse {
 	private int hitCnt;
 	private int likeCnt;
 	private LocalDateTime createTime;
+	private Long userId;
 	private String username;
 	private String nickname;
 	private Long videoId;

@@ -12,6 +12,7 @@ import com.bremen.backend.domain.article.entity.Article;
 public interface ArticleMapper {
 	ArticleMapper INSTANCE = Mappers.getMapper(ArticleMapper.class);
 
+	@Mapping(target = "userId", source = "article.user.id")
 	@Mapping(target = "username", source = "article.user.username")
 	@Mapping(target = "nickname", source = "article.user.nickname")
 	@Mapping(target = "videoId", source = "article.video.id")
