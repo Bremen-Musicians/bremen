@@ -53,6 +53,12 @@ public class Comment {
 	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
 	private boolean isDeleted;
 
+	@NotNull
+	@ColumnDefault("false")
+	@Setter(AccessLevel.PROTECTED)
+	@Column(name = "is_updated", columnDefinition = "TINYINT(1)")
+	private boolean isUpdated;
+
 	@CreationTimestamp
 	@Column(name = "create_time")
 	private LocalDateTime createTime;
@@ -83,6 +89,7 @@ public class Comment {
 
 	public void modifyContent(String content) {
 		setContent(content);
+		setUpdated(true);
 	}
 
 	public void deleteComment() {

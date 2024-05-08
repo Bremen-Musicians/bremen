@@ -12,4 +12,5 @@ public class CommentResponse {
 	private String content;
 	private String writerNickname;
 	private boolean isDeleted;
+	private boolean isUpdated;
 }

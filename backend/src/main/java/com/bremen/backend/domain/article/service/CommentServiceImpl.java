@@ -1,7 +1,5 @@
 package com.bremen.backend.domain.article.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
-	private static final Logger log = LoggerFactory.getLogger(CommentServiceImpl.class);
 	private final CommentRepository commentRepository;
 	private final UserService userService;
 	private final ArticleService articleService;
