@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @Builder
 public class UserLoginResponse {
+	private Long id;
 	private String profileImage;
 	private String nickname;
 	private String refreshToken;
