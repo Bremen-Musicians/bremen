@@ -11,14 +11,17 @@ export default function Challenge() {
   };
 
   return (
-    <div className={styles.challengepage}>
-      <FindSong />
-      <FindDate />
-      <IntroChallenge />
+    <div className={styles.page}>
+      <span className={styles.title}>챌린지 정보 등록</span>
+      <div className={styles.challengepage}>
+        <FindSong />
+        <FindDate />
+        <IntroChallenge />
 
-      {/* 등록 */}
-      <div onClick={submit} className={styles.submitbutton}>
-        등록
+        {/* 등록 */}
+        <div onClick={submit} className={styles.submitbutton}>
+          등록
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,19 @@
+.page {
+    margin-top: 20px;
+}
+
+.title {
+    font-size: larger;
+    font-weight: 700;
+    color: var(--light-gray-color);
+    margin-left: 20px;
+}
+
 .challengepage {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 20px;
+    margin: 10px 20px 0;
     gap: 10px;
 }
 
