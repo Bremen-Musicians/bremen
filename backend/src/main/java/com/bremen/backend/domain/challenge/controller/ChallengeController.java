@@ -18,6 +18,7 @@ import com.bremen.backend.global.response.CustomResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +33,7 @@ public class ChallengeController {
 	@PostMapping
 	@Operation(summary = "챌린지를 등록합니다.", description = "챌린지 곡, 일정, 챌린지 내용을 입력받아 챌린지를 등록합니다.")
 	ResponseEntity<CustomResponse<ChallengeResponse>> challengeAdd(
-		@RequestPart(value = "challengeInfo") ChallengeRequest challengeRequest,
+		@Valid @RequestPart(value = "challengeInfo") ChallengeRequest challengeRequest,
 		@RequestPart(value = "mainImage") MultipartFile mainImage,
 		@RequestPart(value = "challengeImage") MultipartFile challengeImage) throws IOException {
 		ChallengeResponse challengeResponse = challengeService.addChallenge(challengeRequest, mainImage,
