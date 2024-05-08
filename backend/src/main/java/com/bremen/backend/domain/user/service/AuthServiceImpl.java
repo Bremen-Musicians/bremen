@@ -39,6 +39,7 @@ public class AuthServiceImpl implements AuthService {
 		// 토큰에 등록한다
 
 		UserLoginResponse userLoginResponse = UserLoginResponse.builder()
+			.id(user.getId())
 			.nickname(user.getNickname())
 			.profileImage(user.getProfileImage())
 			.accessToken(accessToken)
