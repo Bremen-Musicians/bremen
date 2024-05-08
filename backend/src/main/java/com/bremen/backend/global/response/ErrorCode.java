@@ -24,6 +24,7 @@ public enum ErrorCode {
 	NOT_FOUND_MUSIC(404, "존재하지 않는 음악입니다."),
 	NOT_FOUND_ARTICLE(404, "존재하지 않는 게시글입니다."),
 	NOT_FOUND_CHALLENGE(404, "존재하지 않는 챌린지입니다."),
+	NOT_FOUND_INSTRUMENT(404, "존재하지 않는 악기입니다."),
 	//409 CONFLICT 중복된 리소스
 	CONFLICT_USER(409, "중복된 유저입니다"),
 
