@@ -58,7 +58,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getUserByToken() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+		if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)
+			&& authentication.isAuthenticated()) {
 			String username = authentication.getPrincipal().toString();
 			return getUserByUsername(username);
 		} else {
@@ -115,5 +116,12 @@ public class UserServiceImpl implements UserService {
 			throw new CustomException(ErrorCode.CONFLICT_USER);
 		}
 
+	}
+
+	@Override
+	public boolean isAuthenticated() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication != null && !(authentication instanceof AnonymousAuthenticationToken)
+			&& authentication.isAuthenticated();
 	}
 }
