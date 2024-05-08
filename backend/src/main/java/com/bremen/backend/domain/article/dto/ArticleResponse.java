@@ -18,4 +18,5 @@ public class ArticleResponse {
 	private Long videoId;
 	private String videoUrl;
 	private String imageUrl;
+	private boolean isLike;
 }
