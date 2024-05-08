@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
@@ -18,7 +19,6 @@ import com.bremen.backend.domain.video.service.VideoService;
 import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -87,4 +87,12 @@ public class ArticleServiceImpl implements ArticleService {
 		List<Article> articles = articleQueryRepository.findEnsembleArticle(musicId, instrumentsIds, category, keyword);
 		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ArticleResponse> findArticleByUser(Long userId) {
+		List<Article> articles = articleRepository.findArticlesByUser(userId);
+		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
+	}
+
 }
