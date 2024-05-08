@@ -63,11 +63,12 @@ public class ChallengeServiceImpl implements ChallengeService {
 
 	@Override
 	@Transactional
-	public void removeChallenge(Long id) {
+	public Long removeChallenge(Long id) {
 		Challenge challenge = getChallengeById(id);
 		s3Service.deleteObject(challenge.getMainImage());
 		s3Service.deleteObject(challenge.getChallengeImage());
-		challengeRepository.delete(challenge);
+		challenge.deleteChallenge();
+		return challenge.getId();
 	}
 
 	@Override

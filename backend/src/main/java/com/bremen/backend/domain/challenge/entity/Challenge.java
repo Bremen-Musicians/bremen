@@ -89,6 +89,8 @@ public class Challenge {
 	}
 
 	public void deleteChallenge() {
+		setMainImage(null);
+		setChallengeImage(null);
 		setDeleted(true);
 		setDeleteTime(LocalDateTime.now());
 	}
