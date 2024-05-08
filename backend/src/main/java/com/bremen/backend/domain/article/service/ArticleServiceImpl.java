@@ -28,13 +28,21 @@ public class ArticleServiceImpl implements ArticleService {
 	private final UserService userService;
 	private final VideoService videoService;
 	private final ArticleQueryRepository articleQueryRepository;
+	private final LikeService likeService;
 
 	@Override
 	@Transactional
 	public ArticleResponse findArticleById(Long articleId) {
 		Article article = getArticleById(articleId);
 		article.viewArticle();
-		return ArticleMapper.INSTANCE.articleToArticleResponse(article);
+		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(article);
+
+		if (userService.isAuthenticated()) {
+			Long userId = userService.getUserByToken().getId();
+			boolean isLike = likeService.isLikeArticle(userId, articleId);
+			articleResponse.setLike(isLike);
+		}
+		return articleResponse;
 	}
 
 	@Override
