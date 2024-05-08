@@ -2,6 +2,10 @@ package com.bremen.backend.domain.challenge.entity;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.bremen.backend.domain.video.entity.Music;
 
 import jakarta.persistence.Column;
@@ -55,6 +59,24 @@ public class Challenge {
 	@Setter(AccessLevel.PROTECTED)
 	private String challengeImage;
 
+	@NotNull
+	@ColumnDefault("false")
+	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
+	@Setter(AccessLevel.PROTECTED)
+	private boolean isDeleted;
+
+	@CreationTimestamp
+	@Column(name = "create_time")
+	private LocalDateTime createTime;
+
+	@Column(name = "delete_time")
+	@Setter(AccessLevel.PROTECTED)
+	private LocalDateTime deleteTime;
+
+	@UpdateTimestamp
+	@Column(name = "update_time")
+	private LocalDateTime updateTime;
+
 	public void saveChallenge(Music music, String mainImage, String challengeImage) {
 		setMusic(music);
 		setMainImage(mainImage);
@@ -64,5 +86,10 @@ public class Challenge {
 	public void modifyChallenge(String mainImage, String challengeImage) {
 		setMainImage(mainImage);
 		setChallengeImage(challengeImage);
+	}
+
+	public void deleteChallenge() {
+		setDeleted(true);
+		setDeleteTime(LocalDateTime.now());
 	}
 }
