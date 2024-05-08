@@ -1,4 +1,4 @@
-.findsongarea {
+.finddatearea {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,7 +44,30 @@
 
 .ex {
     color: var(--light-gray-color);
-    font-size: smaller;
+    font-size: x-small;
     display: flex;
     text-align: right;
+    margin-bottom: 20px;
+}
+
+.filetitle {
+    color: var(--light-gray-color);
+}
+
+.file {
+    color: var(--light-gray-color);
+    margin-bottom: 10px;
+}
+
+.submitbutton {
+    margin: 20px 0;
+    width: 40vw;
+    height: 5vh;
+    background-color: var(--origin-green-color);
+    text-align: center;
+    align-content: center;
+    border-radius: 10px;
+    color: var(--light-gray-color);
+    font-size: large;
+    font-weight: 600;
 }

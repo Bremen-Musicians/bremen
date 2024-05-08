@@ -15,8 +15,8 @@ export default function FindSong() {
   const closeModal = () => {
     setOpenModal(false);
   };
-  const registSong = (selected: string) => {
-    setSelectedSong(selected);
+  const registSong = (title: string) => {
+    setSelectedSong(title);
   };
 
   return (

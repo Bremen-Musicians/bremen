@@ -1,22 +1,28 @@
-'use client';
+import styles from './IntroChallenge.module.scss';
 
-import React, {useState} from 'react';
-import QuillEditor from './QuillEditor';
-// import styles from './IntroChallenge.module.scss';
-
-const YourComponent: React.FC = () => {
-  const [editorContent, setEditorContent] = useState<string>('');
-
-  const handleEditorChange = (content: string): void => {
-    setEditorContent(content);
-  };
-
+export default function IntroChallenge() {
   return (
-    <div>
-      <QuillEditor onChange={handleEditorChange} />
-      <p>Editor Content: {editorContent}</p>
+    <div className={styles.fileuploadarea}>
+      {/* 파일 업로드 */}
+      <div className={styles.fileupload}>
+        <span className={styles.filetitle}>[메인]</span>
+        <input
+          className={styles.file}
+          type="file"
+          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          id="main"
+        />
+      </div>
+
+      <div className={styles.fileupload}>
+        <span className={styles.filetitle}>[챌린지]</span>
+        <input
+          className={styles.file}
+          type="file"
+          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          id="challenge"
+        />
+      </div>
     </div>
   );
-};
-
-export default YourComponent;
+}

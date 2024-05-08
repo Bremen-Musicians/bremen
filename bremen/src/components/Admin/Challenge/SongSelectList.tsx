@@ -1,4 +1,4 @@
-import styles from './FoundSong.module.scss';
+import styles from './SongSelectList.module.scss';
 
 interface Song {
   title: string;
@@ -7,7 +7,7 @@ interface Song {
   selectSong: (title: string, artist: string) => void;
 }
 
-export default function FoundSong({
+export default function SongSelectList({
   title,
   artist,
   isClassic,

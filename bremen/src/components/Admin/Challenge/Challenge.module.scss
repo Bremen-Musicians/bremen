@@ -5,3 +5,16 @@
     margin: 20px;
     gap: 10px;
 }
+
+.submitbutton {
+    margin: 20px 0;
+    width: 40vw;
+    height: 5vh;
+    background-color: var(--origin-green-color);
+    text-align: center;
+    align-content: center;
+    border-radius: 10px;
+    color: var(--light-gray-color);
+    font-size: large;
+    font-weight: 600;
+}
