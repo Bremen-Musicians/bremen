@@ -5,8 +5,6 @@ import com.bremen.backend.domain.article.entity.Heart;
 import com.bremen.backend.domain.user.entity.User;
 
 public interface LikeService {
-	int toggleLikeArticle(Long id);
-
 	boolean isLikeArticle(Long userId, Long articleId);
 
 	void addHeart(Heart heart);
