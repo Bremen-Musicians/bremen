@@ -13,7 +13,5 @@ public interface EnsembleRepository extends JpaRepository<Ensemble, Long> {
 
 	@Query("SELECT e from Ensemble e where e.owner = :videoId")
 	List<Ensemble> findByOwner(Long videoId);
-
-	@Query("SELECT e from Ensemble e where e.participant = :videoId")
-	List<Ensemble> findByParticipant(Long videoId);
+	
 }
