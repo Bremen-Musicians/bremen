@@ -6,6 +6,7 @@ import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
+import com.bremen.backend.domain.article.repository.ArticleOrderBy;
 
 public interface ArticleService {
 
@@ -22,4 +23,6 @@ public interface ArticleService {
 	List<ArticleResponse> findEnsembleArticles(Long musicId, List<Long> instrumentsIds, String title, String nickname);
 
 	List<ArticleResponse> findArticleByUser(Long userId);
+
+	List<ArticleResponse> findArticle(ArticleOrderBy articleOrderBy);
 }

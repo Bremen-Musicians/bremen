@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +13,8 @@ import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.mapper.ArticleMapper;
+import com.bremen.backend.domain.article.repository.ArticleOrderBy;
+import com.bremen.backend.domain.article.repository.ArticleQueryDslRepository;
 import com.bremen.backend.domain.article.repository.ArticleQueryRepository;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
 import com.bremen.backend.domain.user.entity.User;
@@ -29,6 +33,8 @@ public class ArticleServiceImpl implements ArticleService {
 	private final VideoService videoService;
 	private final ArticleQueryRepository articleQueryRepository;
 	private final LikeService likeService;
+
+	private final ArticleQueryDslRepository articleQueryDslRepository;
 
 	@Override
 	@Transactional
@@ -92,6 +98,20 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional(readOnly = true)
 	public List<ArticleResponse> findArticleByUser(Long userId) {
 		List<Article> articles = articleRepository.findArticlesByUser(userId);
+		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<ArticleResponse> findArticle(ArticleOrderBy articleOrderBy){
+		LocalDateTime dateTime = LocalDateTime.now().minusDays(7);
+		List<Article> articles;
+		if(userService.isAuthenticated()){
+			User user = userService.getUserByToken();
+			articles = articleQueryDslRepository.findArticle(user.getId(),articleOrderBy,dateTime);
+		}else{
+			articles = articleQueryDslRepository.findArticle(articleOrderBy,dateTime);
+		}
 		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
 	}
 
