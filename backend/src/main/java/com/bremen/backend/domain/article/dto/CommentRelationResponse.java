@@ -17,4 +17,8 @@ public class CommentRelationResponse {
 	private boolean isUpdated;
 	private LocalDateTime createTime;
 	private List<CommentRelationResponse> children;
+
+	public void addChildrenCnt() {
+		groupCnt += 1;
+	}
 }

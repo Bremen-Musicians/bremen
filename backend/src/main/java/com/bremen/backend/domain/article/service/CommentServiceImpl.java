@@ -90,6 +90,7 @@ public class CommentServiceImpl implements CommentService {
 					parent.setChildren(new ArrayList<>());
 				}
 				parent.getChildren().add(commentRelationResponse);
+				parent.addChildrenCnt();
 			}
 		});
 
