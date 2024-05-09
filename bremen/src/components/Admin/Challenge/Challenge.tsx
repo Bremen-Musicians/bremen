@@ -7,6 +7,7 @@ import IntroChallenge from './IntroChallenge';
 
 export default function Challenge() {
   const submit = () => {
+    // eslint-disable-next-line no-console
     console.log('제출!');
   };
 
