@@ -1,0 +1,38 @@
+.container{
+    display: flex;
+    height: 40px;
+    width: 100%;
+    background-color: var(--header-background-color);
+    align-items: center;
+    gap: calc(50vw - 20px - 32/432*530px - 44px);
+}
+
+.image{
+    height: 32px;;
+    width: auto;
+}
+
+.logo{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.name{
+    color: var(--origin-pink-color);
+    font-size: 12px;
+}
+
+.goBack{
+    height: 60%;
+    width: auto;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+@media (min-width: 450px) {
+    .container{
+    height: 7vmin;
+    }
+}
