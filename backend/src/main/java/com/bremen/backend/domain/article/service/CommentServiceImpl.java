@@ -1,7 +1,7 @@
 package com.bremen.backend.domain.article.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -76,8 +76,8 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<CommentRelationResponse> findCommentsByArticleId(Long id) {
-		List<Comment> comments = commentRepository.findAllByArticleIdOrderByGroup(id);
-		Map<Long, CommentRelationResponse> parents = new HashMap<>();
+		List<Comment> comments = commentRepository.findAllByArticleIdOrderByGroupAscCreateTimeDesc(id);
+		Map<Long, CommentRelationResponse> parents = new LinkedHashMap<>();
 
 		comments.forEach(comment -> {
 			CommentRelationResponse commentRelationResponse = CommentMapper.INSTANCE.commentToCommentRelationResponse(
