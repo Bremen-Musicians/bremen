@@ -66,21 +66,9 @@ public class CommentServiceImpl implements CommentService {
 		checkCommentAccessRights(comment.getUser());
 
 		if (isParentComment(comment)) {
-			if (commentRepository.findAllByGroupId(comment.getId()).isEmpty()) {
-				// 자식 댓글이 존재하지 않는 경우
-				commentRepository.deleteById(comment.getId());
-			} else {
-				// 자식 댓글이 존재하는 경우
-				comment.deleteComment();
-			}
+			deleteParentComment(comment);
 		} else {
-			commentRepository.deleteById(comment.getId());
-
-			Comment parentComment = getCommentById(comment.getGroup().getId());
-			if (parentComment.isDeleted() && commentRepository.findAllByGroupId(parentComment.getId()).isEmpty()) {
-				// 부모 댓글 삭제 필요시(부모 댓글 삭제됨 + 자식 댓글 없음)
-				commentRepository.deleteById(parentComment.getId());
-			}
+			deleteChildComment(comment);
 		}
 		return id;
 	}
@@ -116,5 +104,24 @@ public class CommentServiceImpl implements CommentService {
 
 	private boolean isParentComment(Comment comment) {
 		return comment.getGroup() == null;
+	}
+
+	private void deleteParentComment(Comment comment) {
+		if (commentRepository.findAllByGroupId(comment.getId()).isEmpty()) {
+			// 자식 댓글이 존재하지 않는 경우
+			commentRepository.deleteById(comment.getId());
+		} else {
+			// 자식 댓글이 존재하는 경우
+			comment.deleteComment();
+		}
+	}
+
+	private void deleteChildComment(Comment comment) {
+		commentRepository.deleteById(comment.getId());
+		Comment parentComment = getCommentById(comment.getGroup().getId());
+		if (parentComment.isDeleted() && commentRepository.findAllByGroupId(parentComment.getId()).isEmpty()) {
+			// 부모 댓글 삭제 필요시(부모 댓글 삭제됨 + 자식 댓글 없음)
+			commentRepository.deleteById(parentComment.getId());
+		}
 	}
 }
