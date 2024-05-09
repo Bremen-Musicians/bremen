@@ -95,5 +95,6 @@ public class Comment {
 	public void deleteComment() {
 		setDeleted(true);
 		setDeleteTime(LocalDateTime.now());
+		setContent("삭제된 댓글입니다.");
 	}
 }
