@@ -18,7 +18,7 @@ import com.bremen.backend.domain.article.dto.CommentRequest;
 import com.bremen.backend.domain.article.dto.CommentResponse;
 import com.bremen.backend.domain.article.dto.CommentUpdateRequest;
 import com.bremen.backend.domain.article.service.CommentService;
-import com.bremen.backend.global.response.CustomResponse;
+import com.bremen.backend.global.response.SingleResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,31 +36,31 @@ public class CommentController {
 
 	@PostMapping()
 	@Operation(summary = "댓글을 등록합니다.", description = "댓글의 내용, 게시글의 id값 대댓글인 경우 부모댓글의 id를 파라미터로 받습니다.")
-	ResponseEntity<CustomResponse<CommentResponse>> commentAdd(@Valid @RequestBody CommentRequest commentRequest) {
+	ResponseEntity<SingleResponse<CommentResponse>> commentAdd(@Valid @RequestBody CommentRequest commentRequest) {
 		CommentResponse commentResponse = commentService.addComment(commentRequest);
-		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 등록 성공", commentResponse));
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "댓글 등록 성공", commentResponse));
 	}
 
 	@PatchMapping()
 	@Operation(summary = "댓글을 수정합니다.", description = "댓글의 id값과 내용을 파라미터로 받습니다.")
-	ResponseEntity<CustomResponse<CommentResponse>> commentModify(
+	ResponseEntity<SingleResponse<CommentResponse>> commentModify(
 		@Valid @RequestBody CommentUpdateRequest commentRequest) {
 		CommentResponse commentResponse = commentService.modifyComment(commentRequest);
-		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 수정 성공", commentResponse));
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "댓글 수정 성공", commentResponse));
 	}
 
 	@DeleteMapping()
 	@Operation(summary = "댓글을 삭제합니다.", description = "댓글의 id값을 파라미터로 받습니다.")
-	ResponseEntity<CustomResponse<Long>> commentRemove(@RequestParam("id") Long id) {
+	ResponseEntity<SingleResponse<Long>> commentRemove(@RequestParam("id") Long id) {
 		Long commentId = commentService.removeComment(id);
-		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 삭제 성공", commentId));
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "댓글 삭제 성공", commentId));
 	}
 
 	@GetMapping()
 	@Operation(summary = "게시글의 댓글을 조회합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
-	ResponseEntity<CustomResponse<List<CommentRelationResponse>>> commentList(@RequestParam("id") Long id) {
+	ResponseEntity<SingleResponse<List<CommentRelationResponse>>> commentList(@RequestParam("id") Long id) {
 		List<CommentRelationResponse> comments = commentService.findCommentsByArticleId(id);
-		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 목록 조회 성공", comments));
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "댓글 목록 조회 성공", comments));
 	}
 
 }
