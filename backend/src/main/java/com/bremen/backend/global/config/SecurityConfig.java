@@ -34,7 +34,8 @@ public class SecurityConfig {
 		HEAD + "/users/*",
 		HEAD + "/articles/*",
 		HEAD + "/articles",
-		HEAD + "/challenges/*"
+		HEAD + "/challenges/*",
+		HEAD + "/comments"
 	};
 
 	private static final String[] POST_PERMIT_URL_ARRAY = {
