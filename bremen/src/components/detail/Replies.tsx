@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import Reply from '@/components/detail/Reply';
+import Reply from '@/components/Detail/Reply';
 import styles from '@/components/detail/Replies.module.scss';
 import ReReplies from './ReReplies';
 

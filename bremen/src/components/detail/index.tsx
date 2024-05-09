@@ -3,6 +3,8 @@
 import {useEffect, useState} from 'react';
 import Tag from '@/components/Common/Tag';
 import {api} from '@/api/api';
+import moment from 'moment';
+import 'moment/locale/ko';
 import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
 
@@ -74,7 +76,7 @@ export default function Page() {
         {/* 영상 추가 정보(조회수, 올린 시간 및 날짜) */}
         <div className={styles.discript}>
           <p>조회수 {post?.hitCnt}회</p>
-          <p>{post?.createTime}</p>
+          <p>{moment(post?.createTime).fromNow()}</p>
         </div>
 
         {/* 영상 게시자 정보 */}

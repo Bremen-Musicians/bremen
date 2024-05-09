@@ -1,5 +1,5 @@
 import styles from '@/components/detail/ReReplies.module.scss';
-import ReReply from '@/components/detail/ReReply';
+import ReReply from '@/components/Detail/ReReply';
 
 export default function ReReplies() {
   return (
