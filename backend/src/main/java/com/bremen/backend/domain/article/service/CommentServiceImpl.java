@@ -65,8 +65,7 @@ public class CommentServiceImpl implements CommentService {
 		Comment comment = getCommentById(id);
 		checkCommentAccessRights(comment.getUser());
 
-		if (comment.getGroup() == null) {
-			// 부모 댓글
+		if (isParentComment(comment)) {
 			if (commentRepository.findAllByGroupId(comment.getId()).isEmpty()) {
 				// 자식 댓글이 존재하지 않는 경우
 				commentRepository.deleteById(comment.getId());
@@ -75,7 +74,6 @@ public class CommentServiceImpl implements CommentService {
 				comment.deleteComment();
 			}
 		} else {
-			// 자식 댓글
 			commentRepository.deleteById(comment.getId());
 
 			Comment parentComment = getCommentById(comment.getGroup().getId());
@@ -96,12 +94,10 @@ public class CommentServiceImpl implements CommentService {
 		comments.forEach(comment -> {
 			CommentRelationResponse commentRelationResponse = CommentMapper.INSTANCE.commentToCommentRelationResponse(
 				comment);
-			if (comment.getGroup() == null) {
-				// 부모 댓글
+			if (isParentComment(comment)) {
 				parents.put(comment.getId(), commentRelationResponse);
 			} else {
 				CommentRelationResponse parent = parents.get(comment.getGroup().getId());
-				// 자식 댓글
 				if (parent.getChildren() == null) {
 					parent.setChildren(new ArrayList<>());
 				}
@@ -116,5 +112,9 @@ public class CommentServiceImpl implements CommentService {
 		if (!user.equals(userService.getUserByToken())) {
 			throw new CustomException(ErrorCode.UNAUTHORIZED_COMMENT_ACCESS);
 		}
+	}
+
+	private boolean isParentComment(Comment comment) {
+		return comment.getGroup() == null;
 	}
 }
