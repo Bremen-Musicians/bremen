@@ -90,10 +90,4 @@ public class ArticleController {
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "조회 성공", articleResponses));
 	}
 
-	@GetMapping("/feed")
-	ResponseEntity<SingleResponse<List<ArticleResponse>>> articleListWithLogin() {
-		List<ArticleResponse> articleResponses = articleService.findArticleWithLogin();
-		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "조회 성공", articleResponses));
-	}
-
 }
