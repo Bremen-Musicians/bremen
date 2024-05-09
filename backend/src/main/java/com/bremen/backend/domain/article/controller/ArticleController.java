@@ -83,4 +83,11 @@ public class ArticleController {
 		int likeCnt = articleLikeService.toggleLikeArticle(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "좋아요/취소 기능 수행", likeCnt));
 	}
+
+	@GetMapping("/list")
+	ResponseEntity<CustomResponse<List<ArticleResponse>>> articleListByUser(@RequestParam("userId")Long userId){
+		List<ArticleResponse> articleResponses = articleService.findArticleByUser(userId);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(),"조회 성공",articleResponses));
+	}
+
 }

@@ -20,4 +20,6 @@ public interface ArticleService {
 	Long removeArticle(Long id);
 
 	List<ArticleResponse> findEnsembleArticles(Long musicId, List<Long> instrumentsIds, String title, String nickname);
+
+	List<ArticleResponse> findArticleByUser(Long userId);
 }
