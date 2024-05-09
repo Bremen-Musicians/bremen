@@ -9,5 +9,5 @@ import com.bremen.backend.domain.video.entity.Music;
 
 @Repository
 public interface MusicRepository extends JpaRepository<Music, Long> {
-	List<Music> findByTitleContaining(String keyword);
+	List<Music> findByTitleContaining(String title);
 }

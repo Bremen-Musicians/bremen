@@ -24,8 +24,8 @@ public class MusicServiceImpl implements MusicService {
 	}
 
 	@Override
-	public List<MusicResponse> searchMusicsByTitle(String keyword) {
-		List<Music> musics = musicRepository.findByTitleContaining(keyword);
+	public List<MusicResponse> searchMusicsByTitle(String title) {
+		List<Music> musics = musicRepository.findByTitleContaining(title);
 		return musics.stream().map(MusicMapper.INSTANCE::musicToMusicResponse).toList();
 	}
 }

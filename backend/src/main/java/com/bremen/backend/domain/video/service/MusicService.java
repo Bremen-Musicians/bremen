@@ -8,5 +8,5 @@ import com.bremen.backend.domain.video.entity.Music;
 public interface MusicService {
 	Music getMusicById(Long musicId);
 
-	List<MusicResponse> searchMusicsByTitle(String keyword);
+	List<MusicResponse> searchMusicsByTitle(String title);
 }

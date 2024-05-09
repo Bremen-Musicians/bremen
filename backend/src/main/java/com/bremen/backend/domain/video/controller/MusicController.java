@@ -27,9 +27,9 @@ public class MusicController {
 	private final MusicService musicService;
 
 	@GetMapping("/search")
-	@Operation(summary = "키워드로 음악을 조회합니다.", description = "음악을 검색하기 위한 키워드를 파라미터로 받습니다.")
-	ResponseEntity<CustomResponse<List<MusicResponse>>> musicsSearch(@RequestParam("keyword") String keyword) {
-		List<MusicResponse> musics = musicService.searchMusicsByTitle(keyword);
+	@Operation(summary = "키워드로 음악을 조회합니다.", description = "음악을 검색하기 위한 제목 키워드를 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<List<MusicResponse>>> musicsSearch(@RequestParam("title") String title) {
+		List<MusicResponse> musics = musicService.searchMusicsByTitle(title);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "음악 검색 성공", musics));
 	}
 
