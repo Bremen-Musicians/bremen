@@ -54,9 +54,7 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	public CommentResponse modifyComment(CommentUpdateRequest commentRequest) {
 		Comment comment = getCommentById(commentRequest.getId());
-		if (!comment.getUser().equals(userService.getUserByToken())) {
-			throw new CustomException(ErrorCode.UNAUTHORIZED_COMMENT_ACCESS);
-		}
+		checkCommentAccessRights(comment.getUser());
 		comment.modifyContent(commentRequest.getContent());
 		return CommentMapper.INSTANCE.commentToCommentResponse(comment);
 	}
@@ -65,9 +63,7 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional
 	public Long removeComment(Long id) {
 		Comment comment = getCommentById(id);
-		if (!comment.getUser().equals(userService.getUserByToken())) {
-			throw new CustomException(ErrorCode.UNAUTHORIZED_COMMENT_ACCESS);
-		}
+		checkCommentAccessRights(comment.getUser());
 
 		if (comment.getGroup() == null) {
 			// 부모 댓글
@@ -114,5 +110,11 @@ public class CommentServiceImpl implements CommentService {
 		});
 
 		return new ArrayList<>(parents.values());
+	}
+
+	private void checkCommentAccessRights(User user) {
+		if (!user.equals(userService.getUserByToken())) {
+			throw new CustomException(ErrorCode.UNAUTHORIZED_COMMENT_ACCESS);
+		}
 	}
 }
