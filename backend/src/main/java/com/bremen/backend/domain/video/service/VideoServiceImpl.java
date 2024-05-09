@@ -25,6 +25,7 @@ public class VideoServiceImpl implements VideoService {
 	private final VideoRepository videoRepository;
 	private final UserService userService;
 	private final S3Service s3Service;
+	private final EnsembleService ensembleService;
 
 	@Override
 	public VideoResponse findVideoById(Long videoId) {
@@ -43,12 +44,12 @@ public class VideoServiceImpl implements VideoService {
 		MultipartFile highlightFile) throws
 		IOException {
 		Video video = VideoMapper.INSTANCE.videoRequestToVideo(videoRequest);
-		String imageUrl = "";
+
 		String videoUrl = "";
 
 		// 작성자
 		User user = userService.getUserByToken();
-		imageUrl = s3Service.streamUpload("thumbnail", thumbnailFile);
+		String imageUrl = s3Service.streamUpload("thumbnail", thumbnailFile);
 		video.setSavedVideo(user, imageUrl);
 
 		// 영상
@@ -61,6 +62,14 @@ public class VideoServiceImpl implements VideoService {
 		video.setSavedVideo(false, videoUrl);
 
 		Video savedVideo = videoRepository.save(video);
+
+		//합주 영상일 경우
+		if (videoRequest.isEnsemble()) {
+			for (Long id : videoRequest.getEnsembleList()) {
+				Video ensembleVideo = getVideoById(id);
+				ensembleService.addEnsemble(savedVideo, ensembleVideo);
+			}
+		}
 		return VideoMapper.INSTANCE.videoToVideoResponse(savedVideo);
 	}
 
@@ -71,4 +80,5 @@ public class VideoServiceImpl implements VideoService {
 		video.deleteVideo();
 		return video.getId();
 	}
+
 }
