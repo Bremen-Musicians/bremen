@@ -1,5 +1,6 @@
 package com.bremen.backend.domain.article.dto;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Builder;
@@ -14,5 +15,6 @@ public class CommentRelationResponse {
 	private String writerNickname;
 	private boolean isDeleted;
 	private boolean isUpdated;
+	private LocalDateTime createTime;
 	private List<CommentRelationResponse> children;
 }
