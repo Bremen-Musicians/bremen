@@ -1,8 +1,14 @@
 package com.bremen.backend.domain.article.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bremen.backend.domain.article.dto.CommentRelationResponse;
 import com.bremen.backend.domain.article.dto.CommentRequest;
 import com.bremen.backend.domain.article.dto.CommentResponse;
 import com.bremen.backend.domain.article.dto.CommentUpdateRequest;
@@ -83,5 +89,30 @@ public class CommentServiceImpl implements CommentService {
 			}
 		}
 		return id;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<CommentRelationResponse> findCommentsByArticleId(Long id) {
+		List<Comment> comments = commentRepository.findAllByArticleIdOrderByGroup(id);
+		Map<Long, CommentRelationResponse> parents = new HashMap<>();
+
+		comments.forEach(comment -> {
+			CommentRelationResponse commentRelationResponse = CommentMapper.INSTANCE.commentToCommentRelationResponse(
+				comment);
+			if (comment.getGroup() == null) {
+				// 부모 댓글
+				parents.put(comment.getId(), commentRelationResponse);
+			} else {
+				CommentRelationResponse parent = parents.get(comment.getGroup().getId());
+				// 자식 댓글
+				if (parent.getChildren() == null) {
+					parent.setChildren(new ArrayList<>());
+				}
+				parent.getChildren().add(commentRelationResponse);
+			}
+		});
+
+		return new ArrayList<>(parents.values());
 	}
 }

@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import com.bremen.backend.domain.article.dto.CommentRelationResponse;
 import com.bremen.backend.domain.article.dto.CommentRequest;
 import com.bremen.backend.domain.article.dto.CommentResponse;
 import com.bremen.backend.domain.article.entity.Comment;
@@ -19,4 +20,7 @@ public interface CommentMapper {
 	@Mapping(target = "group.id", source = "commentRequest.groupId")
 	@Mapping(target = "article.id", source = "commentRequest.articleId")
 	Comment commentRequestToComment(CommentRequest commentRequest);
+
+	@Mapping(target = "writerNickname", source = "comment.user.nickname")
+	CommentRelationResponse commentToCommentRelationResponse(Comment comment);
 }

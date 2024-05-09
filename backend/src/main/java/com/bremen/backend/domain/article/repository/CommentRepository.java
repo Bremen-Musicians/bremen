@@ -15,6 +15,8 @@ import io.lettuce.core.dynamic.annotation.Param;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 	@Query("SELECT c FROM Comment c JOIN FETCH c.user WHERE c.id = :commentId")
 	Optional<Comment> findById(@Param("commentId") Long commentId);
-	
+
 	List<Comment> findAllByGroupId(Long groupId);
+
+	List<Comment> findAllByArticleIdOrderByGroup(Long articleId);
 }

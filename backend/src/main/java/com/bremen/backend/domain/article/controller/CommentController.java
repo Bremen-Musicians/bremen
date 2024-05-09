@@ -1,8 +1,11 @@
 package com.bremen.backend.domain.article.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bremen.backend.domain.article.dto.CommentRelationResponse;
 import com.bremen.backend.domain.article.dto.CommentRequest;
 import com.bremen.backend.domain.article.dto.CommentResponse;
 import com.bremen.backend.domain.article.dto.CommentUpdateRequest;
@@ -50,6 +54,13 @@ public class CommentController {
 	ResponseEntity<CustomResponse<Long>> commentRemove(@RequestParam("id") Long id) {
 		Long commentId = commentService.removeComment(id);
 		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 삭제 성공", commentId));
+	}
+
+	@GetMapping()
+	@Operation(summary = "게시글의 댓글을 조회합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
+	ResponseEntity<CustomResponse<List<CommentRelationResponse>>> commentList(@RequestParam("id") Long id) {
+		List<CommentRelationResponse> comments = commentService.findCommentsByArticleId(id);
+		return ResponseEntity.ok(new CustomResponse<>(HttpStatus.OK.value(), "댓글 목록 조회 성공", comments));
 	}
 
 }
