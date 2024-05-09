@@ -1,0 +1,14 @@
+.tag {
+    border: 1px solid var(--header-background-color);
+    padding: 5px 10px;
+    border-radius: 10px;
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    color: var(--header-background-color);
+    background-color: var(--light-gray-color);
+
+    span {
+        color: var(--header-background-color);
+    }
+}

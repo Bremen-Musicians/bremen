@@ -1,0 +1,23 @@
+.fileuploadarea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--light-gray-color);
+    width: 100%;
+    gap: 10px;
+}
+
+.fileupload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filetitle {
+    color: var(--light-gray-color);
+}
+
+.file {
+    color: var(--light-gray-color);
+    margin-bottom: 10px;
+}
