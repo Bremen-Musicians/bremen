@@ -32,7 +32,8 @@ public class ArticleSearchQueryDslRepository {
 			.selectFrom(article)
 			.join(article.user, user).fetchJoin()
 			.where(
-				eqMusicTitle(category, keyword)
+				eqMusicTitle(category, keyword),
+				eqTitle(category, keyword)
 			)
 			.orderBy(order.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 
@@ -49,5 +50,9 @@ public class ArticleSearchQueryDslRepository {
 				.select(music.id));
 		}
 		return null;
+	}
+
+	private BooleanExpression eqTitle(String category, String keyword) {
+		return category.equals("title") ? article.title.contains(keyword) : null;
 	}
 }
