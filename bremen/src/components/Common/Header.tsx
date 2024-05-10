@@ -58,7 +58,7 @@ const Header = () => {
             </div>
           )}
           <div className={styles.bell}>
-            <Link href="/" className={styles.bell}>
+            <Link href="/alarm" className={styles.bell}>
               <Image
                 className={styles.img}
                 src="/header/bell.png"
