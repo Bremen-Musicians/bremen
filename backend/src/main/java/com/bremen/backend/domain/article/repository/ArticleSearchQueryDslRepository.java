@@ -25,7 +25,8 @@ import lombok.RequiredArgsConstructor;
 public class ArticleSearchQueryDslRepository {
 	private final JPAQueryFactory queryFactory;
 
-	public Page<Article> searchAll(String category, ArticleOrderBy order, List<Long> instrumentIds, String keyword,
+	public Page<Article> searchAll(String category, ArticleOrderBy order, List<Long> instrumentIds,
+		String keyword,
 		Pageable pageable) {
 
 		JPQLQuery<Article> query = queryFactory
@@ -78,12 +79,19 @@ public class ArticleSearchQueryDslRepository {
 	}
 
 	private BooleanExpression getCategoryExpression(String category, String keyword) {
-		return switch (category) {
-			case "music" -> eqMusicTitle(keyword);
-			case "title" -> eqTitle(keyword);
-			case "artist" -> eqMusicArtist(keyword);
-			case "writer" -> eqWriter(keyword);
-			default -> null;
-		};
+		if (category.equals("all")) {
+			return eqMusicTitle(keyword)
+				.or(eqTitle(keyword))
+				.or(eqMusicArtist(keyword))
+				.or(eqWriter(keyword));
+		} else {
+			return switch (category) {
+				case "music" -> eqMusicTitle(keyword);
+				case "title" -> eqTitle(keyword);
+				case "artist" -> eqMusicArtist(keyword);
+				case "writer" -> eqWriter(keyword);
+				default -> null;
+			};
+		}
 	}
 }

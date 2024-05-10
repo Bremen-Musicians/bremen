@@ -24,7 +24,8 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public ListResponse searchArticle(String category, ArticleOrderBy order, List<Long> instrumentIds, String keyword,
+	public ListResponse searchArticle(String category, ArticleOrderBy order, List<Long> instrumentIds,
+		String keyword,
 		Pageable pageable) {
 		Page<Article> pages = articleSearchQueryDslRepository.searchAll(category, order, instrumentIds, keyword,
 			pageable);
