@@ -32,6 +32,7 @@ public class ArticleSearchQueryDslRepository {
 			.selectFrom(article)
 			.join(article.user, user).fetchJoin()
 			.where(
+				eqInstruments(instrumentIds),
 				eqMusicTitle(category, keyword),
 				eqTitle(category, keyword),
 				eqMusicArtist(category, keyword),
@@ -77,6 +78,13 @@ public class ArticleSearchQueryDslRepository {
 				JPAExpressions.selectFrom(user)
 					.where(user.nickname.contains(keyword))
 					.select(user.id));
+		}
+		return null;
+	}
+
+	private BooleanExpression eqInstruments(List<Long> instrumentIds) {
+		if (instrumentIds != null) {
+			return article.video.instrument.id.in(instrumentIds);
 		}
 		return null;
 	}
