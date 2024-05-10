@@ -2,6 +2,7 @@ package com.bremen.backend.domain.article.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -93,9 +94,12 @@ public class ArticleController {
 	}
 
 	@GetMapping("/feed")
-	ResponseEntity<ListResponse<ArticleResponse>> getFeed(@RequestParam(defaultValue = "POPULAR") ArticleOrderBy order) {
-		List<ArticleResponse> articleResponses = articleService.findArticle(order);
-		return ResponseEntity.ok(new ListResponse<>(HttpStatus.OK.value(),"피드 조회 성공",articleResponses,articleResponses.size()));
+	ResponseEntity<ListResponse> getFeed(@RequestParam(defaultValue = "POPULAR") ArticleOrderBy order,
+		Pageable pageable) {
+		ListResponse listResponse = articleService.findArticle(order, pageable);
+		listResponse.setStatus(HttpStatus.OK.value());
+		listResponse.setMessage("피드 조회 성공");
+		return ResponseEntity.ok(listResponse);
 	}
 
 }
