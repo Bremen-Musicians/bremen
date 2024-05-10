@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bremen.backend.domain.article.repository.ArticleCategory;
 import com.bremen.backend.domain.article.repository.ArticleOrderBy;
 import com.bremen.backend.domain.article.service.SearchService;
 import com.bremen.backend.global.response.ListResponse;
@@ -29,12 +30,12 @@ public class SearchController {
 
 	@GetMapping("/search")
 	@Operation(summary = "게시글 검색 기능을 수행합니다.",
-		description = "Category: 전체(All-default)/곡명(music)/제목(title)/아티스트(artist)/작성자(writer), "
+		description = "Category: 전체(ALL-default)/곡명(MUSIC)/제목(TITLE)/아티스트(ARTIST)/작성자(WRITER), "
 			+ "Order: 최신순(Latest-default)/인기순(Popular), "
 			+ "instrumentIds: 악기id 목록, "
 			+ "keyword: 검색어")
 	ResponseEntity<ListResponse> articlesSearch(
-		@RequestParam(defaultValue = "All") String category,
+		@RequestParam(defaultValue = "ALL") ArticleCategory category,
 		@RequestParam(defaultValue = "POPULAR") ArticleOrderBy order,
 		@RequestParam(required = false) List<Long> instrumentIds,
 		@RequestParam(value = "keyword", required = false) String keyword,
