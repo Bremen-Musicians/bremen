@@ -1,0 +1,54 @@
+.container {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: -0.015em;
+    color: #FFFFFF;
+    border-top: 1px solid #ccc; /* 최상위 테두리 */
+    border-bottom: 1px solid #ccc; /* 최하위 테두리 */
+}
+  
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+  
+.header > div {
+    margin-right: 10px;
+}
+  
+.alarms {
+    border-left: 1px solid #ccc; /* 좌측 테두리 */
+    border-right: 1px solid #ccc; /* 우측 테두리 */
+    padding: 10px;
+}
+  
+.alarm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+  
+.message {
+    font-size: 16px;
+    flex: 1;
+}
+  
+.noAlarms {
+    font-size: 16px;
+    color: #888;
+    text-align: center;
+}
+  
+.deleteButton { 
+    border-radius: 5px;
+    background: #E4D2B3;
+    padding: 8px 15px;
+    font-size: 18px;
+}
