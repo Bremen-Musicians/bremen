@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import com.bremen.backend.domain.article.entity.Article;
 import com.querydsl.core.types.OrderSpecifier;
@@ -79,7 +80,9 @@ public class ArticleSearchQueryDslRepository {
 	}
 
 	private BooleanExpression getCategoryExpression(ArticleCategory category, String keyword) {
-		if (category.equals(ArticleCategory.ALL)) {
+		if (!StringUtils.hasText(keyword)) {
+			return null;
+		} else if (category.equals(ArticleCategory.ALL)) {
 			return eqMusicTitle(keyword)
 				.or(eqTitle(keyword))
 				.or(eqMusicArtist(keyword))
