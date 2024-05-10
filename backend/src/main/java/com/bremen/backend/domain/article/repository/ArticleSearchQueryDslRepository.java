@@ -33,7 +33,8 @@ public class ArticleSearchQueryDslRepository {
 			.join(article.user, user).fetchJoin()
 			.where(
 				eqMusicTitle(category, keyword),
-				eqTitle(category, keyword)
+				eqTitle(category, keyword),
+				eqMusicArtist(category, keyword)
 			)
 			.orderBy(order.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 
@@ -54,5 +55,18 @@ public class ArticleSearchQueryDslRepository {
 
 	private BooleanExpression eqTitle(String category, String keyword) {
 		return category.equals("title") ? article.title.contains(keyword) : null;
+	}
+
+	private BooleanExpression eqMusicArtist(String category, String keyword) {
+		if (category.equals("artist")) {
+			return article.video.music.id.in(
+				JPAExpressions.selectFrom(music)
+					.where(
+						music.composer.contains(keyword)
+							.or(music.singer.contains(keyword))
+					)
+					.select(music.id));
+		}
+		return null;
 	}
 }
