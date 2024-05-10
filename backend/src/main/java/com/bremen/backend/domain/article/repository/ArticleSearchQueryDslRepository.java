@@ -34,7 +34,8 @@ public class ArticleSearchQueryDslRepository {
 			.where(
 				eqMusicTitle(category, keyword),
 				eqTitle(category, keyword),
-				eqMusicArtist(category, keyword)
+				eqMusicArtist(category, keyword),
+				eqWriter(category, keyword)
 			)
 			.orderBy(order.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 
@@ -66,6 +67,16 @@ public class ArticleSearchQueryDslRepository {
 							.or(music.singer.contains(keyword))
 					)
 					.select(music.id));
+		}
+		return null;
+	}
+
+	private BooleanExpression eqWriter(String category, String keyword) {
+		if (category.equals("writer")) {
+			return article.user.id.in(
+				JPAExpressions.selectFrom(user)
+					.where(user.nickname.contains(keyword))
+					.select(user.id));
 		}
 		return null;
 	}
