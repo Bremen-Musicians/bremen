@@ -1,7 +1,6 @@
 package com.bremen.backend.domain.notification.service;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,10 +13,8 @@ import com.bremen.backend.domain.notification.message.FollowNotificationMessage;
 import com.bremen.backend.domain.notification.message.NotificationMessage;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +43,7 @@ public class NotificationServiceImpl implements NotificationService {
 		kafkaTemplate.send("alarm", notificationMessage);
 
 	}
+
 	public SseEmitter subscribe() throws IOException {
 		User user = userService.getUserByToken();
 		SseEmitter emitter = new SseEmitter();
@@ -72,7 +70,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@KafkaListener(topics = "alarm", groupId = "consumer")
-	public void receiveNotification(String json){
+	public void receiveNotification(String json) {
 		Gson gson = new Gson();
 		JsonObject jsonObject = gson.fromJson(json, JsonObject.class);
 
@@ -82,8 +80,6 @@ public class NotificationServiceImpl implements NotificationService {
 			sendNotification(notification.getUsername(), notification.getMessage());
 			// FollowNotification 객체로 처리
 		}
-
-
 	}
 
 }
