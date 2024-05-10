@@ -33,10 +33,7 @@ public class ArticleSearchQueryDslRepository {
 			.join(article.user, user).fetchJoin()
 			.where(
 				eqInstruments(instrumentIds),
-				eqMusicTitle(category, keyword),
-				eqTitle(category, keyword),
-				eqMusicArtist(category, keyword),
-				eqWriter(category, keyword)
+				getCategoryExpression(category, keyword)
 			)
 			.orderBy(order.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 
@@ -45,41 +42,32 @@ public class ArticleSearchQueryDslRepository {
 		return PageableExecutionUtils.getPage(articles, pageable, query::fetchCount);
 	}
 
-	private BooleanExpression eqMusicTitle(String category, String keyword) {
-		if (category.equals("music")) {
-			return article.video.music.id.in(JPAExpressions
-				.selectFrom(music)
-				.where(music.title.contains(keyword))
+	private BooleanExpression eqMusicTitle(String keyword) {
+		return article.video.music.id.in(JPAExpressions
+			.selectFrom(music)
+			.where(music.title.contains(keyword))
+			.select(music.id));
+	}
+
+	private BooleanExpression eqTitle(String keyword) {
+		return article.title.contains(keyword);
+	}
+
+	private BooleanExpression eqMusicArtist(String keyword) {
+		return article.video.music.id.in(
+			JPAExpressions.selectFrom(music)
+				.where(
+					music.composer.contains(keyword)
+						.or(music.singer.contains(keyword))
+				)
 				.select(music.id));
-		}
-		return null;
 	}
 
-	private BooleanExpression eqTitle(String category, String keyword) {
-		return category.equals("title") ? article.title.contains(keyword) : null;
-	}
-
-	private BooleanExpression eqMusicArtist(String category, String keyword) {
-		if (category.equals("artist")) {
-			return article.video.music.id.in(
-				JPAExpressions.selectFrom(music)
-					.where(
-						music.composer.contains(keyword)
-							.or(music.singer.contains(keyword))
-					)
-					.select(music.id));
-		}
-		return null;
-	}
-
-	private BooleanExpression eqWriter(String category, String keyword) {
-		if (category.equals("writer")) {
-			return article.user.id.in(
-				JPAExpressions.selectFrom(user)
-					.where(user.nickname.contains(keyword))
-					.select(user.id));
-		}
-		return null;
+	private BooleanExpression eqWriter(String keyword) {
+		return article.user.id.in(
+			JPAExpressions.selectFrom(user)
+				.where(user.nickname.contains(keyword))
+				.select(user.id));
 	}
 
 	private BooleanExpression eqInstruments(List<Long> instrumentIds) {
@@ -87,5 +75,15 @@ public class ArticleSearchQueryDslRepository {
 			return article.video.instrument.id.in(instrumentIds);
 		}
 		return null;
+	}
+
+	private BooleanExpression getCategoryExpression(String category, String keyword) {
+		return switch (category) {
+			case "music" -> eqMusicTitle(keyword);
+			case "title" -> eqTitle(keyword);
+			case "artist" -> eqMusicArtist(keyword);
+			case "writer" -> eqWriter(keyword);
+			default -> null;
+		};
 	}
 }
