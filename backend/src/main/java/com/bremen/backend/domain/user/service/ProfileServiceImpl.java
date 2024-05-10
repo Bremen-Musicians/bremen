@@ -26,7 +26,7 @@ public class ProfileServiceImpl implements ProfileService {
 	public void modifyUserProfile(MultipartFile profileImage, UserProfileRequest userProfileRequest) throws
 		IOException {
 		User user = userService.getUserByUsername(userProfileRequest.getUsername());
-		if (!profileImage.isEmpty()) {
+		if (profileImage.isEmpty()) {
 			//이미지를 첨부하지 않고 랜덤이미지를 사용할경우
 			user.modifyUserProfile(userProfileRequest.getProfileImage(), user.getIntroduce());
 		} else {
