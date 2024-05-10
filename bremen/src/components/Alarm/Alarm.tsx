@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import Link from 'next/link';
 import styles from '@/components/Alarm/Alarm.module.scss';
 
 const alarms = [
@@ -23,22 +24,26 @@ const Page = () => {
   const [alarmList, setAlarmList] = useState(alarms);
 
   const handleDeleteAlarm = id => {
-    // 클릭한 알람을 제외한 나머지 알람을 유지하여 새로운 알람 목록 설정
     const newAlarmList = alarmList.filter(alarm => alarm.id !== id);
     setAlarmList(newAlarmList);
   };
 
   const handleDeleteAll = () => {
-    // 알림 목록을 빈 배열로 설정하여 모든 알림 삭제
     setAlarmList([]);
   };
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <div>알림</div>
-        <div>채팅</div>
-        <button onClick={handleDeleteAll}>전체 삭제</button>
+      <div className={styles.alarmtitle}>
+        <Link href="/alarm" className={styles.alarmtext}>
+          알림
+        </Link>
+        <div className={styles.chattext}>채팅</div>
+      </div>
+      <div className={styles.deleteAllButtonBlock}>
+        <button className={styles.deleteAllButton} onClick={handleDeleteAll}>
+          전체 삭제
+        </button>
       </div>
       <div className={styles.alarms}>
         {alarmList.length === 0 ? (
