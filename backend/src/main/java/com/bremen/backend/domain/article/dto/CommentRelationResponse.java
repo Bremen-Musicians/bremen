@@ -13,6 +13,7 @@ public class CommentRelationResponse {
 	private int groupCnt;
 	private String content;
 	private String writerNickname;
+	private String profile;
 	private boolean isDeleted;
 	private boolean isUpdated;
 	private LocalDateTime createTime;
