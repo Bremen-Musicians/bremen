@@ -5,7 +5,6 @@ import Reply from '@/components/Detail/Reply';
 import styles from '@/components/detail/Replies.module.scss';
 import ReReplies from './ReReplies';
 import { RxCross2 } from "react-icons/rx";
-import api from '@/api/api';
 
 interface IReply {
   id: number, // 댓글의 고유 id
@@ -18,33 +17,12 @@ interface IReply {
   updated: boolean,
 }
 
-interface IReplyResponse {
-  status: number;
-  message: string;
-  item: IReply[];
-}
-
-export default function Replies({replyHandler}: {replyHandler: () => void}) {
+export default function Replies({replyList, replyHandler}: {replyList: IReply[], replyHandler: () => void}) {
   const [openReReply, setOpenReReply] = useState(false);
-  const [replyList, setReplyList] = useState<IReply[]>();
-
+  
   const handleReReply = () => {
     setOpenReReply(!openReReply);
   };
-
-  // 댓글 목록 받는 api 호출 함수
-  const replyAPI = (articleId: number) => {
-    api.get<IReplyResponse>(`/comments?id=${articleId}`).then((response) => {
-      const replyData = response.data.item;
-      setReplyList(replyData);
-    })
-  }
-  
-  // 처음 페이지 로딩
-  useEffect(() => {
-    replyAPI(2);
-  }, [])
-
 
   return (
     <>
