@@ -1,7 +1,7 @@
 import {useRouter} from 'next/navigation';
 import Image from 'next/image';
 import useUserInfoStore from '@/stores/UserInfo';
-// import styles from './ProfileImage.module.scss';
+import styles from './ProfileImage.module.scss';
 
 interface IProfileImage {
   userNickname: string;
@@ -26,12 +26,11 @@ export default function ProfileImage({
   };
 
   return (
-    <div>
-      <Image
-        src={profileImage}
-        alt="profileImage"
-        onClick={() => moveToProfile}
-      />
-    </div>
+    <img
+      className={styles.profileImage}
+      src={profileImage}
+      alt="profileImage"
+      onClick={() => moveToProfile}
+    />
   );
 }
