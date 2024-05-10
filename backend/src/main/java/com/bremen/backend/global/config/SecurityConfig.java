@@ -31,7 +31,11 @@ public class SecurityConfig {
 		"/swagger-ui/**"
 	};
 	private static final String[] GET_PERMIT_URL_ARRAY = {
-		HEAD + "/users/*"
+		HEAD + "/users/*",
+		HEAD + "/articles/*",
+		HEAD + "/articles",
+		HEAD + "/challenges/*",
+		HEAD + "/comments"
 	};
 
 	private static final String[] POST_PERMIT_URL_ARRAY = {

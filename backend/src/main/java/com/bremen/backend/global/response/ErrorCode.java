@@ -14,12 +14,19 @@ public enum ErrorCode {
 
 	//403
 	UNAUTHORIZED_S3_ERROR(403, "S3 접근 권한을 확인해주세요."),
+	UNAUTHORIZED_ARTICLE_ACCESS(403, "게시글 삭제 권한이 없습니다."),
+	UNAUTHORIZED_COMMENT_ACCESS(403, "댓글 접근 권한이 없습니다."),
 
 	//404 NOT_FOUND 잘못된 리소스 접근
 	NOT_FOUND_USER(404, "해당하는 사용자가 없습니다."),
 	NOT_FOUND_ACCESS_TOKEN(404, "액세스 토큰이 유효하지 않습니다."),
 	NOT_FOUND_REFRESH_TOKEN(404, "리프레시 토큰이 유효하지 않습니다."),
-
+	NOT_FOUND_VIDEO(404, "존재하지 않는 영상입니다."),
+	NOT_FOUND_MUSIC(404, "존재하지 않는 음악입니다."),
+	NOT_FOUND_ARTICLE(404, "존재하지 않는 게시글입니다."),
+	NOT_FOUND_COMMENT(404, "존재하지 않는 댓글입니다."),
+	NOT_FOUND_CHALLENGE(404, "존재하지 않는 챌린지입니다."),
+	NOT_FOUND_INSTRUMENT(404, "존재하지 않는 악기입니다."),
 	//409 CONFLICT 중복된 리소스
 	CONFLICT_USER(409, "중복된 유저입니다"),
 
