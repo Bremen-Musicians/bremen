@@ -20,6 +20,7 @@ const LoginIndex = () => {
     setZustandUserNickname,
     setZustandToken,
     setZustandRFToken,
+    setZustandUserId,
   } = useUserInfoStore();
   /** 엔터누르면 전송
    * 전송 버튼 누르면 전송
@@ -46,6 +47,7 @@ const LoginIndex = () => {
         setZustandUserNickname(response.data.data.nickname);
         setZustandToken(response.data.data.accessToken);
         setZustandRFToken(response.data.data.refreshToken);
+        setZustandUserId(response.data.data.id);
         router.push('/');
       } else {
         setIsLoginPass(false);
