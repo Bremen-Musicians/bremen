@@ -39,7 +39,7 @@ public class ArticleServiceImpl implements ArticleService {
 	private final ArticleQueryDslRepository articleQueryDslRepository;
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public ArticleResponse findArticleById(Long articleId) {
 		Article article = getArticleById(articleId);
 		article.viewArticle();
