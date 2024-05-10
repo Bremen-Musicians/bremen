@@ -79,8 +79,8 @@ public class ArticleController {
 
 	@PostMapping("/like")
 	@Operation(summary = "게시글에 '좋아요/취소'기능을 수행합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
-	ResponseEntity<SingleResponse<Integer>> toggleArticleLike(@RequestBody Long id) {
-		int likeCnt = articleLikeService.toggleLikeArticle(id);
+	ResponseEntity<SingleResponse<Integer>> toggleArticleLike(@RequestParam(name = "articleId") Long articleId) {
+		int likeCnt = articleLikeService.toggleLikeArticle(articleId);
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "좋아요/취소 기능 수행", likeCnt));
 	}
 
