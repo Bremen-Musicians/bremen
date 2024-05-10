@@ -1,10 +1,11 @@
 package com.bremen.backend.domain.article.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.domain.video.service.VideoService;
 import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
+import com.bremen.backend.global.response.ListResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -103,16 +105,21 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ArticleResponse> findArticle(ArticleOrderBy articleOrderBy){
+	public ListResponse findArticle(ArticleOrderBy articleOrderBy, Pageable pageable) {
 		LocalDateTime dateTime = LocalDateTime.now().minusDays(7);
-		List<Article> articles;
-		if(userService.isAuthenticated()){
+		Page<Article> pages;
+		if (userService.isAuthenticated()) {
 			User user = userService.getUserByToken();
-			articles = articleQueryDslRepository.findArticle(user.getId(),articleOrderBy,dateTime);
-		}else{
-			articles = articleQueryDslRepository.findArticle(articleOrderBy,dateTime);
+			pages = articleQueryDslRepository.findArticle(user.getId(), articleOrderBy, dateTime,
+				pageable);
+		} else {
+			pages = articleQueryDslRepository.findArticle(articleOrderBy, dateTime, pageable);
 		}
-		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
+		List<ArticleResponse> articles = pages.getContent()
+			.stream()
+			.map(ArticleMapper.INSTANCE::articleToArticleResponse)
+			.collect(Collectors.toList());
+		return new ListResponse(articles, pages.getTotalElements(), pages.getPageable());
 	}
 
 }
