@@ -18,6 +18,7 @@ const SignUp = () => {
   const [isRight, setIsRight] = useState<boolean>(false);
   const [isNickname, setIsNickname] = useState<string>('');
   const [isEmail, setIsEmail] = useState<string>('');
+  const [isEmailDefined, setIsEmailDefined] = useState<boolean>(false);
   const [isPassword, setIsPassword] = useState<string>('');
   const [isPasswordCheck, setIsPasswordCheck] = useState<string>('');
   const [emailErrorMessage, setEmailErrorMessage] =
@@ -50,8 +51,10 @@ const SignUp = () => {
   };
 
   const emailCheck = (): Promise<boolean> => {
-    if (!isEmail.includes('@')) {
-      return Promise.resolve(false);
+    if (!isEmailDefined) {
+      if (!isEmail.includes('@')) {
+        return Promise.resolve(false);
+      }
     }
 
     return axios
@@ -61,7 +64,6 @@ const SignUp = () => {
       .then(response => {
         const isValid = response.status >= 200 && response.status < 300;
         console.log(response.status);
-        console.log('isValid', isValid);
         return isValid;
       })
       .catch(error => {
@@ -72,8 +74,10 @@ const SignUp = () => {
   };
 
   const nicknameCheck = (): Promise<boolean> => {
-    if (isNickname.length > 10 || isNickname.length < 3) {
-      return Promise.resolve(false);
+    if (!isEmailDefined) {
+      if (isNickname.length > 10 || isNickname.length < 3) {
+        return Promise.resolve(false);
+      }
     }
 
     return axios
@@ -151,6 +155,7 @@ const SignUp = () => {
       if (response.data.status >= 200 && response.data.status < 300) {
         setZustandEmail(isEmail);
         router.push('/user/profile');
+        setIsEmailDefined(true);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -160,6 +165,8 @@ const SignUp = () => {
   // TODO: 서버 전송
   const handleSubmit = () => {
     doSignUp().catch(error => console.error('회원가입 에러: ', error));
+
+    // doSignUp().catch(error => console.error('회원가입 에러: ', error));
   };
 
   return (

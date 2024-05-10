@@ -21,7 +21,9 @@ const useUserInfoStore = create<IUserInfo>()(
     set => ({
       zustandUserImage: '',
       setZustandUserImage: (newImage: string) =>
-        set({zustandUserImage: newImage}),
+        set({
+          zustandUserImage: `https://bremen-music.s3.ap-northeast-2.amazonaws.com/${newImage}`,
+        }),
       zustandUserNickname: '',
       setZustandUserNickname: (newNickname: string) =>
         set({zustandUserNickname: newNickname}),
