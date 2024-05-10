@@ -4,7 +4,7 @@ import {useRef} from 'react';
 import {useRouter} from 'next/navigation';
 import Image from 'next/image';
 import Header from '@/components/Common/Header';
-import styles from '@/components/Upload/Main/Index.module.scss';
+import styles from '@/components/Upload/Main/index.module.scss';
 import UploadVideo from '@/components/Upload/Main/UploadVideo';
 import VideoInfo from '@/stores/VideoInfo';
 

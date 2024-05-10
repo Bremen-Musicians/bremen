@@ -6,6 +6,7 @@ interface LoginResponse {
     nickname: string;
     refreshToken: string;
     accessToken: string;
+    id: number;
   };
 }
 
