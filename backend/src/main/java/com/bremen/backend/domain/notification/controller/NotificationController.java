@@ -1,4 +1,4 @@
-package com.bremen.backend.domain.notification;
+package com.bremen.backend.domain.notification.controller;
 
 import java.io.IOException;
 
