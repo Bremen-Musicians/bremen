@@ -1,0 +1,78 @@
+.topImageContainer {
+    margin-top:5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.topImage {
+    color: white;
+}
+.infoContainer {
+    // margin-top:5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    justify-content: space-between;
+    margin-right: 3vw;
+    margin-left: 3vw;
+    margin-bottom :2vw;
+}
+.info{
+    display: flex;
+}
+
+.categorySelected {
+    text-decoration : underline;
+    text-decoration-thickness: 3px;
+    font-weight: bold; // 선택된 항목을 굵게 표시
+    text-underline-offset : 7px;
+    margin-bottom: 10px;
+  }
+
+.orderSelected {
+    padding: 5px 12px;        /* 패딩 설정 */
+    background-color: skyblue;  /* 배경 색상 */
+    color: black;               /* 글자 색상 */
+    border: none;               /* 테두리 없음 */
+    text-align: center;         /* 텍스트 가운데 정렬 */
+    text-decoration: none;      /* 텍스트 밑줄 없음 */
+    display: inline-block;      /* 인라인 블록으로 표시 */
+    border-radius: 15px;        /* 테두리 둥글게 (캡슐 형태) */
+    font-weight: bold; // 선택된 항목을 굵게 표시
+    transition: background-color 0.3s; /* 배경 색상 변환 효과 */
+  }
+
+.orderUnselected {
+    padding: 5px 12px;        /* 패딩 설정 */
+    background-color: white;  /* 배경 색상 */
+    color: black;               /* 글자 색상 */
+    border: none;               /* 테두리 없음 */
+    text-align: center;         /* 텍스트 가운데 정렬 */
+    text-decoration: none;      /* 텍스트 밑줄 없음 */
+    display: inline-block;      /* 인라인 블록으로 표시 */
+    border-radius: 15px;        /* 테두리 둥글게 (캡슐 형태) */
+    transition: background-color 0.3s; /* 배경 색상 변환 효과 */
+    font-weight: bold; // 선택된 항목을 굵게 표시
+  }
+.filter{
+    padding: 5px 45px; 
+    background-color: gray;  /* 배경 색상 */
+    color: white;               /* 글자 색상 */
+    border: none;               /* 테두리 없음 */
+    text-align: center;         /* 텍스트 가운데 정렬 */
+    text-decoration: none;      /* 텍스트 밑줄 없음 */
+    display: inline-block;      /* 인라인 블록으로 표시 */
+    border-radius: 5px;        /* 테두리 둥글게 (캡슐 형태) */
+    font-weight: bold; // 선택된 항목을 굵게 표시
+}
+.videolist {
+    margin: 6px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.empty{
+    margin-top: 20vw;
+}
