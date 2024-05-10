@@ -1,5 +1,6 @@
 package com.bremen.backend.global.config;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
@@ -32,17 +33,16 @@ public class SwaggerConfig {
 			.bearerFormat("JWT")
 		);
 
-		Server deployServer = new Server();
-		deployServer.setUrl("https://k10a104.p.ssafy.io");
+		List<Server> serverList = new ArrayList<>();
 
-		Server devServer = new Server();
-		devServer.setUrl("http://localhost:8080");
+		serverList.add(new Server().url("https://k10a104.p.ssafy.io"));
+		serverList.add(new Server().url("http://localhost:8080"));
 
 		return new OpenAPI()
 			.info(info)
 			.addSecurityItem(securityRequirement)
 			.components(components)
-			.servers(List.of(new Server[] {devServer, deployServer}));
+			.servers(serverList);
 	}
 
 	@Bean
