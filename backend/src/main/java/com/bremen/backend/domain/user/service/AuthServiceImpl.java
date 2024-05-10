@@ -40,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
 		UserLoginResponse userLoginResponse = UserLoginResponse.builder()
 			.id(user.getId())
+			.username(user.getUsername())
 			.nickname(user.getNickname())
 			.profileImage(user.getProfileImage())
 			.accessToken(accessToken)
