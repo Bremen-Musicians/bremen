@@ -57,6 +57,7 @@ const ProfileIndex = () => {
   const number = Math.floor(Math.random() * 5 + 1);
   const initialImg = `/basicImage/no_image_${number}.png`;
   const [userImg, setUserImg] = useState<string>(initialImg);
+  const [userImgFile, setUserImgFile] = useState<FormData | string>('');
 
   const router = useRouter();
 
@@ -65,25 +66,59 @@ const ProfileIndex = () => {
     let sendImage = userImg;
     if (userImg.includes('/basicImage/no_image_')) {
       sendImage = `no_image_${number}.png`;
+      const profileData = {
+        userProfileRequest: {
+          username: zustandEmail,
+          profileImage: sendImage,
+          introduce: profileContent,
+        },
+      };
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
+          profileData,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          },
+        )
+        .then(response => {
+          // eslint-disable-next-line no-console
+          console.log('요청 response: ', response);
+        })
+        .catch(Error => {
+          // eslint-disable-next-line no-console
+          console.error(Error);
+        });
+    } else {
+      const profileData = {
+        profileImage: userImgFile,
+        userProfileRequest: {
+          username: zustandEmail,
+          introduce: profileContent,
+        },
+      };
+      // TODO: 헤더 수정
+      axios
+        .post(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
+          profileData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          },
+        )
+        .then(response => {
+          // eslint-disable-next-line no-console
+          console.log('파일O요청: ', response);
+        })
+        .catch(Error => {
+          // eslint-disable-next-line no-console
+          console.error(Error);
+        });
     }
-    const profileData = {
-      username: zustandEmail,
-      profileImage: sendImage,
-      introduce: profileContent,
-    };
-    axios
-      .post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
-        profileData,
-      )
-      .then(response => {
-        // eslint-disable-next-line no-console
-        console.log(response);
-      })
-      .catch(Error => {
-        // eslint-disable-next-line no-console
-        console.error(Error);
-      });
     router.push('/user/login');
   };
 
@@ -96,6 +131,7 @@ const ProfileIndex = () => {
             buttonDetail="사진 등록"
             setUserImg={setUserImg}
             initialImg={initialImg}
+            setUserImgFile={setUserImgFile}
           />
         </div>
         <div>

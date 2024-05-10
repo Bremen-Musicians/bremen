@@ -1,0 +1,124 @@
+.container {
+    font-family: 'Pretendard';
+    font-style: normal;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: -0.015em;
+    font-size:medium;
+    color: #FFFFFF;
+    margin: 15% auto; /* 위아래 10%, 좌우 자동 여백 설정 */
+    padding: 0 3%; /* 좌우 여백 3% */
+    position: relative;
+}
+
+.alarmtitle {
+    display:flex;
+    margin-left: 2%;
+    margin-bottom: 5%;
+}
+
+.alarmtext {
+    margin-right: 3%;
+    font-size: x-large;
+}
+
+.chattext {
+    font-size: x-large;
+}
+
+.deleteAllButtonBlock {
+    display: flex; /* 자식 요소를 상대적으로 위치시키기 위해 position 설정 */
+    justify-content: flex-end;
+    top: 0; /* 상단으로부터의 거리 */
+    right: 3%; /* 우측으로부터의 거리 */
+    padding: 0px 10px;
+}
+
+.deleteAllButton {
+    
+    border-radius: 5px;
+    background: #E4D2B3;
+    padding: 8px 15px;
+    margin-top: 20px; /* 부모 요소인 .container와의 간격 설정 */
+}
+
+.header {
+    display: flex;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header > div {
+    margin-right: 20px; /* 알림과 채팅 텍스트 간격 조정 */
+}
+
+.alarms {
+    padding: 10px;
+    margin-top: 20px; /* 알림과 채팅 텍스트와의 간격 */
+}
+
+.alarm {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+}
+
+.message {
+    width: 60%; /* 최대 폭 지정 */
+    overflow-wrap: break-word;
+    font-size: 14px;
+}
+
+.noAlarms {
+    font-size: 16px;
+    color: #888;
+    text-align: center;
+}
+
+.deleteButton { 
+    border-radius: 5px;
+    background: #E4D2B3;
+    padding: 5px;
+    margin-left: 5%;
+}
+
+
+@media (min-width: 450px) {
+    .container {
+        font-size: x-large;
+        color: #FFFFFF;
+        margin: 12% auto; /* 위아래 10%, 좌우 자동 여백 설정 */
+        padding: 0 3%; /* 좌우 여백 3% */
+        position: relative;
+    }
+
+    .alarmtext {
+        margin-right: 3%;
+        font-size: xx-large;
+    }
+    
+    .chattext {
+        font-size: xx-large;
+    }
+    
+    .deleteAllButton {  
+        border-radius: 5px;
+        background: #E4D2B3;
+        padding: 8px 15px;
+        font-size: 12px; 
+        margin-top: 20px; /* 부모 요소인 .container와의 간격 설정 */
+    }
+
+    .message {
+        font-size: 18px;
+        flex: 1;
+        margin: 2%;
+    }
+
+    .deleteButton { 
+        font-size: 20px;
+    }
+}

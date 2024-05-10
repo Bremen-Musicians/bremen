@@ -13,10 +13,12 @@ const ImageUp = ({
   buttonDetail,
   setUserImg,
   initialImg,
+  setUserImgFile,
 }: {
   buttonDetail: string;
   setUserImg: (newImg: string) => void;
   initialImg: string;
+  setUserImgFile: (newFile: FormData) => void;
 }) => {
   const imgRef = useRef<HTMLInputElement>(null);
   const [presentImgUrl, setPresentImgUrl] = useState<string>(initialImg);
@@ -32,6 +34,7 @@ const ImageUp = ({
       reader.onloadend = () => {
         const formData = new FormData();
         formData.append('userImg', file);
+        setUserImgFile(formData);
       };
     }
   };
