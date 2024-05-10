@@ -23,7 +23,7 @@ const alarms = [
 const Page = () => {
   const [alarmList, setAlarmList] = useState(alarms);
 
-  const handleDeleteAlarm = id => {
+  const handleDeleteAlarm = (id: number) => {
     const newAlarmList = alarmList.filter(alarm => alarm.id !== id);
     setAlarmList(newAlarmList);
   };
