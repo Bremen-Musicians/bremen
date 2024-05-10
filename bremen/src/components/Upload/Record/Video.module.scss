@@ -1,0 +1,34 @@
+.container{
+    background-color: var(--light-gray-color);
+    width: 58vw;
+    height: 78vw;
+    display: flex;
+    overflow: hidden;
+    margin-top: 3vh;
+    margin-left: 4vw;
+}
+
+.unseen{
+    visibility: hidden;
+    width: 1px;
+    height: 1px;
+}
+
+.recorded{
+    object-fit: contain;
+    width: 100%;
+}
+
+.recording{
+    object-fit: contain;
+    width: 100%;
+}
+
+@media (min-width: 450px) {
+    .container{
+        height: 68%;
+        width: 60%;
+        margin-top: 11vh;
+        margin-left: 6.5vw;
+    }
+}

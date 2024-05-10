@@ -21,9 +21,11 @@ const FootProfile = () => {
     useUserInfoStore,
     state => state.zustandUserImage,
   );
+  const randomNumber = Math.floor(Math.random() * 5 + 1);
+  const randomUrl = `/basicImage/no_image_${randomNumber}.png`;
   return (
     <Profile>
-      {typeof userImage === 'string' ? (
+      {typeof userImage === 'string' && userImage !== '' ? (
         <Image
           src={userImage}
           width={200}
@@ -31,7 +33,15 @@ const FootProfile = () => {
           style={{width: '100%', height: 'auto'}}
           alt="이미지"
         />
-      ) : null}
+      ) : (
+        <Image
+          src={randomUrl}
+          width={200}
+          height={200}
+          style={{width: '100%', height: 'auto'}}
+          alt="이미지"
+        />
+      )}
     </Profile>
   );
 };

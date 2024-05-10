@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 'use client';
 
 import {useState} from 'react';
@@ -20,6 +22,8 @@ const LoginIndex = () => {
     setZustandUserNickname,
     setZustandToken,
     setZustandRFToken,
+    setZustandUserId,
+    setZustandEmail,
   } = useUserInfoStore();
   /** 엔터누르면 전송
    * 전송 버튼 누르면 전송
@@ -37,16 +41,26 @@ const LoginIndex = () => {
         loginData,
       );
       if (response.data.status >= 200 && response.data.status < 300) {
+        console.log('통과');
         // FIXME: API수정 후 삭제 필요
-        if (response.data.data.profileImage.includes('no_image')) {
-          setZustandUserImage(`/profile/${response.data.data.profileImage}`);
+        console.log(response.data.item.profileImage);
+        setZustandUserNickname(response.data.item.nickname);
+        setZustandToken(response.data.item.accessToken);
+        setZustandRFToken(response.data.item.refreshToken);
+        setZustandUserId(response.data.item.id);
+        setZustandEmail(response.data.item.username);
+        if (response.data.item.profileImage === null) {
+          console.log('이미지X');
+          router.push('/user/profile');
+        } else if (response.data.item.profileImage.includes('no_image')) {
+          console.log('이미지 기본');
+          setZustandUserImage(`/profile/${response.data.item.profileImage}`);
+          router.push('/');
         } else {
-          setZustandUserImage(response.data.data.profileImage);
+          console.log('이미지 O');
+          setZustandUserImage(response.data.item.profileImage);
+          router.push('/');
         }
-        setZustandUserNickname(response.data.data.nickname);
-        setZustandToken(response.data.data.accessToken);
-        setZustandRFToken(response.data.data.refreshToken);
-        router.push('/');
       } else {
         setIsLoginPass(false);
       }
@@ -86,7 +100,7 @@ const LoginIndex = () => {
     <div>
       <form onSubmit={handleSubmit} className={styles.container}>
         <div className={styles.secondCon}>
-          <div className={styles.idTag}>
+          <div className={styles.Tag}>
             <div className={styles.title}>이메일</div>
             <input
               type="text"
@@ -100,7 +114,7 @@ const LoginIndex = () => {
               <div className={styles.error}>아이디를 입력하세요</div>
             )}
           </div>
-          <div className={styles.pwTag}>
+          <div className={styles.Tag}>
             <div className={styles.title}>비밀번호</div>
             <input
               type="password"
@@ -133,6 +147,7 @@ const LoginIndex = () => {
         alt="bremen"
         width={100}
         height={100}
+        priority
       />
     </div>
   );

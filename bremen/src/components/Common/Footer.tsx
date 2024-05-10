@@ -1,7 +1,24 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import styles from '@/components/Common/Footer.module.scss';
-import FootProfile from '@/components/Common/FooterProfile';
+// import FootProfile from '@/components/Common/FooterProfile';
+
+const DynamicFooterProfile = dynamic(
+  () => import('@/components/Common/FooterProfile'),
+  {
+    loading: () => (
+      <Image
+        src="/loading.gif"
+        width={200}
+        height={200}
+        alt="로딩"
+        style={{width: '8vmin', height: 'auto'}}
+      />
+    ),
+    ssr: false,
+  },
+);
 
 const Footer = () => {
   return (
@@ -60,7 +77,8 @@ const Footer = () => {
           <div className={styles.mypage}>
             <Link href="/mypage">
               <div className={styles.image}>
-                <FootProfile />
+                {/* <FootProfile /> */}
+                <DynamicFooterProfile />
                 <div>마이페이지</div>
               </div>
             </Link>

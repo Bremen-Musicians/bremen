@@ -1,4 +1,4 @@
-import Form from '@/components/Upload/Main/Index';
+import Form from '@/components/Upload/Main';
 
 export default function Page() {
   return (
