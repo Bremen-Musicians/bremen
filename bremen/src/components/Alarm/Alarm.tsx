@@ -44,7 +44,7 @@ const alarms = [
 
 const Page = () => {
   const [alarmList, setAlarmList] = useState(alarms);
-  const [showHeader, setShowHeader] = useState(window.innerWidth >= 450);
+  const [showHeader, setShowHeader] = useState(false); // 초기값 변경
 
   const handleDeleteAlarm = (id: number) => {
     const newAlarmList = alarmList.filter(alarm => alarm.id !== id);
@@ -56,8 +56,15 @@ const Page = () => {
   };
 
   useEffect(() => {
-    const handleResize = () => {
+    // 클라이언트 사이드에서만 실행되도록 조건 추가
+    if (typeof window !== 'undefined') {
       setShowHeader(window.innerWidth >= 450);
+    }
+
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        setShowHeader(window.innerWidth >= 450);
+      }
     };
 
     window.addEventListener('resize', handleResize);
@@ -107,7 +114,7 @@ const Page = () => {
         </div>
         <div
           className={styles.alarms}
-          style={{maxHeight: '300px', overflowY: 'auto', display: 'hidden'}}
+          style={{maxHeight: '300px', overflowY: 'auto'}}
         >
           {alarmList.length === 0 ? (
             <div className={styles.noAlarms}>현재 받은 알림이 없습니다.</div>
@@ -123,11 +130,10 @@ const Page = () => {
                   onClick={() => handleDeleteAlarm(alarm.id)}
                 >
                   <Image
-                    style={{width: '3vmin', height: '3vmin'}}
                     src={'/Icon/minus.png'}
                     alt="삭제"
-                    width={15}
-                    height={15}
+                    width={20}
+                    height={20}
                   />
                 </button>
               </div>
