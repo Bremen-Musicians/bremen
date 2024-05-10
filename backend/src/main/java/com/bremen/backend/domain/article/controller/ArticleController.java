@@ -2,6 +2,7 @@ package com.bremen.backend.domain.article.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bremen.backend.domain.article.dto.ArticleRequest;
 import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
+import com.bremen.backend.domain.article.repository.ArticleOrderBy;
 import com.bremen.backend.domain.article.service.ArticleLikeService;
 import com.bremen.backend.domain.article.service.ArticleService;
+import com.bremen.backend.global.response.ListResponse;
 import com.bremen.backend.global.response.SingleResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -88,6 +91,15 @@ public class ArticleController {
 	ResponseEntity<SingleResponse<List<ArticleResponse>>> articleListByUser(@RequestParam("userId") Long userId) {
 		List<ArticleResponse> articleResponses = articleService.findArticleByUser(userId);
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "조회 성공", articleResponses));
+	}
+
+	@GetMapping("/feed")
+	ResponseEntity<ListResponse> getFeed(@RequestParam(defaultValue = "POPULAR") ArticleOrderBy order,
+		Pageable pageable) {
+		ListResponse listResponse = articleService.findArticle(order, pageable);
+		listResponse.setStatus(HttpStatus.OK.value());
+		listResponse.setMessage("피드 조회 성공");
+		return ResponseEntity.ok(listResponse);
 	}
 
 }

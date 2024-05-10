@@ -1,8 +1,11 @@
 package com.bremen.backend.domain.article.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +14,8 @@ import com.bremen.backend.domain.article.dto.ArticleResponse;
 import com.bremen.backend.domain.article.dto.ArticleUpdateRequest;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.mapper.ArticleMapper;
+import com.bremen.backend.domain.article.repository.ArticleOrderBy;
+import com.bremen.backend.domain.article.repository.ArticleQueryDslRepository;
 import com.bremen.backend.domain.article.repository.ArticleQueryRepository;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
 import com.bremen.backend.domain.user.entity.User;
@@ -18,6 +23,7 @@ import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.domain.video.service.VideoService;
 import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
+import com.bremen.backend.global.response.ListResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,8 +36,10 @@ public class ArticleServiceImpl implements ArticleService {
 	private final ArticleQueryRepository articleQueryRepository;
 	private final LikeService likeService;
 
+	private final ArticleQueryDslRepository articleQueryDslRepository;
+
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public ArticleResponse findArticleById(Long articleId) {
 		Article article = getArticleById(articleId);
 		article.viewArticle();
@@ -93,6 +101,25 @@ public class ArticleServiceImpl implements ArticleService {
 	public List<ArticleResponse> findArticleByUser(Long userId) {
 		List<Article> articles = articleRepository.findArticlesByUser(userId);
 		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ListResponse findArticle(ArticleOrderBy articleOrderBy, Pageable pageable) {
+		LocalDateTime dateTime = LocalDateTime.now().minusDays(7);
+		Page<Article> pages;
+		if (userService.isAuthenticated()) {
+			User user = userService.getUserByToken();
+			pages = articleQueryDslRepository.findArticle(user.getId(), articleOrderBy, dateTime,
+				pageable);
+		} else {
+			pages = articleQueryDslRepository.findArticle(articleOrderBy, dateTime, pageable);
+		}
+		List<ArticleResponse> articles = pages.getContent()
+			.stream()
+			.map(ArticleMapper.INSTANCE::articleToArticleResponse)
+			.collect(Collectors.toList());
+		return new ListResponse(articles, pages.getTotalElements(), pages.getPageable());
 	}
 
 }
