@@ -2,11 +2,12 @@
 
 import {useEffect, useState} from 'react';
 import Tag from '@/components/Common/Tag';
-import {api} from '@/api/api';
+import api from '@/api/api';
 import moment from 'moment';
 import 'moment/locale/ko';
 import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
+import { MdThumbUp } from "react-icons/md";
 
 interface IPost {
   title: string;
@@ -25,17 +26,15 @@ interface IPost {
 interface IPostResponse {
   status: number;
   message: string;
-  data: IPost;
+  item: IPost;
 }
 
 export default function Page() {
   const [post, setPost] = useState<IPost>();
   const [isLiked, setLiked] = useState(false);
   const [didMount, setDidMount] = useState(false);
-  const toggleLiked = () => {
-    setLiked(!isLiked);
-  };
 
+  // 게시글 전체 정보 받기
   useEffect(() => {
     setDidMount(true);
     return () => {};
@@ -46,8 +45,8 @@ export default function Page() {
     if (didMount) {
       api
         .get<IPostResponse>(`/articles?id=2`)
-        .then(response => {
-          const postData = response.data.data;
+        .then((response) => {
+          const postData = response.data.item;
           setPost(postData);
           setLiked(postData.like);
         })
@@ -56,6 +55,40 @@ export default function Page() {
         });
     }
   }, [didMount]);
+  // 게시글 전체 정보 받기 끝
+
+  // 게시글 좋아요 누르기
+  const clickLikeBtn = () => {
+    api.post(`/articles/like?articleId=2`, { liked: !isLiked })
+      .then(response => {
+        if (response.status < 300) {
+          setPost(prevPost => {
+            if (!prevPost) {
+              // 이전 상태가 없는 경우에 대한 처리
+              return prevPost;
+            }
+  
+            // 이전 상태가 있는 경우
+            const updatedPost = { ...prevPost };
+  
+            if (isLiked) {
+              updatedPost.likeCnt--;
+            } else {
+              updatedPost.likeCnt++;
+            }
+  
+            return updatedPost;
+          });
+  
+          setLiked(!isLiked);
+        } else {
+          console.error("좋아요 업데이트 실패:", response.status);
+        }
+      })
+      .catch(error => {
+        console.error("좋아요 업데이트 실패:", error);
+      });
+  }
 
   return (
     <>
@@ -67,8 +100,6 @@ export default function Page() {
         {/* 영상 제목 */}
         <div className={styles.title}>
           <p>
-            {/* [Bass] 대학생 베이스 커버 연주 어쩌구 저쩌구 두줄에서 잘린다 제목이
-            너무길어 정말길어서 잘리는걸 봐야겠어 */}
             {post?.title}
           </p>
         </div>
@@ -90,12 +121,12 @@ export default function Page() {
         {/* 좋아요 버튼 및 태그 */}
         <div className={styles.taglist}>
           {isLiked ? (
-            <div className={styles.liked} onClick={toggleLiked}>
-              따봉 4
+            <div className={styles.liked} onClick={clickLikeBtn}>
+              <MdThumbUp /><span>{post && post.likeCnt}</span>
             </div>
           ) : (
-            <div className={styles.disliked} onClick={toggleLiked}>
-              따봉 3
+            <div className={styles.disliked} onClick={clickLikeBtn}>
+              <MdThumbUp /><span>{post && post.likeCnt}</span>
             </div>
           )}
           <Tag />

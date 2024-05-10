@@ -51,17 +51,41 @@
 }
 
 .liked {
+    min-width: 60px;
+    text-align: center;
+    align-content: center;
     padding: 5px 10px;
     border-radius: 10px;
     background-color: var(--light-gray-color);
     color: var(--header-background-color-color);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-use-select: none;
+    user-select: none;
+    
+    span {
+        margin-left: 7px;
+    }
 }
 
 .disliked {
+    min-width: 60px;
+    text-align: center;
+    align-content: center;
     padding: 5px 10px;
     border-radius: 10px;
     background-color: var(--header-background-color);
     color: var(--light-gray-color);
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-use-select: none;
+    user-select: none;
+        
+    span {
+        margin-left: 7px;
+    }
 }
 
 .videolist {
