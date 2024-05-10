@@ -12,8 +12,6 @@ import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.bremen.backend.domain.article.entity.Article;
-import com.bremen.backend.domain.article.entity.QArticle;
-import com.bremen.backend.domain.video.entity.QMusic;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
@@ -29,15 +27,14 @@ public class ArticleSearchQueryDslRepository {
 
 	public Page<Article> searchAll(String category, ArticleOrderBy order, List<Long> instrumentIds, String keyword,
 		Pageable pageable) {
-		QArticle qArticle = article;
 
 		JPQLQuery<Article> query = queryFactory
-			.selectFrom(qArticle)
-			.join(qArticle.user, user).fetchJoin()
+			.selectFrom(article)
+			.join(article.user, user).fetchJoin()
 			.where(
 				eqMusicTitle(category, keyword)
 			)
-			.orderBy(order.getOrderSpecifier(qArticle).toArray(OrderSpecifier[]::new));
+			.orderBy(order.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 
 		List<Article> articles = query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
 
@@ -45,8 +42,6 @@ public class ArticleSearchQueryDslRepository {
 	}
 
 	private BooleanExpression eqMusicTitle(String category, String keyword) {
-		QMusic qMusic = music;
-
 		if (category.equals("music")) {
 			return article.video.music.id.in(JPAExpressions
 				.selectFrom(music)
