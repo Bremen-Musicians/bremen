@@ -1,10 +1,26 @@
+'use client';
+
 import {useState} from 'react';
-import Reply from '@/components/detail/Reply';
+import Reply from '@/components/Detail/Reply';
 import styles from '@/components/detail/Replies.module.scss';
 import ReReplies from './ReReplies';
+import { RxCross2 } from "react-icons/rx";
 
-export default function Replies({replyHandler}: {replyHandler: () => void}) {
+interface IReply {
+  id: number, // 댓글의 고유 id
+  groupCnt: number, // 대댓글이 총 몇개 있는지 알려줌
+  content: string,
+  writerNickname: string,
+  profile: string,
+  createTime: string,
+  children: IReply[], // 대댓글 목록
+  deleted: boolean,
+  updated: boolean,
+}
+
+export default function Replies({replyList, replyHandler}: {replyList: IReply[], replyHandler: () => void}) {
   const [openReReply, setOpenReReply] = useState(false);
+  
   const handleReReply = () => {
     setOpenReReply(!openReReply);
   };
@@ -14,13 +30,15 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
       <div className={styles.title}>
         {openReReply ? (
           <>
+          {/* 특정 댓글에 대한 답글 목록 */}
             <p>답글</p>
-            <p onClick={handleReReply}>X</p>
+            <p onClick={handleReReply}><RxCross2 /></p>
           </>
         ) : (
           <>
+          {/* 댓글목록 */}
             <p>댓글</p>
-            <p onClick={replyHandler}>X</p>
+            <p onClick={replyHandler}><RxCross2 /></p>
           </>
         )}
       </div>
@@ -29,12 +47,7 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
         <ReReplies />
       ) : (
         <div className={styles.replylist}>
-          <Reply reReplyHandler={handleReReply} />
-          <Reply reReplyHandler={handleReReply} />
-          <Reply reReplyHandler={handleReReply} />
-          <Reply reReplyHandler={handleReReply} />
-          <Reply reReplyHandler={handleReReply} />
-          <Reply reReplyHandler={handleReReply} />
+          {replyList && replyList.map((reply, key) => <Reply reply={reply} key={key} reReplyHandler={handleReReply}/>)}
         </div>
       )}
 
