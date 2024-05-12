@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.dto;
 
+import java.util.Set;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -14,4 +16,6 @@ public class ArticleRequest {
 	private String content;
 
 	private Long videoId;
+
+	private Set<String> hashtags;
 }

@@ -35,6 +35,7 @@ public class ArticleServiceImpl implements ArticleService {
 	private final VideoService videoService;
 	private final ArticleQueryRepository articleQueryRepository;
 	private final LikeService likeService;
+	private final ArticleHashtagService articleHashtagService;
 
 	private final ArticleQueryDslRepository articleQueryDslRepository;
 
@@ -65,7 +66,9 @@ public class ArticleServiceImpl implements ArticleService {
 		Article article = ArticleMapper.INSTANCE.articleRequestToArticle(articleRequest);
 		article.saveArticle(userService.getUserByToken(), videoService.getVideoById(articleRequest.getVideoId()));
 		Article savedArticle = articleRepository.save(article);
-		return ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
+		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
+		articleResponse.setHashtags(articleHashtagService.addHashtags(article, articleRequest.getHashtags()));
+		return articleResponse;
 	}
 
 	@Override

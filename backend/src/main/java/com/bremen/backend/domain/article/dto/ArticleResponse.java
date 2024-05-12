@@ -1,6 +1,7 @@
 package com.bremen.backend.domain.article.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,5 @@ public class ArticleResponse {
 	private String videoUrl;
 	private String imageUrl;
 	private boolean isLike;
+	private List<HashTagResponse> hashtags;
 }

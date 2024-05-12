@@ -46,7 +46,7 @@ public class ArticleController {
 	}
 
 	@PostMapping()
-	@Operation(summary = "게시글을 등록합니다.", description = "게시글의 제목, 내용, 영상의 id값을 파라미터로 받습니다.")
+	@Operation(summary = "게시글을 등록합니다.", description = "게시글의 제목, 내용, 영상의 id값과 해시태그 목록을 파라미터로 받습니다.")
 	ResponseEntity<SingleResponse<ArticleResponse>> articleAdd(@Valid @RequestBody ArticleRequest articleRequest) {
 		ArticleResponse articleResponse = articleService.addArticle(articleRequest);
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "게시글 등록 성공", articleResponse));
