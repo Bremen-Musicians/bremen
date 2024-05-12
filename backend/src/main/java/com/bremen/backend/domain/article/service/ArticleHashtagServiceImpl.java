@@ -13,9 +13,11 @@ import com.bremen.backend.domain.article.entity.Hashtag;
 import com.bremen.backend.domain.article.repository.ArticleHashtagRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ArticleHashtagServiceImpl implements ArticleHashtagService {
 	private final ArticleHashtagRepository articleHashtagRepository;
 	private final HashtagService hashtagService;
@@ -27,6 +29,21 @@ public class ArticleHashtagServiceImpl implements ArticleHashtagService {
 			.map(articleHashtag -> articleHashtag.getHashtag().getName())
 			.collect(
 				Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public Long removeHashtags(Long articleId) {
+		List<ArticleHashtag> articleHashtags = articleHashtagRepository.findByArticleId(articleId);
+		for (ArticleHashtag articleHashtag : articleHashtags) {
+			List<ArticleHashtag> otherArticleHashtags = articleHashtagRepository.findByHashtagAndArticleIdNot(
+				articleHashtag.getHashtag(), articleId);
+			if (otherArticleHashtags.isEmpty()) {
+				hashtagService.removeHashtag(articleHashtag.getHashtag().getId());
+			}
+		}
+		articleHashtagRepository.deleteAll(articleHashtags);
+		return articleId;
 	}
 
 	private ArticleHashtag findOrAddArticleHashtag(Article article, Hashtag hashtag) {
