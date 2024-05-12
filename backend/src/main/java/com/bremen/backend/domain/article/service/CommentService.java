@@ -1,6 +1,7 @@
 package com.bremen.backend.domain.article.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.bremen.backend.domain.article.dto.CommentRelationResponse;
 import com.bremen.backend.domain.article.dto.CommentRequest;
@@ -17,5 +18,5 @@ public interface CommentService {
 
 	Long removeComment(Long id);
 
-	List<CommentRelationResponse> findCommentsByArticleId(Long id);
+	Page<CommentRelationResponse> findCommentsByArticleId(Long id, Pageable pageable);
 }

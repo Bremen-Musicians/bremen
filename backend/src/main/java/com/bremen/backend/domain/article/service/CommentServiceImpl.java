@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,10 +78,11 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<CommentRelationResponse> findCommentsByArticleId(Long id) {
-		List<Comment> comments = commentRepository.findAllByArticleIdOrderByGroupAscCreateTimeDesc(id);
-		Map<Long, CommentRelationResponse> parents = new LinkedHashMap<>();
+	public Page<CommentRelationResponse> findCommentsByArticleId(Long id, Pageable pageable) {
+		Page<Comment> commentsPage = commentRepository.findAllByArticleIdOrderByGroupAscCreateTimeDesc(id, pageable);
 
+		List<Comment> comments = commentsPage.getContent();
+		Map<Long, CommentRelationResponse> parents = new LinkedHashMap<>();
 		comments.forEach(comment -> {
 			CommentRelationResponse commentRelationResponse = CommentMapper.INSTANCE.commentToCommentRelationResponse(
 				comment);
@@ -93,8 +97,9 @@ public class CommentServiceImpl implements CommentService {
 				parent.addChildrenCnt();
 			}
 		});
+		List<CommentRelationResponse> result = new ArrayList<>(parents.values());
 
-		return new ArrayList<>(parents.values());
+		return new PageImpl<>(result, pageable, commentsPage.getTotalElements());
 	}
 
 	private void checkCommentAccessRights(User user) {
