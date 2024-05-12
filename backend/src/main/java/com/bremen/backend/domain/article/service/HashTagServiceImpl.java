@@ -19,4 +19,10 @@ public class HashTagServiceImpl implements HashtagService {
 		Hashtag hashtag = hashtagRepository.findByName(name).orElse(Hashtag.builder().name(name).build());
 		return hashtagRepository.save(hashtag);
 	}
+
+	@Override
+	public Long removeHashtag(Long id) {
+		hashtagRepository.deleteById(id);
+		return id;
+	}
 }

@@ -4,4 +4,6 @@ import com.bremen.backend.domain.article.entity.Hashtag;
 
 public interface HashtagService {
 	Hashtag findOrAddHashtag(String name);
+
+	Long removeHashtag(Long id);
 }
