@@ -1,11 +1,14 @@
 package com.bremen.backend.domain.notification.service;
 
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+
+import com.bremen.backend.domain.notification.NotificationDto;
+import com.bremen.backend.global.response.ListResponse;
 
 public interface NotificationService {
-	void send(Long alarmId, String username, String msg);
+	void addNotification(NotificationDto notification,String username);
+	ListResponse getNotification(Pageable pageable);
 
-	SseEmitter connectAlarm(String username);
-
-	String createAlarmId(String username, Long alarmId);
 }

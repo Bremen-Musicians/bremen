@@ -1,68 +1,46 @@
 package com.bremen.backend.domain.notification.service;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.bremen.backend.domain.notification.repository.EmitterRepository;
-import com.bremen.backend.global.CustomException;
-import com.bremen.backend.global.response.ErrorCode;
+import com.bremen.backend.domain.article.dto.ArticleResponse;
+import com.bremen.backend.domain.article.mapper.ArticleMapper;
+import com.bremen.backend.domain.notification.NotificationDto;
+import com.bremen.backend.domain.notification.entity.Notification;
+import com.bremen.backend.domain.notification.mapper.NotificationMapper;
+import com.bremen.backend.domain.notification.repository.NotificationRepository;
+import com.bremen.backend.domain.user.service.UserService;
+import com.bremen.backend.global.response.ListResponse;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
-public class NotificationServiceImpl implements NotificationService {
-	private final EmitterRepository emitterRepository;
-
-	private final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
-	private final String ALARM_NAME = "alarm";
-
+public class NotificationServiceImpl implements NotificationService{
+	private final NotificationRepository notificationRepository;
+	private final UserService userService;
 	@Override
-	public void send(final Long alarmId, final String username, final String msg) {
-		emitterRepository.get(username).ifPresentOrElse(sseEmitter -> {
-			try {
-				sseEmitter.send(SseEmitter.event().id(createAlarmId(username, alarmId)).name(ALARM_NAME).data(msg));
-			} catch (IOException e) {
-				emitterRepository.delete(username);
-				throw new CustomException(ErrorCode.INTERNAL_SERVER_ERROR);
-			}
-		}, () -> log.info("[SseEmitter] {} SseEmitter Not Founded", username));
+	@Transactional
+	public void addNotification(NotificationDto notificationDto,String username) {
+		Notification notification = NotificationMapper.INSTANCE.dtoToEntity(notificationDto);
+		notification.addUser(userService.getUserByUsername(username));
+		notificationRepository.save(notification);
 	}
 
 	@Override
-	public SseEmitter connectAlarm(String username) {
-		SseEmitter sseEmitter = new SseEmitter(DEFAULT_TIMEOUT);
-		emitterRepository.save(username, sseEmitter);
-
-		// 종료 되었을 때 처리
-		sseEmitter.onCompletion(() -> {
-			emitterRepository.delete(username);
-		});
-
-		// timeOut 시 처리
-		sseEmitter.onTimeout(() -> {
-			emitterRepository.delete(username);
-		});
-
-		try {
-			sseEmitter.send(
-				SseEmitter.event().id(createAlarmId(username, null)).name(ALARM_NAME).data("connect completed!!"));
-		} catch (IOException e) {
-			throw new CustomException(ErrorCode.ALARM_CONNECT_ERROR);
-		}
-
-		return sseEmitter;
-	}
-
-	@Override
-	public String createAlarmId(String username, Long alarmId) {
-		if (alarmId == null) {
-			return username + "_" + System.currentTimeMillis();
-		}
-		return username + "_" + alarmId;
+	@Transactional(readOnly = true)
+	public ListResponse getNotification(Pageable pageable) {
+		String username = userService.getUserByToken().getUsername();
+		Page<Notification> pages = notificationRepository.findByUser(username,pageable);
+		List<NotificationDto> notificationDtos = pages.getContent()
+			.stream()
+			.map(NotificationMapper.INSTANCE::entityToDto)
+			.collect(Collectors.toList());
+		return new ListResponse<>(notificationDtos,pages.getTotalElements(),pages.getPageable());
 	}
 }
