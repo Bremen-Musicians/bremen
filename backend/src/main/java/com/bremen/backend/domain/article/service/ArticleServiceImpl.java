@@ -89,6 +89,7 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		article.deleteArticle();
 		videoService.removeVideo(article.getVideo().getId());
+		articleHashtagService.removeHashtags(article.getId());
 		return article.getId();
 	}
 
