@@ -10,6 +10,8 @@ import com.bremen.backend.domain.user.entity.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,6 +44,11 @@ public class Notification {
 	@Setter(AccessLevel.PROTECTED)
 	private String content;
 
+	@Enumerated(value = EnumType.STRING)
+	@Column(name = "type")
+	@NotNull
+	private NotificationType type;
+
 	@NotNull
 	@ColumnDefault("false")
 	@Column(name = "is_deleted", columnDefinition = "TINYINT(1)")
@@ -68,6 +75,11 @@ public class Notification {
 
 	@JoinColumn(name = "member_id")
 	@ManyToOne(fetch = FetchType.LAZY)
+	@Setter(AccessLevel.PROTECTED)
 	private User user;
+
+	public void addUser(User user){
+		this.setUser(user);
+	}
 
 }
