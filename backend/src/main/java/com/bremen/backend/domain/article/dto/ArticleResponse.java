@@ -21,5 +21,5 @@ public class ArticleResponse {
 	private String videoUrl;
 	private String imageUrl;
 	private boolean isLike;
-	private List<HashTagResponse> hashtags;
+	private List<String> hashtags;
 }

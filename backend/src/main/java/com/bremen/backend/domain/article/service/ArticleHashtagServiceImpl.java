@@ -7,11 +7,9 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bremen.backend.domain.article.dto.HashTagResponse;
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.entity.ArticleHashtag;
 import com.bremen.backend.domain.article.entity.Hashtag;
-import com.bremen.backend.domain.article.mapper.HashtagMapper;
 import com.bremen.backend.domain.article.repository.ArticleHashtagRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -24,9 +22,9 @@ public class ArticleHashtagServiceImpl implements ArticleHashtagService {
 
 	@Override
 	@Transactional
-	public List<HashTagResponse> addHashtags(Article article, Set<String> hashtags) {
+	public List<String> addHashtags(Article article, Set<String> hashtags) {
 		return addArticleHashtags(article, hashtags).stream()
-			.map(HashtagMapper.INSTANCE::articlehashtagToHashTagResponse)
+			.map(articleHashtag -> articleHashtag.getHashtag().getName())
 			.collect(
 				Collectors.toList());
 	}
