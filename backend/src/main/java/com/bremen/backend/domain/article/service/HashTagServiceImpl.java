@@ -16,11 +16,12 @@ public class HashTagServiceImpl implements HashtagService {
 	@Override
 	@Transactional
 	public Hashtag findOrAddHashtag(String name) {
-		Hashtag hashtag = hashtagRepository.findByName(name).orElse(Hashtag.builder().name(name).build());
-		return hashtagRepository.save(hashtag);
+		return hashtagRepository.findByName(name)
+			.orElseGet(() -> hashtagRepository.save(Hashtag.builder().name(name).build()));
 	}
 
 	@Override
+	@Transactional
 	public Long removeHashtag(Long id) {
 		hashtagRepository.deleteById(id);
 		return id;
