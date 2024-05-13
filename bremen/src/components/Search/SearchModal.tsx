@@ -1,25 +1,28 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, {useState} from 'react';
+
+'use client';
+
+import React, { useState, useEffect } from 'react';
 import styles from './SearchModal.module.scss';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onApplyFilters: (selected: string[]) => void;
+  selectedFilters: string[];
 }
 
 interface CheckedItems {
-  [key: string]: boolean;
+  [key: string]: boolean;  // Define an index signature for boolean values
 }
 
 interface FilterOptions {
   [key: number]: string;
 }
 
-const Modal: React.FC<ModalProps> = ({isOpen, onClose}) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selectedFilters }) => {
   if (!isOpen) return null;
-
-  const [checkedItems, setCheckedItems] = useState<CheckedItems>({});
 
   const filterOptions: FilterOptions = {
     1: '그 외',
@@ -38,17 +41,32 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose}) => {
     14: '일렉기타',
   };
 
-  const allSelected = Object.keys(filterOptions).every(
-    key => checkedItems[key],
+  const [checkedItems, setCheckedItems] = useState<CheckedItems>(
+    Object.keys(filterOptions).reduce<CheckedItems>((acc, key) => {
+      acc[key] = true;  // Initialize all as selected
+      return acc;
+    }, {})
   );
+
+  useEffect(() => {
+    if (selectedFilters.length > 0) {
+      setCheckedItems(
+        selectedFilters.reduce<CheckedItems>((acc, filterId) => {
+          acc[filterId] = true;
+          return acc;
+        }, {})
+      );
+    }
+  }, [selectedFilters]);
+
+  const allSelected = Object.values(checkedItems).every(value => value);
 
   const toggleAllCheckboxes = () => {
     const newState = !allSelected;
-    const newCheckedItems = Object.keys(filterOptions).reduce((acc, key) => {
+    setCheckedItems(Object.keys(filterOptions).reduce<CheckedItems>((acc, key) => {
       acc[key] = newState;
       return acc;
-    }, {} as CheckedItems);
-    setCheckedItems(newCheckedItems);
+    }, {}));
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -59,13 +77,9 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose}) => {
   };
 
   const applyFilters = () => {
-    console.log(
-      'Selected Items:',
-      Object.entries(checkedItems)
-        .filter(([key, value]) => value)
-        .map(([key]) => filterOptions[+key]), // Note conversion to number if needed
-    );
-    onClose(); // Optionally close modal after applying
+    const selectedItems = Object.keys(checkedItems).filter(key => checkedItems[key]);
+    onApplyFilters(selectedItems);
+    onClose();
   };
 
   return (
@@ -78,9 +92,7 @@ const Modal: React.FC<ModalProps> = ({isOpen, onClose}) => {
           {Object.entries(filterOptions).map(([key, value]) => (
             <button
               key={key}
-              className={
-                checkedItems[key] ? styles.selectedItem : styles.unselectedItem
-              }
+              className={checkedItems[key] ? styles.selectedItem : styles.unselectedItem}
               onClick={() => handleCheckboxChange(key)}
             >
               {value}
