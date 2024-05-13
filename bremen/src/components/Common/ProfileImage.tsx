@@ -23,6 +23,7 @@ export default function ProfileImage({
     } else {
       router.push(`/user/${userNickname}`);
     }
+    console.log('프로필 사진으로 페이지 이동!');
   };
 
   return (
@@ -30,7 +31,7 @@ export default function ProfileImage({
       className={styles.profileImage}
       src={profileImage}
       alt="profileImage"
-      onClick={() => moveToProfile}
+      onClick={moveToProfile}
     />
   );
 }

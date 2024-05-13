@@ -20,10 +20,16 @@ interface IReply {
 
 export default function Replies({replyList, replyHandler}: {replyList: IReply[], replyHandler: () => void}) {
   const [openReReply, setOpenReReply] = useState(false);
+  const [openedReply, setOpenedReply] = useState<IReply>();
   
-  const handleReReply = () => {
-    setOpenReReply(!openReReply);
+  const handleReReply = (reply: IReply) => {
+    setOpenedReply(reply);
+    setOpenReReply(true);
   };
+
+  const closeReReply = () => {
+    setOpenReReply(false);
+  }
 
   return (
     <>
@@ -32,7 +38,7 @@ export default function Replies({replyList, replyHandler}: {replyList: IReply[],
           <>
           {/* 특정 댓글에 대한 답글 목록 */}
             <p>답글</p>
-            <p onClick={handleReReply}><RxCross2 /></p>
+            <p onClick={closeReReply}><RxCross2 /></p>
           </>
         ) : (
           <>
@@ -44,10 +50,10 @@ export default function Replies({replyList, replyHandler}: {replyList: IReply[],
       </div>
 
       {openReReply ? (
-        <ReReplies />
+        <ReReplies reply={openedReply!} />
       ) : (
         <div className={styles.replylist}>
-          {replyList && replyList.map((reply, key) => <Reply reply={reply} key={key} reReplyHandler={handleReReply}/>)}
+          {replyList && replyList.map((reply, key) => <Reply reply={reply} key={reply.id} reReplyHandler={handleReReply}/>)}
         </div>
       )}
 
