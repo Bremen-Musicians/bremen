@@ -79,7 +79,7 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional(readOnly = true)
 	public Page<CommentRelationResponse> findCommentsByArticleId(Long id, Pageable pageable) {
-		Page<Comment> commentsPage = commentRepository.findAllByArticleIdOrderByGroupAscCreateTimeDesc(id, pageable);
+		Page<Comment> commentsPage = commentRepository.findByArticleIdOrderByGroupAscCreateTimeDesc(id, pageable);
 
 		List<Comment> comments = commentsPage.getContent();
 		Map<Long, CommentRelationResponse> parents = new LinkedHashMap<>();
@@ -113,7 +113,7 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	private void deleteParentComment(Comment comment) {
-		if (commentRepository.findAllByGroupId(comment.getId()).isEmpty()) {
+		if (commentRepository.findByGroupId(comment.getId()).isEmpty()) {
 			// 자식 댓글이 존재하지 않는 경우
 			commentRepository.deleteById(comment.getId());
 		} else {
@@ -125,7 +125,7 @@ public class CommentServiceImpl implements CommentService {
 	private void deleteChildComment(Comment comment) {
 		commentRepository.deleteById(comment.getId());
 		Comment parentComment = getCommentById(comment.getGroup().getId());
-		if (parentComment.isDeleted() && commentRepository.findAllByGroupId(parentComment.getId()).isEmpty()) {
+		if (parentComment.isDeleted() && commentRepository.findByGroupId(parentComment.getId()).isEmpty()) {
 			// 부모 댓글 삭제 필요시(부모 댓글 삭제됨 + 자식 댓글 없음)
 			commentRepository.deleteById(parentComment.getId());
 		}
