@@ -44,7 +44,7 @@ public class ProfileServiceImpl implements ProfileService {
 			if (!isNoImage(user.getProfileImage())) {
 				s3Service.deleteObject(user.getProfileImage()); // 기존 사진을 삭제하고
 			}
-			s3Service.streamUpload("profile", userProfileUpdateRequest.getProfileImage());
+			url = s3Service.streamUpload("profile", userProfileUpdateRequest.getProfileImage());
 		} else {
 			url = user.getProfileImage();
 		}
