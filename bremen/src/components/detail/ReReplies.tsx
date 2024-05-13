@@ -1,5 +1,5 @@
 import styles from '@/components/detail/ReReplies.module.scss';
-import ReReply from '@/components/Detail/ReReply';
+import ReReply from '@/components/detail/ReReply';
 import moment from 'moment';
 import ProfileImage from '../Common/ProfileImage';
 
