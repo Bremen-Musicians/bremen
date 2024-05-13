@@ -5,6 +5,7 @@ import Reply from '@/components/detail/Reply';
 import styles from '@/components/detail/Replies.module.scss';
 import ReReplies from './ReReplies';
 import { RxCross2 } from "react-icons/rx";
+import api from '@/api/api';
 
 interface IReply {
   id: number, // 댓글의 고유 id
