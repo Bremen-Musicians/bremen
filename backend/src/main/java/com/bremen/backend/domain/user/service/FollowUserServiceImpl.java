@@ -45,7 +45,7 @@ public class FollowUserServiceImpl implements FollowUserService {
 			.type(type)
 			.build();
 		notificationService.addNotification(notificationDto, username);
-		emitterService.send(null, username, message, FOLLOW);
+		emitterService.send(null, username, message, type);
 		return !isExist;
 
 	}
