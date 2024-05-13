@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import com.bremen.backend.domain.notification.NotificationDto;
 import com.bremen.backend.domain.notification.entity.NotificationType;
 import com.bremen.backend.domain.notification.repository.EmitterRepository;
 import com.bremen.backend.global.CustomException;

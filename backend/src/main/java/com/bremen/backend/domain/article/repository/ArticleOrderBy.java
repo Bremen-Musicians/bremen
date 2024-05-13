@@ -3,8 +3,6 @@ package com.bremen.backend.domain.article.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.query.Order;
-
 import com.bremen.backend.domain.article.entity.QArticle;
 import com.querydsl.core.types.OrderSpecifier;
 
