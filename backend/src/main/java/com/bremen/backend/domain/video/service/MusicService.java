@@ -1,12 +1,12 @@
 package com.bremen.backend.domain.video.service;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
-import com.bremen.backend.domain.video.dto.MusicResponse;
 import com.bremen.backend.domain.video.entity.Music;
+import com.bremen.backend.global.response.ListResponse;
 
 public interface MusicService {
 	Music getMusicById(Long musicId);
 
-	List<MusicResponse> searchMusicsByTitle(String title);
+	ListResponse searchMusicsByTitle(String title, Pageable pageable);
 }

@@ -1,7 +1,7 @@
 package com.bremen.backend.domain.article.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +18,7 @@ import com.bremen.backend.domain.article.dto.CommentRequest;
 import com.bremen.backend.domain.article.dto.CommentResponse;
 import com.bremen.backend.domain.article.dto.CommentUpdateRequest;
 import com.bremen.backend.domain.article.service.CommentService;
+import com.bremen.backend.global.response.ListResponse;
 import com.bremen.backend.global.response.SingleResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -58,9 +59,12 @@ public class CommentController {
 
 	@GetMapping()
 	@Operation(summary = "게시글의 댓글을 조회합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
-	ResponseEntity<SingleResponse<List<CommentRelationResponse>>> commentList(@RequestParam("id") Long id) {
-		List<CommentRelationResponse> comments = commentService.findCommentsByArticleId(id);
-		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "댓글 목록 조회 성공", comments));
+	ResponseEntity<ListResponse> commentList(@RequestParam("id") Long id,
+		Pageable pageable) {
+		Page<CommentRelationResponse> comments = commentService.findCommentsByArticleId(id, pageable);
+		return ResponseEntity.ok(
+			new ListResponse(HttpStatus.OK.value(), "댓글 조회 성공", comments.getContent(), comments.getTotalElements(),
+				comments.getPageable()));
 	}
 
 }

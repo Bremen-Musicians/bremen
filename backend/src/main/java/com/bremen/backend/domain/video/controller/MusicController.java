@@ -1,7 +1,6 @@
 package com.bremen.backend.domain.video.controller;
 
-import java.util.List;
-
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,9 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bremen.backend.domain.video.dto.MusicResponse;
 import com.bremen.backend.domain.video.service.MusicService;
-import com.bremen.backend.global.response.SingleResponse;
+import com.bremen.backend.global.response.ListResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,9 +26,11 @@ public class MusicController {
 
 	@GetMapping("/search")
 	@Operation(summary = "키워드로 음악을 조회합니다.", description = "음악을 검색하기 위한 제목 키워드를 파라미터로 받습니다.")
-	ResponseEntity<SingleResponse<List<MusicResponse>>> musicsSearch(@RequestParam("title") String title) {
-		List<MusicResponse> musics = musicService.searchMusicsByTitle(title);
-		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "음악 검색 성공", musics));
+	ResponseEntity<ListResponse> musicsSearch(@RequestParam("title") String title, Pageable pageable) {
+		ListResponse musics = musicService.searchMusicsByTitle(title, pageable);
+		musics.setStatus(HttpStatus.OK.value());
+		musics.setMessage("음악 조회 성공");
+		return ResponseEntity.ok(musics);
 	}
 
 }
