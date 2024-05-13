@@ -8,6 +8,7 @@ import 'moment/locale/ko';
 import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
 import { MdThumbUp } from "react-icons/md";
+import { useParams } from 'next/navigation';
 
 interface IPost {
   title: string;
@@ -30,12 +31,14 @@ interface IPostResponse {
 }
 
 export default function Page() {
+  const param = useParams();
+  const articleId = param.id;
   const [post, setPost] = useState<IPost>();
   const [isLiked, setLiked] = useState(false);
   const [didMount, setDidMount] = useState(false);
 
   // 게시글 전체 정보 받기
-  useEffect(() => {
+  useEffect(() => { 
     setDidMount(true);
     return () => {};
   });
@@ -44,7 +47,7 @@ export default function Page() {
     // 2번 게시글 조회(임시)
     if (didMount) {
       api
-        .get<IPostResponse>(`/articles?id=2`)
+        .get<IPostResponse>(`/articles?id=${articleId}`)
         .then((response) => {
           const postData = response.data.item;
           setPost(postData);
@@ -59,7 +62,7 @@ export default function Page() {
 
   // 게시글 좋아요 누르기
   const clickLikeBtn = () => {
-    api.post(`/articles/like?articleId=2`, { liked: !isLiked })
+    api.post(`/articles/like?articleId=${articleId}`, { liked: !isLiked })
       .then(response => {
         if (response.status < 300) {
           setPost(prevPost => {

@@ -6,7 +6,7 @@ import styles from '@/components/Common/Video.module.scss';
 export default function Video() {
   const router = useRouter();
   const viewVideo = () => {
-    router.push('/detail/1');
+    router.push('/detail/2');
   };
 
   return (

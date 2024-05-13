@@ -1,7 +1,6 @@
 import styles from '@/components/detail/Reply.module.scss';
 import moment from 'moment';
 import ProfileImage from '../Common/ProfileImage';
-import replyHighlight from './ReplyHighlight';
 
 interface IReply {
   id: number, // 댓글의 고유 id
