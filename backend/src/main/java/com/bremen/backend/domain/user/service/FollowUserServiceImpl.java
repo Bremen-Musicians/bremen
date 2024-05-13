@@ -39,13 +39,13 @@ public class FollowUserServiceImpl implements FollowUserService {
 			message += "님이 팔로우 했습니다.";
 		}
 		String username = follow.getUsername();
-		NotificationType type = 팔로우;
+		NotificationType type = FOLLOW;
 		NotificationDto notificationDto = NotificationDto.builder()
 			.content(message)
 			.type(type)
 			.build();
-		notificationService.addNotification(notificationDto,username);
-		emitterService.send(null, username, message, 팔로우);
+		notificationService.addNotification(notificationDto, username);
+		emitterService.send(null, username, message, FOLLOW);
 		return !isExist;
 
 	}
