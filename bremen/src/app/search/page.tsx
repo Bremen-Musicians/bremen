@@ -18,8 +18,10 @@ export default function Page() {
           height={150}
         />
       </div>
-      <div>
+      <div className={styles.outerSearchBar}>
+      <div className={styles.searchBar}>
         <SearchBar initialValue="" />
+      </div>
       </div>
       <div className={styles.infoContainer}>
         <div className={styles.info}>노래 제목, 아티스트 명으로 검색하세요</div>
