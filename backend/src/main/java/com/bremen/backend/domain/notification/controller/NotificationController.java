@@ -2,6 +2,7 @@ package com.bremen.backend.domain.notification.controller;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import com.bremen.backend.domain.notification.service.EmitterService;
 import com.bremen.backend.domain.notification.service.NotificationService;
 import com.bremen.backend.global.response.ListResponse;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -22,8 +24,9 @@ public class NotificationController {
 	private final EmitterService emitterService;
 	private final NotificationService notificationService;
 
-	@GetMapping("/subscribe")
-	SseEmitter subscribe(Authentication authentication) {
+	@GetMapping(value = "/subscribe", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+	SseEmitter subscribe(Authentication authentication, HttpServletResponse response) {
+		response.setHeader("X-Accel-Buffering", "no");
 		return emitterService.connectAlarm(authentication.getPrincipal().toString());
 	}
 
