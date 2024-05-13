@@ -2,10 +2,13 @@ import Image from 'next/image';
 import styles from '@/app/search/page.module.scss';
 import SearchBar from '@/components/Search/SearchBar';
 import bremenStand2 from '../../../public/bremenstand2.png';
+import Header from '@/components/Common/Header';
 
 export default function Page() {
   return (
     <>
+      <Header/>
+      <div className={styles.headerMargin}/>
       <div className={styles.topImageContainer}>
         <Image
           className={styles.topImage}
