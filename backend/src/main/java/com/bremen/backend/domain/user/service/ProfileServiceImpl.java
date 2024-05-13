@@ -39,15 +39,17 @@ public class ProfileServiceImpl implements ProfileService {
 	public UserProfileUpdateResponse modifyUserProfile(
 		UserProfileUpdateRequest userProfileUpdateRequest) throws IOException {
 		User user = userService.getUserByToken();
+		String url = "";
 		if (!userProfileUpdateRequest.getProfileImage().isEmpty()) {
 			if (!isNoImage(user.getProfileImage())) {
 				s3Service.deleteObject(user.getProfileImage()); // 기존 사진을 삭제하고
 			}
-			String url = s3Service.streamUpload("profile", userProfileUpdateRequest.getProfileImage());
-
-			user.modifyUserProfile(userProfileUpdateRequest.getNickname(), url,
-				userProfileUpdateRequest.getIntroduce());
+			s3Service.streamUpload("profile", userProfileUpdateRequest.getProfileImage());
+		} else {
+			url = user.getProfileImage();
 		}
+		user.modifyUserProfile(userProfileUpdateRequest.getNickname(), url,
+			userProfileUpdateRequest.getIntroduce());
 		return UserMapper.INSTANCE.userToUserProfileUpdateResponse(user);
 	}
 
