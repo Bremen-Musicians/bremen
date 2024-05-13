@@ -5,6 +5,7 @@
     justify-content: center; 
     position:fixed;
     top: 0;
+    z-index:2000;
 }
 .Container{
     width: 100%;
@@ -47,7 +48,7 @@
 }
 @media (min-width: 450px) {
     .firstContainer{
-        height: 20vmin;
+        height: 10vmin;
     }
     .Container{
         width: 100%;
