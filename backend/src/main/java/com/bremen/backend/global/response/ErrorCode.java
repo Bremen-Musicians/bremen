@@ -31,9 +31,8 @@ public enum ErrorCode {
 	CONFLICT_USER(409, "중복된 유저입니다"),
 
 	//500 INTERNAL SERVER ERROR
-	ALARM_CONNECT_ERROR(500,"알람 연결이 되지 않았습니다."),
+	ALARM_CONNECT_ERROR(500, "알림 서버 연결이 되지 않았습니다."),
 	INTERNAL_SERVER_ERROR(500, "서버 에러입니다.");
-
 
 	private final int status;
 	private final String message;
