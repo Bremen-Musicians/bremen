@@ -18,10 +18,27 @@ interface IReply {
   updated: boolean,
 }
 
+interface IPageable {
+  pageNumber: number,
+  pageSize: number,
+  sort: ISort,
+  offset: number,
+  paged: boolean,
+  unpaged: boolean,
+}
+
+interface ISort {
+  sorted: boolean,
+  empty: boolean,
+  unsorted: boolean,
+}
+
 interface IReplyResponse {
-  status: number;
-  message: string;
-  item: IReply[];
+  status: number,
+  message: string,
+  items: IReply[],
+  pageable: IPageable,
+  size: number,
 }
 
 export default function ReplyArea() {
@@ -38,9 +55,8 @@ export default function ReplyArea() {
   // 댓글 목록 받는 api 호출 함수
   const replyAPI = async (articleId: number) => {
     await api.get<IReplyResponse>(`/comments?id=${articleId}`).then((response) => {
-      const replyData = response.data.item;
+      const replyData = response.data.items;
       setReplyList(replyData);
-      console.log(replyData.length);
 
       if (replyData.length > 0) {
         setProfileImgH(replyData[replyData.length -1].profile);

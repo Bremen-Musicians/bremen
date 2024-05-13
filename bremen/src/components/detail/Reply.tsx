@@ -18,7 +18,7 @@ interface IReply {
 interface ReplyProps {
   reply: IReply,
   key: number,
-  reReplyHandler: () => void,
+  reReplyHandler: (reply: IReply) => void,
 }
 
 export default function Reply({reply, key, reReplyHandler}: ReplyProps) {
@@ -35,7 +35,7 @@ export default function Reply({reply, key, reReplyHandler}: ReplyProps) {
           {reply.content}
         </div>
         {/* 답글 버튼 */}
-        <p className={styles.rereplybtn} onClick={reReplyHandler}>
+        <p className={styles.rereplybtn} onClick={() => reReplyHandler(reply)}>
           {reply.groupCnt > 0 ? <span>답글 {reply.groupCnt}개</span> : <span>답글 달기</span>}
         </p>
       </div>

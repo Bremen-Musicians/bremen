@@ -1,16 +1,31 @@
 import styles from '@/components/detail/ReReply.module.scss';
+import moment from 'moment';
+import ProfileImage from '../Common/ProfileImage';
 
-export default function ReReply() {
+interface IReply {
+  id: number, // 댓글의 고유 id
+  groupCnt: number, // 대댓글이 총 몇개 있는지 알려줌
+  content: string,
+  writerNickname: string,
+  profile: string,
+  createTime: string,
+  children: IReply[], // 대댓글 목록
+  deleted: boolean,
+  updated: boolean,
+}
+
+export default function ReReply({rereply}: {rereply: IReply}) {
   return (
     <div className={styles.rereply}>
-      <div className={styles.profileimg} />
+      <div className={styles.profileimg}>
+        <ProfileImage userNickname={rereply.writerNickname} profileImage={rereply.profile} />
+      </div>
       <div>
         {/* 답댓글 단 사람 */}
-        <div className={styles.rereplier}>답댓글단사람 | 3시간 전</div>
+        <div className={styles.rereplier}>{rereply.writerNickname} | {moment(rereply.createTime).fromNow()}</div>
         {/* 답댓글 내용 */}
         <div>
-          저도 집에 가고 싶습니다! 그래도 오늘은 금요일입니다. 내일은 늦게
-          일어날 수 있는 날이지요.
+          {rereply.content}
         </div>
       </div>
     </div>
