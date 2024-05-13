@@ -1,14 +1,13 @@
 package com.bremen.backend.domain.notification.service;
 
-import java.io.IOException;
+import org.springframework.data.domain.Pageable;
 
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import com.bremen.backend.domain.user.entity.User;
+import com.bremen.backend.domain.notification.NotificationDto;
+import com.bremen.backend.global.response.ListResponse;
 
 public interface NotificationService {
-	void followNotificationCreate(User follow, User follower);
-	SseEmitter subscribe() throws IOException;
-	void sendNotification(String userId, String notification);
-	void receiveNotification(String json);
+	void addNotification(NotificationDto notification, String username);
+
+	ListResponse getNotification(Pageable pageable);
+
 }
