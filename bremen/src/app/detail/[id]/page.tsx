@@ -1,9 +1,9 @@
-import DetailPage from '@/components/Detail';
+import Detail from '@/components/Detail';
 
 export default function page() {
   return (
     <>
-      <DetailPage />
+      <Detail />
     </>
   );
 }
