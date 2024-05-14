@@ -1,65 +1,66 @@
 .finddatearea {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     color: var(--light-gray-color);
     width: 100%;
-
+  
     .date {
-        min-width: 20vw;
-        font-size: small;
+      min-width: 20vw;
+      font-size: small;
+      margin-bottom: 10px;
     }
-
+  
     .searchbox {
-        border: 1px solid var(--light-gray-color);
-        margin-left: 10px;
-        padding: 5px;
-        border-radius: 10px;
-        width: 100%;
+      border: 1px solid var(--light-gray-color);
+      margin-left: 10px;
+      padding: 5px;
+      border-radius: 10px;
+      width: 100%;
     }
-
+  
     .wave {
-        margin-left: 10px;
+      margin-left: 10px;
     }
-
+  
     input {
-        padding: 0 5px;
-        border: none;
-        background-color: #001533;
-        color: var(--light-gray-color);
-        width: 100%;
-        font-size: small;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        word-break: break-word;
-        display: -webkit-box;
-        -webkit-line-clamp: 1; // 원하는 라인수
-        -webkit-box-orient: vertical;
+      padding: 0 5px;
+      border: none;
+      background-color: #001533;
+      color: var(--light-gray-color);
+      width: 100%;
+      font-size: small;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      word-break: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
-
+  
     input:focus {
-        outline: none;
+      outline: none;
     }
-}
-
-.ex {
+  }
+  
+  .ex {
     color: var(--light-gray-color);
     font-size: x-small;
     display: flex;
     text-align: right;
     margin-bottom: 20px;
-}
-
-.filetitle {
+  }
+  
+  .filetitle {
     color: var(--light-gray-color);
-}
-
-.file {
+  }
+  
+  .file {
     color: var(--light-gray-color);
     margin-bottom: 10px;
-}
-
-.submitbutton {
+  }
+  
+  .submitbutton {
     margin: 20px 0;
     width: 40vw;
     height: 5vh;
@@ -70,4 +71,4 @@
     color: var(--light-gray-color);
     font-size: large;
     font-weight: 600;
-}
+  }
