@@ -15,12 +15,14 @@ import com.bremen.backend.domain.notification.service.NotificationService;
 import com.bremen.backend.global.response.ListResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/notification")
+@Tag(name = "Notification", description = "알림 API")
 public class NotificationController {
 	private final EmitterService emitterService;
 	private final NotificationService notificationService;
