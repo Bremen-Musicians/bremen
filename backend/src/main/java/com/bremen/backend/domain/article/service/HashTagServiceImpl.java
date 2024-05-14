@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +24,8 @@ public class HashTagServiceImpl implements HashtagService {
 
 	@Override
 	@Transactional
-	public Long removeHashtag(Long id) {
-		hashtagRepository.deleteById(id);
-		return id;
+	public int removeHashtags(List<Hashtag> hashtags) {
+		hashtagRepository.deleteAll(hashtags);
+		return hashtags.size();
 	}
 }

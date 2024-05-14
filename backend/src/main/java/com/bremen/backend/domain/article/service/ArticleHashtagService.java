@@ -8,5 +8,5 @@ import com.bremen.backend.domain.article.entity.Article;
 public interface ArticleHashtagService {
 	List<String> addHashtags(Article article, Set<String> hashtags);
 
-	Long removeHashtags(Long articleId);
+	int removeHashtags(Long articleId);
 }

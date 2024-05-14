@@ -33,17 +33,8 @@ public class ArticleHashtagServiceImpl implements ArticleHashtagService {
 
 	@Override
 	@Transactional
-	public Long removeHashtags(Long articleId) {
-		List<ArticleHashtag> articleHashtags = articleHashtagRepository.findByArticleId(articleId);
-		for (ArticleHashtag articleHashtag : articleHashtags) {
-			List<ArticleHashtag> otherArticleHashtags = articleHashtagRepository.findByHashtagAndArticleIdNot(
-				articleHashtag.getHashtag(), articleId);
-			if (otherArticleHashtags.isEmpty()) {
-				hashtagService.removeHashtag(articleHashtag.getHashtag().getId());
-			}
-		}
-		articleHashtagRepository.deleteAll(articleHashtags);
-		return articleId;
+	public int removeHashtags(Long articleId) {
+		return removeHashtags(articleId, articleHashtagRepository.findByArticleId(articleId));
 	}
 
 	private ArticleHashtag findOrAddArticleHashtag(Article article, Hashtag hashtag) {
@@ -57,5 +48,16 @@ public class ArticleHashtagServiceImpl implements ArticleHashtagService {
 			Hashtag hashtag = hashtagService.findOrAddHashtag(name);
 			return findOrAddArticleHashtag(article, hashtag);
 		}).collect(Collectors.toSet());
+	}
+
+	private int removeHashtags(Long articleId, List<ArticleHashtag> articleHashtags) {
+		List<Hashtag> hashtagsToRemove = articleHashtags.stream()
+			.filter(articleHashtag ->
+				articleHashtagRepository.findByHashtagAndArticleIdNot(articleHashtag.getHashtag(), articleId).isEmpty())
+			.map(ArticleHashtag::getHashtag)
+			.collect(Collectors.toList());
+		articleHashtagRepository.deleteAll(articleHashtags);
+		hashtagService.removeHashtags(hashtagsToRemove);
+		return articleHashtags.size();
 	}
 }
