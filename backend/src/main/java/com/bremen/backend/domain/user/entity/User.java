@@ -1,13 +1,10 @@
 package com.bremen.backend.domain.user.entity;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 
@@ -33,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class User implements UserDetails {
+public class User {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,23 +91,26 @@ public class User implements UserDetails {
 	@UpdateTimestamp
 	private LocalDateTime updateTime;
 
-	public void addFollower(){
-		this.setFollowerCnt(this.getFollowerCnt()+1);
+	@Column(name = "role")
+	private String role;
+
+	public void addFollower() {
+		this.setFollowerCnt(this.getFollowerCnt() + 1);
 	}
 
-	public void addFollow(){
-		this.setFollowCnt(this.getFollowerCnt()+1);
+	public void addFollow() {
+		this.setFollowCnt(this.getFollowerCnt() + 1);
 	}
 
-	public void removeFollower(){
-		if(this.getFollowerCnt() > 0){
-			this.setFollowerCnt(this.getFollowerCnt()-1);
+	public void removeFollower() {
+		if (this.getFollowerCnt() > 0) {
+			this.setFollowerCnt(this.getFollowerCnt() - 1);
 		}
 	}
 
-	public void removeFollow(){
-		if(this.getFollowCnt() > 0){
-			this.setFollowCnt(this.getFollowCnt()-1);
+	public void removeFollow() {
+		if (this.getFollowCnt() > 0) {
+			this.setFollowCnt(this.getFollowCnt() - 1);
 		}
 	}
 
@@ -145,28 +145,4 @@ public class User implements UserDetails {
 		this.setAgree(true);
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return false;
-	}
 }
