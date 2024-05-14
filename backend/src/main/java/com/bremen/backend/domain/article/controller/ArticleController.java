@@ -95,6 +95,7 @@ public class ArticleController {
 	}
 
 	@GetMapping("/feed")
+	@Operation(summary = "피드를 조회합니다", description = "로그인을 한 경우 팔로우한 사용자 정보를 이용한 추천 피드를 조회합니다. 기본값은 POPULAR 입니다")
 	ResponseEntity<ListResponse> getFeed(@RequestParam(defaultValue = "POPULAR") ArticleOrderBy order,
 		Pageable pageable) {
 		ListResponse listResponse = articleService.findArticle(order, pageable);
