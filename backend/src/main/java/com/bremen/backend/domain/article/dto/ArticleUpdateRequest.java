@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.dto;
 
+import java.util.Set;
+
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -13,4 +15,6 @@ public class ArticleUpdateRequest {
 	private String title;
 
 	private String content;
+
+	private Set<String> hashtags;
 }
