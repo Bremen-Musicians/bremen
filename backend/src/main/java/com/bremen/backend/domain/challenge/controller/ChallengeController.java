@@ -2,6 +2,8 @@ package com.bremen.backend.domain.challenge.controller;
 
 import java.io.IOException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
 import com.bremen.backend.domain.challenge.service.ChallengeService;
+import com.bremen.backend.global.response.ListResponse;
 import com.bremen.backend.global.response.SingleResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,5 +51,15 @@ public class ChallengeController {
 		ChallengeResponse challengeResponse = challengeService.findLatestChallenge();
 		return ResponseEntity.ok(
 			new SingleResponse<>(HttpStatus.OK.value(), "최신 챌린지를 정상적으로 조회하였습니다.", challengeResponse));
+	}
+
+	@GetMapping("/winners")
+	@Operation(summary = "지난 챌린지 합주 영상을 조회합니다.")
+	ResponseEntity<ListResponse> commentList(Pageable pageable) {
+		Page<ChallengeArticleResponse> articles = challengeService.findChallengeEnsemble(pageable);
+		return ResponseEntity.ok(
+			new ListResponse(HttpStatus.OK.value(), "지난 챌린지 선정 게시글 조회 성공", articles.getContent(),
+				articles.getTotalElements(),
+				articles.getPageable()));
 	}
 }

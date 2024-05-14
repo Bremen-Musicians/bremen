@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
 import com.bremen.backend.domain.challenge.entity.Challenge;
@@ -20,4 +21,8 @@ public interface ChallengeMapper {
 
 	@Mapping(target = "musicId", source = "challenge.music.id")
 	ChallengeRequest challengeToChallengeRequest(Challenge challenge);
+
+	@Mapping(target = "musicTitle", source = "challenge.music.title")
+	@Mapping(target = "articleId", source = "challenge.article.id")
+	ChallengeArticleResponse challengeToChallengeArticleResponse(Challenge challenge);
 }

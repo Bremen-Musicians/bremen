@@ -2,10 +2,13 @@ package com.bremen.backend.domain.challenge.service;
 
 import java.io.IOException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
 import com.bremen.backend.domain.challenge.entity.Challenge;
@@ -77,4 +80,11 @@ public class ChallengeServiceImpl implements ChallengeService {
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CHALLENGE));
 		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(latestChallenge);
 	}
+
+	@Override
+	public Page<ChallengeArticleResponse> findChallengeEnsemble(Pageable pageable) {
+		return challengeRepository.findChallengeEnsemble(pageable)
+			.map(ChallengeMapper.INSTANCE::challengeToChallengeArticleResponse);
+	}
+
 }
