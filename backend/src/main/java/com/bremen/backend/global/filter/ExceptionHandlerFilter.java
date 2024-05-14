@@ -3,6 +3,7 @@ package com.bremen.backend.global.filter;
 import java.io.IOException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -31,6 +32,8 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
 			setErrorResponse(HttpStatus.BAD_REQUEST, response, e);
 		} catch (IllegalArgumentException e) {
 			setErrorResponse(HttpStatus.BAD_REQUEST, response, e);
+		} catch (AccessDeniedException e) {
+			setErrorResponse(HttpStatus.UNAUTHORIZED, response, e);
 		}
 	}
 

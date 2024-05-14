@@ -2,7 +2,6 @@ package com.bremen.backend.domain.user.service;
 
 import java.util.Date;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,14 +17,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 	private final BlackTokenService blackTokenService;
-	private final UserDetailsService userDetailsService;
+	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtTokenUtil jwtTokenUtil;
 	private final TokenService tokenService;
 
 	@Override
 	public UserLoginResponse login(UserLoginRequest userLoginRequest) {
-		User user = (User)userDetailsService.loadUserByUsername(userLoginRequest.getUsername());
+		User user = userService.getUserByUsername(userLoginRequest.getUsername());
 		// 해당하는 유저가 있는지 먼저 확인한다
 
 		passwordEncoder.matches(user.getPassword(), user.getPassword());
