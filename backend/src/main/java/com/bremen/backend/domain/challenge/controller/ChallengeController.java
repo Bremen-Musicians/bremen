@@ -55,7 +55,7 @@ public class ChallengeController {
 
 	@GetMapping("/ensembles")
 	@Operation(summary = "지난 챌린지 합주 영상을 조회합니다.")
-	ResponseEntity<ListResponse> commentList(Pageable pageable) {
+	ResponseEntity<ListResponse> challengesEnsemble(Pageable pageable) {
 		Page<ChallengeArticleResponse> articles = challengeService.findChallengeEnsemble(pageable);
 		return ResponseEntity.ok(
 			new ListResponse(HttpStatus.OK.value(), "지난 챌린지 선정 게시글 조회 성공", articles.getContent(),
