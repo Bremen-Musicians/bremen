@@ -1,5 +1,7 @@
 package com.bremen.backend.domain.article.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -29,6 +31,27 @@ public class ArticleHashtagServiceImpl implements ArticleHashtagService {
 			.map(articleHashtag -> articleHashtag.getHashtag().getName())
 			.collect(
 				Collectors.toList());
+	}
+
+	@Override
+	@Transactional
+	public List<String> modifyHashtags(Article article, Set<String> hashtags) {
+		Set<String> originalHashtags = articleHashtagRepository.findByArticleId(article.getId()).stream()
+			.map(ArticleHashtag::getHashtag)
+			.map(Hashtag::getName)
+			.collect(Collectors.toSet());
+		Set<String> modifiedHashtags = new HashSet<>(hashtags);
+
+		Set<String> hashtagsToRemove = new HashSet<>(originalHashtags);
+		hashtagsToRemove.removeAll(modifiedHashtags);
+		removeHashtags(article.getId(),
+			articleHashtagRepository.findByArticleIdAndHashtagNameIn(article.getId(), hashtagsToRemove));
+
+		Set<String> hashtagsToAdd = new HashSet<>(modifiedHashtags);
+		hashtagsToAdd.removeAll(originalHashtags);
+		addHashtags(article, hashtagsToAdd);
+
+		return new ArrayList<>(modifiedHashtags);
 	}
 
 	@Override

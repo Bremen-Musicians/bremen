@@ -2,6 +2,7 @@ package com.bremen.backend.domain.article.repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +21,8 @@ public interface ArticleHashtagRepository extends JpaRepository<ArticleHashtag, 
 	List<ArticleHashtag> findByArticleId(@Param("articleId") Long articleId);
 
 	List<ArticleHashtag> findByHashtagAndArticleIdNot(Hashtag hashtag, Long articleId);
+
+	@Query("SELECT ah FROM ArticleHashtag ah JOIN FETCH ah.hashtag WHERE ah.article.id = :articleId AND ah.hashtag.name IN :hashtagsToRemove")
+	List<ArticleHashtag> findByArticleIdAndHashtagNameIn(@Param("articleId") Long articleId,
+		@Param("hashtagsToRemove") Set<String> hashtagsToRemove);
 }
