@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ChallengeController {
 	private final ChallengeService challengeService;
 
-	@PostMapping
+	@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Operation(summary = "챌린지를 등록합니다.", description = "챌린지 곡, 일정, 챌린지 내용을 입력받아 챌린지를 등록합니다.")
 	ResponseEntity<SingleResponse<ChallengeResponse>> challengeAdd(
 		@Valid @RequestPart(value = "challengeInfo") ChallengeRequest challengeRequest,
