@@ -76,7 +76,9 @@ public class ArticleServiceImpl implements ArticleService {
 	public ArticleResponse modifyArticle(ArticleUpdateRequest articleUpdateRequest) {
 		Article article = getArticleById(articleUpdateRequest.getId());
 		article.modifyArticle(articleUpdateRequest.getTitle(), articleUpdateRequest.getContent());
-		return ArticleMapper.INSTANCE.articleToArticleResponse(article);
+		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(article);
+		articleResponse.setHashtags(articleHashtagService.modifyHashtags(article, articleUpdateRequest.getHashtags()));
+		return articleResponse;
 	}
 
 	@Override
