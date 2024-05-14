@@ -38,7 +38,7 @@ public class ArticleController {
 	private final ArticleService articleService;
 	private final ArticleLikeService articleLikeService;
 
-	@GetMapping()
+	@GetMapping("/detail")
 	@Operation(summary = "게시글 아이디로 게시글을 조회합니다.", description = "게시글의 id값을 파라미터로 받습니다.")
 	ResponseEntity<SingleResponse<ArticleResponse>> articleDetails(@RequestParam("id") Long id) {
 		ArticleResponse articleResponse = articleService.findArticleById(id);
@@ -87,7 +87,8 @@ public class ArticleController {
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "좋아요/취소 기능 수행", likeCnt));
 	}
 
-	@GetMapping("/list")
+	@GetMapping()
+	@Operation(summary = "유저가 작성한 게시글을 조회합니다", description = "유저의 id값을 파라미터로 받습니다.")
 	ResponseEntity<SingleResponse<List<ArticleResponse>>> articleListByUser(@RequestParam("userId") Long userId) {
 		List<ArticleResponse> articleResponses = articleService.findArticleByUser(userId);
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "조회 성공", articleResponses));
