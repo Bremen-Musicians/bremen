@@ -1,16 +1,29 @@
+import React from 'react';
 import styles from './IntroChallenge.module.scss';
 
-export default function IntroChallenge() {
+// Props interface if you're using TypeScript
+interface IntroChallengeProps {
+  onFileUpload: (file: File, id: string) => void;
+}
+
+export default function IntroChallenge({ onFileUpload }: IntroChallengeProps) {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      onFileUpload(file, id);  // Call the callback function with the file object and identifier
+    }
+  };
+
   return (
     <div className={styles.fileuploadarea}>
-      {/* 파일 업로드 */}
       <div className={styles.fileupload}>
         <span className={styles.filetitle}>[메인]</span>
         <input
           className={styles.file}
           type="file"
-          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          accept="image/jpg,image/png,image/jpeg,image/gif"
           id="main"
+          onChange={(event) => handleFileChange(event, 'main')}
         />
       </div>
 
@@ -19,8 +32,9 @@ export default function IntroChallenge() {
         <input
           className={styles.file}
           type="file"
-          accept="image/jpg,impge/png,image/jpeg,image/gif"
+          accept="image/jpg,image/png,image/jpeg,image/gif"
           id="challenge"
+          onChange={(event) => handleFileChange(event, 'challenge')}
         />
       </div>
     </div>
