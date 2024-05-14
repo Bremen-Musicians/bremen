@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.bremen.backend.domain.user.entity.PrincipalDetails;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.repository.UserRepository;
 import com.bremen.backend.global.CustomException;
@@ -23,6 +24,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			() ->
 				new CustomException(ErrorCode.NOT_FOUND_USER)
 		);
-		return user;
+		return new PrincipalDetails(user);
 	}
 }
