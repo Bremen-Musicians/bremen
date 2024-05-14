@@ -53,7 +53,7 @@ public class ChallengeController {
 			new SingleResponse<>(HttpStatus.OK.value(), "최신 챌린지를 정상적으로 조회하였습니다.", challengeResponse));
 	}
 
-	@GetMapping("/winners")
+	@GetMapping("/ensembles")
 	@Operation(summary = "지난 챌린지 합주 영상을 조회합니다.")
 	ResponseEntity<ListResponse> commentList(Pageable pageable) {
 		Page<ChallengeArticleResponse> articles = challengeService.findChallengeEnsemble(pageable);
@@ -62,4 +62,5 @@ public class ChallengeController {
 				articles.getTotalElements(),
 				articles.getPageable()));
 	}
+
 }
