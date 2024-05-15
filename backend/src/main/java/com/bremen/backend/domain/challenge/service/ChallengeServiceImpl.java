@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bremen.backend.domain.article.dto.ArticleListResponse;
+import com.bremen.backend.domain.article.service.ArticleChallengeService;
 import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
@@ -27,6 +29,7 @@ public class ChallengeServiceImpl implements ChallengeService {
 	private final ChallengeRepository challengeRepository;
 	private final MusicService musicService;
 	private final S3Service s3Service;
+	private final ArticleChallengeService articleChallengeService;
 
 	@Override
 	public Challenge getChallengeById(Long id) {
@@ -85,6 +88,11 @@ public class ChallengeServiceImpl implements ChallengeService {
 	public Page<ChallengeArticleResponse> findChallengeEnsemble(Pageable pageable) {
 		return challengeRepository.findChallengeEnsemble(pageable)
 			.map(ChallengeMapper.INSTANCE::challengeToChallengeArticleResponse);
+	}
+
+	@Override
+	public Page<ArticleListResponse> findChallengeArticle(Long instrumentId, Pageable pageable) {
+		return articleChallengeService.findArticlesByChallengeId(findLatestChallenge().getId(), instrumentId, pageable);
 	}
 
 }
