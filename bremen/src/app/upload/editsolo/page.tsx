@@ -1,3 +1,3 @@
 export default function Page() {
-  return <div>나는 자르기 독주</div>;
+  return <div style={{color: 'white'}}>독주 편집</div>;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 'use client';
@@ -57,7 +58,7 @@ const ProfileIndex = () => {
   const number = Math.floor(Math.random() * 5 + 1);
   const initialImg = `/basicImage/no_image_${number}.png`;
   const [userImg, setUserImg] = useState<string>(initialImg);
-  const [userImgFile, setUserImgFile] = useState<FormData | string>('');
+  const [userImgFile, setUserImgFile] = useState<File | null>(null);
 
   const router = useRouter();
 
@@ -66,59 +67,65 @@ const ProfileIndex = () => {
     let sendImage = userImg;
     if (userImg.includes('/basicImage/no_image_')) {
       sendImage = `no_image_${number}.png`;
-      const profileData = {
-        userProfileRequest: {
-          username: zustandEmail,
-          profileImage: sendImage,
-          introduce: profileContent,
-        },
-      };
+      const formData = new FormData();
+      formData.append('profileUrl', sendImage);
+      formData.append('username', zustandEmail);
+      formData.append('introduce', profileContent);
+      formData.append('profileImage', '');
+
+      const boundary = `----WebKitFormBoundary${crypto.randomUUID()}`;
+
       axios
         .post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
-          profileData,
+          formData,
           {
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': `multipart/form-data; boundary=${boundary}`,
             },
           },
         )
         .then(response => {
           // eslint-disable-next-line no-console
-          console.log('요청 response: ', response);
+          console.log('파일x요청: ', response, '헤더: ', Headers);
         })
         .catch(Error => {
           // eslint-disable-next-line no-console
           console.error(Error);
         });
     } else {
-      const profileData = {
-        profileImage: userImgFile,
-        userProfileRequest: {
-          username: zustandEmail,
-          introduce: profileContent,
-        },
-      };
-      // TODO: 헤더 수정
+      const formData = new FormData();
+
+      if (userImgFile) {
+        console.log('userImgFile', userImgFile);
+        formData.append('profileImage', userImgFile);
+      }
+      formData.append('username', zustandEmail);
+      formData.append('introduce', profileContent);
+      formData.append('profileUrl', '');
+
+      const boundary = `----WebKitFormBoundary${crypto.randomUUID()}`;
+
       axios
         .post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
-          profileData,
+          formData,
           {
             headers: {
-              'Content-Type': 'multipart/form-data',
+              'Content-Type': `multipart/form-data; boundary=${boundary}`,
             },
           },
         )
         .then(response => {
           // eslint-disable-next-line no-console
-          console.log('파일O요청: ', response);
+          console.log('파일O요청, axios, boundary: ', response);
         })
         .catch(Error => {
           // eslint-disable-next-line no-console
-          console.error(Error);
+          console.error('axios, boundary: ', Error);
         });
     }
+
     router.push('/user/login');
   };
 
