@@ -1,21 +1,41 @@
 import styles from '@/components/detail/Reply.module.scss';
+import moment from 'moment';
+import ProfileImage from '../Common/ProfileImage';
 
-export default function Reply({reReplyHandler}: {reReplyHandler: () => void}) {
+interface IReply {
+  id: number, // 댓글의 고유 id
+  groupCnt: number, // 대댓글이 총 몇개 있는지 알려줌
+  content: string,
+  writerNickname: string,
+  profile: string,
+  createTime: string,
+  children: IReply[], // 대댓글 목록
+  deleted: boolean,
+  updated: boolean,
+}
+
+interface ReplyProps {
+  reply: IReply,
+  key: number,
+  reReplyHandler: (reply: IReply) => void,
+}
+
+export default function Reply({reply, key, reReplyHandler}: ReplyProps) {
   return (
     <div className={styles.reply}>
-      <div className={styles.profileimg} />
+      <div className={styles.profileimg}>
+        <ProfileImage userNickname={reply.writerNickname} profileImage={reply.profile} />
+      </div>
       <div>
         {/* 댓글 단 사람 */}
-        <div className={styles.replier}>닉네임 | 3시간 전</div>
+        <div className={styles.replier}>{reply.writerNickname} | {moment(reply.createTime).fromNow()}</div>
         {/* 댓글 내용 */}
         <div>
-          정말 완벽한 연주입니다! 어떻게 이렇게 멋있으실 수 있을까요 저도
-          ㅇㅇ님처럼 멋있게 베이스 연주를 할 수 있었으면 좋겠습니다. 그날까지
-          열심히 연습할게요 화이팅!
+          {reply.content}
         </div>
         {/* 답글 버튼 */}
-        <p className={styles.rereplybtn} onClick={reReplyHandler}>
-          답글 달기
+        <p className={styles.rereplybtn} onClick={() => reReplyHandler(reply)}>
+          {reply.groupCnt > 0 ? <span>답글 {reply.groupCnt}개</span> : <span>답글 달기</span>}
         </p>
       </div>
     </div>

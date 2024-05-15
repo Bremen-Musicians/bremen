@@ -1,31 +1,25 @@
 import styles from '@/components/detail/ReplyHighlight.module.scss';
 import Video from '@/components/Common/Video';
+import useUserInfoStore from '@/stores/UserInfo';
 
-export default function replyHighlight({
-  profileImgH,
-  contentH,
-  deletedH,
-  replyCnt,
+export default function ReplyHighlightEmpty({
   replyHandler,
 }: {
-  profileImgH: string,
-  contentH: string,
-  deletedH: boolean,
-  replyCnt: number,
   replyHandler: () => void;
 }) {
+  const {zustandUserImage} = useUserInfoStore.getState();
+  const myProfileImage = zustandUserImage;
   return (
     <>
       <div className={styles.cell} onClick={replyHandler}>
         <div className={styles.title}>
           <p>댓글</p>
-          <p>{replyCnt}</p>
         </div>
         <div className={styles.reply}>
           <div className={styles.profileimg}>
-            {!deletedH && <img src={profileImgH} alt='profileImage' />}
+            <img src={myProfileImage} alt='myProfileImage' />
           </div>
-          <div>{deletedH ? '(삭제된 댓글입니다)' : contentH}</div>
+          <div>댓글 입력 ...</div>
         </div>
       </div>
       <div className={styles.videolist}>

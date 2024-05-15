@@ -1,0 +1,211 @@
+.topImageContainer {
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .topImage {
+    color: white;
+  }
+  
+  .infoContainer {
+    // margin-top:5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    justify-content: space-between;
+    margin-right: 3vw;
+    margin-left: 3vw;
+    margin-bottom :2vw;
+    @media (min-width: 450px) {
+      // 450px 이상의 화면에서는 가로 방향으로 배치
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  
+  .info {
+    display: flex;
+  }
+  
+  .categorySelected {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    font-weight: bold;
+    text-underline-offset: 7px;
+    margin-bottom: 10px;
+  }
+  
+  .orderSelected {
+    padding: 5px 12px;
+    background-color: skyblue;
+    color: black;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .orderUnselected {
+    padding: 5px 12px;
+    background-color: white;
+    color: black;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 15px;
+    transition: background-color 0.3s;
+    font-weight: bold;
+  }
+  
+  .filter {
+    padding: 5px;
+    width: 170px;
+    background-color: gray;
+    color: white;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+    font-weight: bold;
+    @media (min-width: 450px) {
+      display: flex;
+      align-items: center; /* 상하 중앙 정렬 */
+      justify-content: center; /* 좌우 중앙 정렬 */
+      height: 50px;
+      z-index: 800;
+    }
+  }
+  
+  .videolist {
+    margin: 6px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    @media (min-width: 450px) {
+        width:70%;
+        margin-left:3vw;
+    }
+  }
+  
+  .empty {
+    margin-top: 20vw;
+  }
+  
+  .topMargin {
+    margin: 15vw;
+  }
+
+  .mobileView {
+    display: flex;
+    flex-direction: column;
+  
+    @media (min-width: 450px) {
+      display: none;
+    }
+  }
+  
+  .webView {
+    display: none;
+    
+  
+    @media (min-width: 450px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  
+  .searchAndFilterContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    align-items: center; /* 상하 중앙 정렬 */
+    padding-bottom:3px;
+    z-index: 800;
+  }
+
+  .searchContainer{
+    @media (min-width: 450px) {
+        width:50vw;
+        z-index: 800;
+      }
+  }
+  .categoryContainer{
+    // margin-top:5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    justify-content: space-between;
+    margin-right: 3vw;
+    margin-left: 3vw;
+    @media (min-width: 450px) {
+      // 450px 이상의 화면에서는 가로 방향으로 배치
+      width:70%;
+      flex-direction: row;
+      justify-content: space-between;
+      height:3vh;
+    }
+  }
+  .category,
+  .order {
+    margin: 0 5px; /* 요소들 사이의 간격을 조정합니다. */
+    display:flex;
+    justify-content: space-around;
+  }
+  .category{
+    width:20vw;
+  } 
+  .order {
+    margin-left: 15px; /* order 요소들 사이의 왼쪽 여백을 더 크게 설정합니다. */
+    width:10vw;
+  }
+  
+.challenge {
+    @media (min-width:450px){
+        margin: 2vw;
+        width: 21vw;
+        height: 28vw;
+        background-color: red;
+        position: fixed;
+        top: 12vw; /* 원하는 위치로 조정하세요. */
+        margin-right:3vw;
+        right: 0; /* 화면 오른쪽에 위치하도록 설정 */
+        z-index: 1500; /* z-index 설정 */
+        margin-right:3vw;
+    }
+}
+.headerMargin{
+    margin:10vw;
+    @media (min-width:450px){
+      margin: 7vw;
+  }
+}
+.test{
+  margin-left:10vw;
+  position: fixed;
+  width:80vw;
+  background-color: #001533;
+  z-index: 500;
+  // margin-top:-10px;
+  margin-bottom:10px;
+}
+
+.test2{
+  background-color: #001533;
+  position: fixed;
+  width:100%;
+  height:130px;
+  z-index: 500;
+  margin-top:-10px;
+  margin-bottom:10px;
+}
