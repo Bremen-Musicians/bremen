@@ -1,0 +1,218 @@
+.searchContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.searchBox{
+position: relative;
+  background-color: var(--input-inner-color);
+  height: 10vmin;
+  width: 60vmin;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 2vmin;
+  border: transparent;
+  z-index: 999;
+  input[type = "text"]:focus{
+    outline: none;
+  }
+}
+.search{
+    width: calc(100% - 10vmin);
+    padding-left: 10px;
+    background-color: var(--input-inner-color);
+    height: 100%;
+    font-size: 4vmin;
+    border-radius: 10px;
+    border: transparent;
+}
+.openToggle{
+    font-size: 4.5vmin;
+    display: flex;
+    padding-right: 2vmin;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    height: 6vmin;
+}
+
+.searchIcon{
+    cursor: pointer;
+    font-size: 6vmin;
+    color: black;
+}
+.close{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 997;
+}
+.toggleSpace{
+    height:6vmin;
+    width:100%;
+}
+.toggle{
+    color: black;
+    position: absolute;
+    z-index: 998;
+    width: 60vmin;
+    left: 13vmin;
+    padding: 10px 2vmin 10px 10px;
+    background-color: var(--input-inner-color);
+    transform: translate(0px, -10px);
+    border-radius: 0px 0px 10px 10px;
+}
+.closeButton{
+    font-size: 4.5vmin;
+    display: flex;
+    align-items: center;
+}
+.closeContainer{
+    display:flex;
+    justify-content: flex-end;
+}
+.middleContainer{
+    display: flex;
+    justify-content: center;
+}
+
+
+.videoCon{
+    height: 50vh;
+    width: 78vmin;
+    display: flex;
+    gap: 2vmin;
+    flex-direction: column;
+    overflow: scroll;
+}
+.videoContainer{
+    width: 77vmin;
+    max-height: 30vmin;
+    display: flex;
+    width: 77vmin;
+    height: fit-content;
+    gap: 2vmin;
+    label{
+        height:auto;
+    }
+    video{
+        // background-color: var(--header-background-color);
+        background-color: black;
+        width: 40vmin;
+        height: 30vmin;
+        object-fit: contain;
+    }
+}
+.instrumentContainer{
+    display: flex;
+    padding-top: 10px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    gap: 1.5vmin;
+    min-height: 30vmin;
+}
+.instrument{
+    label{
+        background-color: var(--light-gray-color);
+        font-size: 3.5vmin;
+        border-radius: 25px;
+        padding: 1vmin;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    input[type = "checkbox"]{
+        display: none;
+    }
+    input[type="checkbox"]:checked + label {
+        background-color: var(--button-hover-color);
+    }
+}
+.info{
+    font-size: 3vmin;
+    overflow: hidden;
+    max-width: 33vmin;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.title{
+    font-size: 4.5vmin;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+}
+.infoContainer{
+    display: flex;
+    padding-top:1vmin;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.noResult{
+    margin-top: 2vmin;
+    margin-bottom: 2vmin;
+    text-align: center;
+}
+
+.selected{
+    background-color: var(--button-hover-color);
+    font-size: 3.5vmin;
+    border-radius: 25px;
+    padding: 1vmin;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+    width: auto;
+    height: 6.5vmin;
+    margin-right: 1vmin;
+    text-align: center;
+    display: flex;
+}
+
+.addButton{
+    cursor: pointer;
+    font-size: 5vmin;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-top: 2vmin;
+    padding: 1vmin 2vmin;
+    border: transparent;
+}
+
+.firstContainer{
+    min-height: 75vmin;
+    display: flex;
+    flex-direction: column;
+}
+.contentContainer{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 60vmin;
+}
+
+.instruments{
+    display: flex;
+    width: 100%;
+    overflow: scroll;
+    white-space: nowrap;
+}
+
+.tab{
+    margin-top: 1vmin;
+    // background-color: red;
+    display: flex;
+    gap: 2vmin;
+    font-size: 4.5vmin;
+}
+
+.sorted{
+ cursor: pointer;
+}
