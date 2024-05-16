@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.domain.video.dto.VideoRequest;
 import com.bremen.backend.domain.video.dto.VideoResponse;
@@ -26,6 +25,8 @@ public class VideoServiceImpl implements VideoService {
 	private final UserService userService;
 	private final S3Service s3Service;
 	private final EnsembleService ensembleService;
+	private final MusicService musicService;
+	private final InstrumentService instrumentService;
 
 	@Override
 	public VideoResponse findVideoById(Long videoId) {
@@ -45,13 +46,12 @@ public class VideoServiceImpl implements VideoService {
 		IOException {
 		Video video = VideoMapper.INSTANCE.videoRequestToVideo(videoRequest);
 
+		video.setSavedVideo(userService.getUserByToken(),
+			s3Service.streamUpload("thumbnail", thumbnailFile),
+			musicService.getMusicById(videoRequest.getMusicId()),
+			instrumentService.getInstrumentById(videoRequest.getInstrumentId()));
+
 		String videoUrl = "";
-
-		// 작성자
-		User user = userService.getUserByToken();
-		String imageUrl = s3Service.streamUpload("thumbnail", thumbnailFile);
-		video.setSavedVideo(user, imageUrl);
-
 		// 영상
 		if (highlightFile != null && !highlightFile.isEmpty()) {
 			videoUrl = s3Service.streamUpload("video", highlightFile);
