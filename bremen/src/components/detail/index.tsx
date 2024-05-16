@@ -47,7 +47,7 @@ export default function Page() {
     // 2번 게시글 조회(임시)
     if (didMount) {
       api
-        .get<IPostResponse>(`/articles?id=${articleId}`)
+        .get<IPostResponse>(`/articles/detail?id=${articleId}`)
         .then((response) => {
           const postData = response.data.item;
           setPost(postData);

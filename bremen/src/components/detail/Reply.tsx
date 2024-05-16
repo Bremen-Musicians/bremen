@@ -20,15 +20,22 @@ interface ReplyProps {
   reReplyHandler: (reply: IReply) => void,
 }
 
-export default function Reply({reply, key, reReplyHandler}: ReplyProps) {
+export default function Reply({reply, reReplyHandler}: ReplyProps) {
   return (
     <div className={styles.reply}>
       <div className={styles.profileimg}>
         <ProfileImage userNickname={reply.writerNickname} profileImage={reply.profile} />
       </div>
       <div>
-        {/* 댓글 단 사람 */}
-        <div className={styles.replier}>{reply.writerNickname} | {moment(reply.createTime).fromNow()}</div>
+        <div className={styles.replytop}>
+          {/* 댓글 단 사람 */}
+          <div className={styles.replier}>{reply.writerNickname} | {moment(reply.createTime).fromNow()}</div>
+          
+          {/* 내가 단 댓글이면 보일 것 */}
+          <div className={styles.modifydelete}>
+            <span>수정</span> | <span>삭제</span>
+          </div>
+        </div>
         {/* 댓글 내용 */}
         <div>
           {reply.content}
