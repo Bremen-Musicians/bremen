@@ -32,7 +32,8 @@ public class ArticleSearchQueryDslRepository {
 			.join(article.user, user).fetchJoin()
 			.where(
 				instrumentIds != null ? article.video.instrument.id.in(instrumentIds) : null,
-				StringUtils.hasText(keyword) ? category.getCategorySpecifier(keyword) : null
+				StringUtils.hasText(keyword) ? category.getCategorySpecifier(keyword) : null,
+				article.isDeleted.isFalse()
 			)
 			.orderBy(order.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 

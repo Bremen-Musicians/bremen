@@ -51,7 +51,7 @@ public class ChallengeController {
 	@GetMapping("/latest")
 	@Operation(summary = "최신 챌린지를 조회합니다.", description = "가장 최근에 등록된 챌린지를 조회합니다.")
 	ResponseEntity<SingleResponse<ChallengeResponse>> challengeDetailsLatest() {
-		ChallengeResponse challengeResponse = challengeService.findLatestChallenge();
+		ChallengeResponse challengeResponse = challengeService.findLatestChallengeResponse();
 		return ResponseEntity.ok(
 			new SingleResponse<>(HttpStatus.OK.value(), "최신 챌린지를 정상적으로 조회하였습니다.", challengeResponse));
 	}

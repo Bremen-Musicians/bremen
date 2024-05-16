@@ -18,6 +18,7 @@ import com.bremen.backend.domain.article.repository.ArticleOrderBy;
 import com.bremen.backend.domain.article.repository.ArticleQueryDslRepository;
 import com.bremen.backend.domain.article.repository.ArticleQueryRepository;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
+import com.bremen.backend.domain.challenge.service.ChallengeArticleService;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.domain.video.service.VideoService;
@@ -36,8 +37,8 @@ public class ArticleServiceImpl implements ArticleService {
 	private final ArticleQueryRepository articleQueryRepository;
 	private final LikeService likeService;
 	private final ArticleHashtagService articleHashtagService;
-
 	private final ArticleQueryDslRepository articleQueryDslRepository;
+	private final ChallengeArticleService challengeArticleService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -66,6 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
 		Article article = ArticleMapper.INSTANCE.articleRequestToArticle(articleRequest);
 		article.saveArticle(userService.getUserByToken(), videoService.getVideoById(articleRequest.getVideoId()));
 		Article savedArticle = articleRepository.save(article);
+		challengeArticleService.addChallengeArticle(savedArticle);
 		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
 		articleResponse.setHashtags(articleHashtagService.addHashtags(article, articleRequest.getHashtags()));
 		return articleResponse;

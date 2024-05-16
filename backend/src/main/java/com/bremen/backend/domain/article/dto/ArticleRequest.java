@@ -15,6 +15,9 @@ public class ArticleRequest {
 	@NotNull(message = "게시글의 내용은 비어있을 수 없습니다.")
 	private String content;
 
+	@NotNull(message = "챌린지 참여 여부는 비어있을 수 없습니다.")
+	private boolean isChallenge;
+
 	private Long videoId;
 
 	private Set<String> hashtags;

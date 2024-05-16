@@ -24,7 +24,9 @@ public interface ChallengeService {
 
 	Long removeChallenge(Long id);
 
-	ChallengeResponse findLatestChallenge();
+	ChallengeResponse findLatestChallengeResponse();
+
+	Challenge findLatestChallenge();
 
 	Page<ChallengeArticleResponse> findChallengeEnsemble(Pageable pageable);
 

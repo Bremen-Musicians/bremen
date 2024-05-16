@@ -65,6 +65,12 @@ public class Article {
 	@Setter(AccessLevel.PROTECTED)
 	private boolean isDeleted;
 
+	@NotNull
+	@ColumnDefault("false")
+	@Column(name = "is_challenge", columnDefinition = "TINYINT(1)")
+	@Setter(AccessLevel.PROTECTED)
+	private boolean isChallenge;
+
 	@CreationTimestamp
 	@Column(name = "create_time")
 	private LocalDateTime createTime;
