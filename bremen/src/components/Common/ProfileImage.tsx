@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {useRouter} from 'next/navigation';
 import Image from 'next/image';
 import useUserInfoStore from '@/stores/UserInfo';
@@ -27,7 +28,7 @@ export default function ProfileImage({
   };
 
   return (
-    <img
+    <Image
       className={styles.profileImage}
       src={`https://bremen-music.s3.ap-northeast-2.amazonaws.com/${profileImage}`}
       alt="profileImage"

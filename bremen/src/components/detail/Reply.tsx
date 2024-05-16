@@ -1,19 +1,19 @@
-import styles from '@/components/detail/Reply.module.scss';
 import moment from 'moment';
+import styles from '@/components/detail/Reply.module.scss';
 import ProfileImage from '../Common/ProfileImage';
 import { useEffect, useState } from 'react';
 import useUserInfoStore from '@/stores/UserInfo';
 
 interface IReply {
-  id: number, // 댓글의 고유 id
-  groupCnt: number, // 대댓글이 총 몇개 있는지 알려줌
-  content: string,
-  writerNickname: string,
-  profile: string,
-  createTime: string,
-  children: IReply[], // 대댓글 목록
-  deleted: boolean,
-  updated: boolean,
+  id: number; // 댓글의 고유 id
+  groupCnt: number; // 대댓글이 총 몇개 있는지 알려줌
+  content: string;
+  writerNickname: string;
+  profile: string;
+  createTime: string;
+  children: IReply[]; // 대댓글 목록
+  deleted: boolean;
+  updated: boolean;
 }
 
 interface ReplyProps {
@@ -36,7 +36,10 @@ export default function Reply({reply, deleteReply, reReplyHandler}: ReplyProps) 
   return (
     <div className={styles.reply}>
       <div className={styles.profileimg}>
-        <ProfileImage userNickname={reply.writerNickname} profileImage={reply.profile} />
+        <ProfileImage
+          userNickname={reply.writerNickname}
+          profileImage={reply.profile}
+        />
       </div>
       <div>
         <div className={styles.replytop}>
@@ -56,6 +59,8 @@ export default function Reply({reply, deleteReply, reReplyHandler}: ReplyProps) 
         <div>
           {reply.content}
         </div>
+        {/* 댓글 내용 */}
+        <div>{reply.content}</div>
         {/* 답글 버튼 */}
         <p className={styles.rereplybtn} >
           {

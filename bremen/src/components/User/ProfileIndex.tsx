@@ -74,17 +74,12 @@ const ProfileIndex = () => {
       formData.append('profileImage', '');
 
       const boundary = `----WebKitFormBoundary${crypto.randomUUID()}`;
-
       axios
-        .post(
-          `https://k10a104.p.ssafy.io/api/v1/users/profile`,
-          formData,
-          {
-            headers: {
-              'Content-Type': `multipart/form-data; boundary=${boundary}`,
-            },
+        .post(`https://k10a104.p.ssafy.io/api/v1/users/profile`, formData, {
+          headers: {
+            'Content-Type': `multipart/form-data; boundary=${boundary}`,
           },
-        )
+        })
         .then(response => {
           // eslint-disable-next-line no-console
           console.log('파일x요청: ', response, '헤더: ', Headers);
@@ -107,15 +102,11 @@ const ProfileIndex = () => {
       const boundary = `----WebKitFormBoundary${crypto.randomUUID()}`;
 
       axios
-        .post(
-          `https://k10a104.p.ssafy.io/api/v1/users/profile`,
-          formData,
-          {
-            headers: {
-              'Content-Type': `multipart/form-data; boundary=${boundary}`,
-            },
+        .post(`https://k10a104.p.ssafy.io/api/v1/users/profile`, formData, {
+          headers: {
+            'Content-Type': `multipart/form-data; boundary=${boundary}`,
           },
-        )
+        })
         .then(response => {
           // eslint-disable-next-line no-console
           console.log('파일O요청, axios, boundary: ', response);
