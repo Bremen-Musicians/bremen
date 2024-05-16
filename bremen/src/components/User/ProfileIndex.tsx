@@ -77,7 +77,7 @@ const ProfileIndex = () => {
 
       axios
         .post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
+          `https://k10a104.p.ssafy.io/api/v1/users/profile`,
           formData,
           {
             headers: {
@@ -108,7 +108,7 @@ const ProfileIndex = () => {
 
       axios
         .post(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/profile`,
+          `https://k10a104.p.ssafy.io/api/v1/users/profile`,
           formData,
           {
             headers: {

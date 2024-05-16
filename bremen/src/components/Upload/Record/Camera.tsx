@@ -168,7 +168,7 @@ const Camera = () => {
       );
 
       axios
-        .post(`${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/videos`, formData, {
+        .post(`https://k10a104.p.ssafy.io/api/v1/videos`, formData, {
           headers: {
             Authorization: `Bearer ${zustandToken}`,
             'Content-Type': `multipart/form-data; boundary=${boundary}`,
