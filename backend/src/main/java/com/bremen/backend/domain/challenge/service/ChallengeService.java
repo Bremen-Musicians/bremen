@@ -2,8 +2,12 @@ package com.bremen.backend.domain.challenge.service;
 
 import java.io.IOException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bremen.backend.domain.article.dto.ArticleListResponse;
+import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
 import com.bremen.backend.domain.challenge.entity.Challenge;
@@ -23,4 +27,8 @@ public interface ChallengeService {
 	ChallengeResponse findLatestChallengeResponse();
 
 	Challenge findLatestChallenge();
+
+	Page<ChallengeArticleResponse> findChallengeEnsemble(Pageable pageable);
+
+	Page<ArticleListResponse> findChallengeArticle(Long instrumentId, Pageable pageable);
 }

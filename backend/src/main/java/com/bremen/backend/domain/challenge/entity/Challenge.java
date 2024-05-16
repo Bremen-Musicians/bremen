@@ -6,6 +6,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.video.entity.Music;
 
 import jakarta.persistence.Column;
@@ -16,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -76,6 +78,10 @@ public class Challenge {
 	@UpdateTimestamp
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
+
+	@JoinColumn(name = "article_id")
+	@OneToOne(fetch = FetchType.LAZY, optional = true)
+	private Article article;
 
 	public void saveChallenge(Music music, String mainImage, String challengeImage) {
 		setMusic(music);
