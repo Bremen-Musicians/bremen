@@ -27,4 +27,6 @@ public interface UserService {
 	void duplicateNickname(String nickname);
 
 	boolean isAuthenticated();
+
+	void isEqualUser(User user);
 }

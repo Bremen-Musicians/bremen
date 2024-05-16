@@ -10,4 +10,6 @@ public interface NotificationService {
 
 	ListResponse getNotification(Pageable pageable);
 
+	void deleteNotification(Long id);
+	
 }

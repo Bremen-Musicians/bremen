@@ -10,6 +10,7 @@ import lombok.Data;
 @Builder
 @Data
 public class NotificationDto {
+	private Long id;
 	private String content;
 	private NotificationType type;
 	private LocalDateTime createTime;

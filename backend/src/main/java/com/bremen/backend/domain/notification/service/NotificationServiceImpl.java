@@ -13,6 +13,8 @@ import com.bremen.backend.domain.notification.entity.Notification;
 import com.bremen.backend.domain.notification.mapper.NotificationMapper;
 import com.bremen.backend.domain.notification.repository.NotificationRepository;
 import com.bremen.backend.domain.user.service.UserService;
+import com.bremen.backend.global.CustomException;
+import com.bremen.backend.global.response.ErrorCode;
 import com.bremen.backend.global.response.ListResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -42,4 +44,19 @@ public class NotificationServiceImpl implements NotificationService {
 			.collect(Collectors.toList());
 		return new ListResponse<>(notificationDtos, pages.getTotalElements(), pages.getPageable());
 	}
+
+	public Notification getNotification(Long id) {
+		return notificationRepository.findById(id).orElseThrow(
+			() -> new CustomException(ErrorCode.NOT_FOUND_NOTIFICATION)
+		);
+	}
+
+	@Override
+	@Transactional
+	public void deleteNotification(Long id) {
+		Notification notification = getNotification(id);
+		userService.isEqualUser(notification.getUser());
+		notification.deleteNotification();
+	}
+
 }
