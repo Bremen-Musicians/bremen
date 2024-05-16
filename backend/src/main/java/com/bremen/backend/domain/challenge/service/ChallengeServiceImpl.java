@@ -1,6 +1,7 @@
 package com.bremen.backend.domain.challenge.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -93,6 +94,11 @@ public class ChallengeServiceImpl implements ChallengeService {
 	@Override
 	public Page<ArticleListResponse> findChallengeArticle(Long instrumentId, Pageable pageable) {
 		return articleChallengeService.findArticlesByChallengeId(findLatestChallenge().getId(), instrumentId, pageable);
+	}
+
+	@Override
+	public List<ArticleListResponse> findChallengeWinner() {
+		return articleChallengeService.findWinnersByChallengeId(findLatestChallenge().getId());
 	}
 
 }

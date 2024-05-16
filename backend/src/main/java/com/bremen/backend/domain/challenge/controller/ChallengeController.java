@@ -1,6 +1,7 @@
 package com.bremen.backend.domain.challenge.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -74,6 +75,13 @@ public class ChallengeController {
 			new ListResponse(HttpStatus.OK.value(), "챌린지 영상 조회 성공", articles.getContent(),
 				articles.getTotalElements(),
 				articles.getPageable()));
+	}
+
+	@GetMapping("/winners")
+	@Operation(summary = "악기별 1위 챌린지 게시글 조회")
+	ResponseEntity<SingleResponse<List<ArticleListResponse>>> challengesWinner() {
+		List<ArticleListResponse> articles = challengeService.findChallengeWinner();
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "챌린지 우수자의 게시글이 조회되었습니다.", articles));
 	}
 
 }
