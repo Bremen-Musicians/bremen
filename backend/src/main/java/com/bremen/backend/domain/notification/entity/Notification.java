@@ -78,8 +78,13 @@ public class Notification {
 	@Setter(AccessLevel.PROTECTED)
 	private User user;
 
-	public void addUser(User user){
+	public void addUser(User user) {
 		this.setUser(user);
+	}
+
+	public void deleteNotification() {
+		this.setDeleteTime(LocalDateTime.now());
+		this.setDeleted(true);
 	}
 
 }
