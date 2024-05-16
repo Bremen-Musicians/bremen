@@ -38,7 +38,10 @@ export default function ReReplies({reply}: {reply: IReply}) {
         </div>
 
         {/* 답댓글 리스트 */}
-        {reply.children && reply.children.map((rereply, key) => <ReReply rereply={rereply} />)}
+        {reply.children &&
+          reply.children.map((rereply, key) => (
+            <ReReply rereply={rereply} key={key} />
+          ))}
       </div>
       <div className={styles.rereplyinput}>
         <input type="text"></input>
