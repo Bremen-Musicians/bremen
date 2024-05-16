@@ -25,10 +25,6 @@ const LoginIndex = () => {
     setZustandUserId,
     setZustandEmail,
   } = useUserInfoStore();
-  /** 엔터누르면 전송
-   * 전송 버튼 누르면 전송
-   *
-   */
 
   const doLogin = async ({email, pw}: {email: string; pw: string}) => {
     try {
@@ -37,12 +33,10 @@ const LoginIndex = () => {
         password: pw,
       };
       const response = await axios.post<LoginResponse>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/login`,
+        `https://k10a104.p.ssafy.io/api/v1/users/login`,
         loginData,
       );
       if (response.data.status >= 200 && response.data.status < 300) {
-        console.log('통과');
-        // FIXME: API수정 후 삭제 필요
         console.log(response.data.item.profileImage);
         setZustandUserNickname(response.data.item.nickname);
         setZustandToken(response.data.item.accessToken);
@@ -50,14 +44,11 @@ const LoginIndex = () => {
         setZustandUserId(response.data.item.id);
         setZustandEmail(response.data.item.username);
         if (response.data.item.profileImage === null) {
-          console.log('이미지X');
           router.push('/user/profile');
         } else if (response.data.item.profileImage.includes('no_image')) {
-          console.log('이미지 기본');
           setZustandUserImage(`/profile/${response.data.item.profileImage}`);
           router.push('/');
         } else {
-          console.log('이미지 O');
           setZustandUserImage(response.data.item.profileImage);
           router.push('/');
         }

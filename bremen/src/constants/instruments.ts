@@ -1,0 +1,17 @@
+export const instruments = [
+  {name: '피아노', number: 10},
+  {name: '통기타', number: 12},
+  {name: '드럼', number: 11},
+  {name: '바이올린', number: 2},
+  {name: '일렉기타', number: 14},
+  {name: '첼로', number: 4},
+  {name: '플룻', number: 6},
+  {name: '클라리넷', number: 7},
+  {name: '베이스기타', number: 13},
+  {name: '트럼펫', number: 8},
+  {name: '비올라', number: 3},
+  {name: '마림바', number: 9},
+  {name: '하프', number: 5},
+  {name: '그 외', number: 1},
+  {name: '보컬', number: 15},
+];

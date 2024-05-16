@@ -2,29 +2,33 @@ import styles from './SongSelectList.module.scss';
 
 interface Song {
   title: string;
-  artist: string;
-  isClassic: boolean;
+  composer: string | null;
+  singer: string | null;
   selectSong: (title: string, artist: string) => void;
 }
 
 export default function SongSelectList({
   title,
-  artist,
-  isClassic,
+  composer,
+  singer,
   selectSong,
 }: Song) {
+  // Determine if the song is classical based on the presence of a composer
+  const isClassic = composer !== null;
+  const artistName = isClassic ? composer : singer; // Choose display between composer and singer
+
   return (
     <div className={styles.foundsong}>
-      {/* 노래제목 */}
+      {/* Song Title */}
       <div className={styles.song}>
-        <span onClick={() => selectSong(title, artist)}>{title}</span>
+        <span onClick={() => selectSong(title, artistName ? artistName : '')}>{title}</span>
       </div>
 
-      {/* 작곡가 / 가수 */}
+      {/* Composer or Singer */}
       <div className={styles.singer}>
-        <span onClick={() => selectSong(title, artist)}>
-          {isClassic ? '작곡가 : ' : '가수 : '}
-          {artist}
+        <span onClick={() => selectSong(title, artistName ? artistName : '')}>
+          {isClassic ? '작곡가: ' : '가수: '}
+          {artistName}
         </span>
       </div>
     </div>
