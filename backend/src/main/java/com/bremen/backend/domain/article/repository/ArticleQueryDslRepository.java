@@ -3,6 +3,7 @@ package com.bremen.backend.domain.article.repository;
 import static com.bremen.backend.domain.article.entity.QArticle.*;
 import static com.bremen.backend.domain.user.entity.QFollow.*;
 import static com.bremen.backend.domain.user.entity.QUser.*;
+import static com.bremen.backend.domain.video.entity.QEnsemble.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -74,4 +75,17 @@ public class ArticleQueryDslRepository {
 		return PageableExecutionUtils.getPage(articles, pageable, query::fetchCount);
 	}
 
+	public Page<Article> findRelatedArticle(Long id, Pageable pageable) {
+		JPQLQuery<Article> query = queryFactory
+			.selectFrom(article)
+			.join(ensemble).on(article.video.id.eq(ensemble.owner.id).or(article.video.id.eq(ensemble.participant.id)))
+			.where(
+				ensemble.owner.id.eq(id).or(ensemble.participant.id.eq(id))
+					.and(article.video.id.ne(id))
+			);
+
+		List<Article> articles = query.offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
+
+		return PageableExecutionUtils.getPage(articles, pageable, query::fetchCount);
+	}
 }
