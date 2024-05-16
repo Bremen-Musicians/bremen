@@ -1,12 +1,16 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
+
 'use client';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import {useRouter} from 'next/navigation';
+import api from '@/api/apiMulti';
 import FindSong from './FindSong';
 import FindDate from './FindDate';
 import IntroChallenge from './IntroChallenge';
 import styles from './Challenge.module.scss';
-import api from '@/api/apiMulti';
-import { useRouter } from 'next/navigation';
 
 export default function Challenge() {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
@@ -63,27 +67,32 @@ export default function Challenge() {
       const challengeInfo = JSON.stringify({
         musicId: songId,
         startTime: formattedStartDate,
-        endTime: formattedEndDate
+        endTime: formattedEndDate,
       });
 
       // FormData에 challengeInfo를 추가
-      formData.append('challengeInfo', new Blob([challengeInfo], { type: 'application/json' }));
+      formData.append(
+        'challengeInfo',
+        new Blob([challengeInfo], {type: 'application/json'}),
+      );
       formData.append('mainImage', mainImage);
       formData.append('challengeImage', challengeImage);
 
       // API 요청
-      api.post(url, formData, {
-        headers: {
-          // 'Content-Type': 'multipart/form-data'은 자동 설정됨
-        }
-      })
-      .then(response => {
-        alert('등록되었습니다');
-        router.back(); // 성공 후 이전 페이지로 돌아가기
-      })
-      .catch(error => {
-        console.error('Failed to create challenge:', error);
-      });
+      api
+        .post(url, formData, {
+          headers: {
+            // 'Content-Type': 'multipart/form-data'은 자동 설정됨
+          },
+        })
+        .then(response => {
+          alert('등록되었습니다');
+          router.back(); // 성공 후 이전 페이지로 돌아가기
+          console.log(response);
+        })
+        .catch(error => {
+          console.error('Failed to create challenge:', error);
+        });
     } else {
       console.log('실패! songId 또는 날짜가 유효하지 않습니다.');
     }
@@ -94,15 +103,37 @@ export default function Challenge() {
       <span className={styles.title}>챌린지 정보 등록</span>
       <div className={styles.challengepage}>
         <FindSong onSongSelect={handleSongId} />
-        <FindDate onStartDateChange={handleStartDateChange} onEndDateChange={handleEndDateChange} onValidationChange={handleValidationChange} />
+        <FindDate
+          onStartDateChange={handleStartDateChange}
+          onEndDateChange={handleEndDateChange}
+          onValidationChange={handleValidationChange}
+        />
         {!songId && <div className={styles.warning}>노래를 선택해 주세요.</div>}
-        {!isDateValid && <div className={styles.warning}>종료일은 시작일 이후가 되어야 합니다.</div>}
+        {!isDateValid && (
+          <div className={styles.warning}>
+            종료일은 시작일 이후가 되어야 합니다.
+          </div>
+        )}
         <IntroChallenge onFileUpload={handleFileUpload} />
         <div className={styles.imagePreview}>
-          {mainImage && <img src={URL.createObjectURL(mainImage)} alt="Main" style={{ width: '100px', height: '125px' }} />}
-          {challengeImage && <img src={URL.createObjectURL(challengeImage)} alt="Challenge" style={{ width: '100px', height: '125px' }} />}
+          {mainImage && (
+            <img
+              src={URL.createObjectURL(mainImage)}
+              alt="Main"
+              style={{width: '100px', height: '125px'}}
+            />
+          )}
+          {challengeImage && (
+            <img
+              src={URL.createObjectURL(challengeImage)}
+              alt="Challenge"
+              style={{width: '100px', height: '125px'}}
+            />
+          )}
         </div>
-        <div onClick={submit} className={styles.submitbutton}>등록</div>
+        <div onClick={submit} className={styles.submitbutton}>
+          등록
+        </div>
       </div>
     </div>
   );
