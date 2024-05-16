@@ -1,6 +1,8 @@
 import styles from '@/components/detail/Reply.module.scss';
 import moment from 'moment';
 import ProfileImage from '../Common/ProfileImage';
+import { useEffect, useState } from 'react';
+import useUserInfoStore from '@/stores/UserInfo';
 
 interface IReply {
   id: number, // 댓글의 고유 id
@@ -22,6 +24,15 @@ interface ReplyProps {
 }
 
 export default function Reply({reply, deleteReply, reReplyHandler}: ReplyProps) {
+  const [myReply, setMyReply] = useState<boolean>(false);
+  const { zustandUserNickname } = useUserInfoStore.getState();
+
+  useEffect(() => {
+    if (zustandUserNickname === reply.writerNickname) {
+      setMyReply(true);
+    }
+  }, [])
+
   return (
     <div className={styles.reply}>
       <div className={styles.profileimg}>
@@ -33,9 +44,13 @@ export default function Reply({reply, deleteReply, reReplyHandler}: ReplyProps) 
           <div className={styles.replier}>{reply.writerNickname} | {moment(reply.createTime).fromNow()}</div>
           
           {/* 내가 단 댓글이면 보일 것 */}
-          <div className={styles.modifydelete}>
-            <span>수정</span> | <span onClick={() => deleteReply(reply.id)}>삭제</span>
-          </div>
+          {
+            myReply && (
+              <div className={styles.modifydelete}>
+                <span>수정</span> | <span onClick={() => deleteReply(reply.id)}>삭제</span>
+              </div>
+            )
+          }
         </div>
         {/* 댓글 내용 */}
         <div>
