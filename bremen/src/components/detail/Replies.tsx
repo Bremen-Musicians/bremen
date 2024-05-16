@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import Reply from '@/components/detail/Reply';
 import styles from '@/components/detail/Replies.module.scss';
 import ReReplies from './ReReplies';
@@ -19,18 +19,46 @@ interface IReply {
   updated: boolean,
 }
 
-export default function Replies({replyList, replyHandler}: {replyList: IReply[], replyHandler: () => void}) {
+export default function Replies({replyHandler}: {replyHandler: () => void}) {
   const [openReReply, setOpenReReply] = useState(false);
   const [openedReply, setOpenedReply] = useState<IReply>();
+  const [replyList, setReplyList] = useState<IReply[]>([]);
+  const [input, setInput] = useState<string>('');
   
+  // 대댓글 창 열기
   const handleReReply = (reply: IReply) => {
     setOpenedReply(reply);
     setOpenReReply(true);
   };
 
+  // 대댓글 창 닫기
   const closeReReply = () => {
     setOpenReReply(false);
   }
+
+  // 댓글 목록 조회
+  const getReply = () => {
+    api.get(`/comments?id=2`).then((response) => {
+      const replyData = response.data.items;
+      setReplyList(replyData);
+    })
+  }
+
+  // 댓글 작성
+  const postReply = () => {
+    api.post(`/comments`, {
+      content: input,
+      articleId: 2,
+    }).then(() => {
+      // 입력창 초기화 및 댓글 목록 재조회
+      setInput('');
+      getReply();
+    })
+  }
+
+  useEffect(() => {
+    getReply();
+  }, []);
 
   return (
     <>
@@ -61,8 +89,14 @@ export default function Replies({replyList, replyHandler}: {replyList: IReply[],
       {!openReReply && (
         <>
           <div className={styles.replyinput}>
-            <input type="text"></input>
-            <div>등록</div>
+            <input
+              type="text"
+              placeholder='댓글 입력...'
+              value={input}
+              onChange={e => setInput(e.target.value)}
+              onKeyDown={e => (e.key === 'Enter' ? postReply() : null)}
+            />
+            <div onClick={postReply}>등록</div>
           </div>
           <div className={styles.pagebottom} />
         </>

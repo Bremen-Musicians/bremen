@@ -74,7 +74,7 @@ export default function ReplyArea() {
   return (
     <div>
       {openReply ? (
-        <Replies replyList={replyList} replyHandler={replyHandler} />
+        <Replies replyHandler={replyHandler} />
       ) : (
         <>
         {
