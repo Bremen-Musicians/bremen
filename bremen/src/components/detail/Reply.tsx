@@ -41,8 +41,8 @@ export default function Reply({reply, reReplyHandler}: ReplyProps) {
           {reply.content}
         </div>
         {/* 답글 버튼 */}
-        <p className={styles.rereplybtn} onClick={() => reReplyHandler(reply)}>
-          {reply.groupCnt > 0 ? <span>답글 {reply.groupCnt}개</span> : <span>답글 달기</span>}
+        <p className={styles.rereplybtn} >
+          {reply.groupCnt > 0 ? <span onClick={() => reReplyHandler(reply)}>답글 {reply.groupCnt}개</span> : <span>답글 달기</span>}
         </p>
       </div>
     </div>
