@@ -28,4 +28,6 @@ public interface ArticleService {
 	List<ArticleResponse> findArticleByUser(Long userId);
 
 	ListResponse findArticle(ArticleOrderBy articleOrderBy, Pageable pageable);
+
+	ListResponse findRelatedArticle(Long id, Pageable pageable);
 }

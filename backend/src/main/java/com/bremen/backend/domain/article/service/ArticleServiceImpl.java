@@ -130,4 +130,15 @@ public class ArticleServiceImpl implements ArticleService {
 		return new ListResponse(articles, pages.getTotalElements(), pages.getPageable());
 	}
 
+	@Override
+	@Transactional(readOnly = true)
+	public ListResponse findRelatedArticle(Long id, Pageable pageable) {
+		Page<Article> pages = articleQueryDslRepository.findRelatedArticle(id, pageable);
+		List<ArticleResponse> articles = pages.getContent()
+			.stream()
+			.map(ArticleMapper.INSTANCE::articleToArticleResponse)
+			.collect(Collectors.toList());
+		return new ListResponse(articles, pages.getTotalElements(), pages.getPageable());
+	}
+
 }
