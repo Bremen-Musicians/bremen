@@ -7,6 +7,7 @@ import com.bremen.backend.domain.user.dto.UserProfileUpdateResponse;
 import com.bremen.backend.domain.user.dto.UserRegistrationRequest;
 import com.bremen.backend.domain.user.dto.UserRequest;
 import com.bremen.backend.domain.user.dto.UserResponse;
+import com.bremen.backend.domain.user.dto.UserSummaryResponse;
 import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 import com.bremen.backend.domain.user.entity.User;
 
@@ -25,5 +26,7 @@ public interface UserMapper {
 	User userRegistrationToUser(UserRegistrationRequest userRegistrationRequest);
 
 	UserProfileUpdateResponse userToUserProfileUpdateResponse(User user);
+
+	UserSummaryResponse userToUserSummaryResponse(User user);
 
 }

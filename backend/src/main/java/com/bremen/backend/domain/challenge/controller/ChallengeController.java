@@ -10,10 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bremen.backend.domain.article.dto.ArticleListResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
@@ -60,6 +62,16 @@ public class ChallengeController {
 		Page<ChallengeArticleResponse> articles = challengeService.findChallengeEnsemble(pageable);
 		return ResponseEntity.ok(
 			new ListResponse(HttpStatus.OK.value(), "지난 챌린지 선정 게시글 조회 성공", articles.getContent(),
+				articles.getTotalElements(),
+				articles.getPageable()));
+	}
+
+	@GetMapping()
+	@Operation(summary = "챌린지 영상 조회")
+	ResponseEntity<ListResponse> challengesList(@RequestParam(required = false) Long instrumentId, Pageable pageable) {
+		Page<ArticleListResponse> articles = challengeService.findChallengeArticle(instrumentId, pageable);
+		return ResponseEntity.ok(
+			new ListResponse(HttpStatus.OK.value(), "챌린지 영상 조회 성공", articles.getContent(),
 				articles.getTotalElements(),
 				articles.getPageable()));
 	}

@@ -37,6 +37,7 @@ public class SecurityConfig {
 		HEAD + "/articles/*",
 		HEAD + "/articles",
 		HEAD + "/challenges/*",
+		HEAD + "/challenges",
 		HEAD + "/comments"
 	};
 
