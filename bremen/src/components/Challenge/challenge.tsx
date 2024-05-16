@@ -1,70 +1,79 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import styles from '@/components/Alarm/Alarm.module.scss';
+import styles from '@/components/Challenge/Challenge.module.scss';
 import Header from '@/components/Common/Header';
+import Video from '@/components/Common/Video';
 import Image from 'next/image';
+import api from '@/api/api';
 
-const alarms = [
-  {
-    id: 1,
-    type: 'follow',
-    message: '우주최강베이시스트님이 회원님을 팔로우했습니다.',
-    page: '우주최강베이시스트님의 페이지로 이동',
-    date: new Date('2024-05-08T08:30:00'), // 예시로 고정된 날짜와 시간을 사용
-  },
-  {
-    id: 2,
-    type: 'follow',
-    message: '우주최강회원님이 회원님을 팔로우했습니다.',
-    page: '우주최강베이시스트님의 페이지로 이동',
-    date: new Date('2024-05-08T08:20:00'), // 예시로 고정된 날짜와 시간을 사용
-  },
-  {
-    id: 3,
-    type: 'follow',
-    message: '우원님이 회원님을 팔로우했습니다.',
-    page: '우원님의 페이지로 이동',
-    date: new Date('2024-05-07T08:10:00'), // 예시로 고정된 날짜와 시간을 사용
-  },
-  {
-    id: 4,
-    type: 'follow',
-    message: '우원님이 회원님을 팔로우했습니다.',
-    page: '우원님의 페이지로 이동',
-    date: new Date('2024-05-07T08:10:00'), // 예시로 고정된 날짜와 시간을 사용
-  },
-  {
-    id: 5,
-    type: 'follow',
-    message: '우원님이 회원님을 팔로우했습니다.',
-    page: '우원님의 페이지로 이동',
-    date: new Date('2024-05-07T08:10:00'), // 예시로 고정된 날짜와 시간을 사용
-  },
-];
+interface ensembleVideoItem {
+  id: number;
+  musicTitle: string;
+  challengeImage: string;
+}
 
-const Page = () => {
-  const [alarmList, setAlarmList] = useState(alarms);
-  const [showHeader, setShowHeader] = useState(false); // 초기값 변경
+interface VideoItem {
+  id: number;
+  musicTitle: string;
+  challengeImage: string;
+}
 
-  const handleDeleteAlarm = (id: number) => {
-    const newAlarmList = alarmList.filter(alarm => alarm.id !== id);
-    setAlarmList(newAlarmList);
-  };
+const instruments = ['전체','바이올린', '비올라', '첼로', '하프', '플룻', '클라리넷', '트럼펫', '마림바', '피아노', '드럼', '통기타', '베이스기타', '일렉기타', '보컬'];
 
-  const handleDeleteAll = () => {
-    setAlarmList([]);
-  };
+const Page: React.FC = () => {
+  const [showHeader, setShowHeader] = useState(false);
+  const [envideos, setEnVideos] = useState<ensembleVideoItem[]>([]);
+  const [videos, setVideos] = useState<VideoItem[]>([]);
 
+  // 이전 챌린지 영상 가져오기
   useEffect(() => {
-    // 클라이언트 사이드에서만 실행되도록 조건 추가
-    if (typeof window !== 'undefined') {
-      setShowHeader(window.innerWidth >= 450);
-    }
-
-    const handleResize = () => {
-      if (typeof window !== 'undefined') {
-        setShowHeader(window.innerWidth >= 450);
+    const fetchEnsembleVideos = async () => {
+      try {
+        const response = await api.get('/challenges/ensembles');
+        console.log('지난 챌린지 영상 데이터:', response.data);
+        // Alarm 인터페이스에 맞게 데이터 매핑
+        const mappedEnVideos = response.data.items.map((item: any, index: number) => ({
+          id: index, // 인덱스를 사용하여 유일한 id 생성
+          musicTitle: item.musicTitle,
+          challengeImage: item.challengeImage,
+        }));
+        setEnVideos(mappedEnVideos); // 알림 데이터를 상태로 설정
+      } catch (error) {
+        console.error('지난 챌린지 영상을 가져오는 중 에러 발생:', error);
       }
+    };
+
+    fetchEnsembleVideos();
+  }, []);
+
+
+  // 진행 챌린지 악기별 1위 가져오기
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await api.get('/challenges/latest');
+        console.log('악기별 챌린지 영상 데이터:', response.data);
+        // Alarm 인터페이스에 맞게 데이터 매핑
+        const mappedVideos = response.data.items.map((item: any, index: number) => ({
+          id: index, // 인덱스를 사용하여 유일한 id 생성
+          musicTitle: item.musicTitle,
+          challengeImage: item.challengeImage,
+          profile: item.profilename
+        }));
+        setVideos(mappedVideos); // 알림 데이터를 상태로 설정
+      } catch (error) {
+        console.error('악기별 챌린지 영상을 가져오는 중 에러 발생:', error);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+
+  // 너비 450px 이상일때 헤더 보이게 설정
+  useEffect(() => {
+    const handleResize = () => {
+      setShowHeader(window.innerWidth >= 450);
     };
 
     window.addEventListener('resize', handleResize);
@@ -74,71 +83,61 @@ const Page = () => {
     };
   }, []);
 
-  const calculateElapsedTime = (date: Date) => {
-    const now = new Date();
-    const diff = Math.round((now.getTime() - date.getTime()) / (1000 * 60)); // 경과 시간을 분 단위로 계산
-
-    if (diff < 60) {
-      return `${diff}분 전`;
-    }
-    if (diff >= 60 && diff < 1440) {
-      return `${Math.floor(diff / 60)}시간 전`;
-    }
-    return `${Math.floor(diff / 1440)}일 전`;
-  };
-
-  useEffect(() => {
-    // 페이지 진입 시 body의 스타일을 변경하여 전체 화면 스크롤을 없앰
-    document.body.style.overflow = 'hidden';
-
-    // 컴포넌트가 unmount될 때 스타일 초기화
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, []);
-
   return (
     <>
       {showHeader && <Header />}
       <div className={styles.container}>
-        <div className={styles.alarmtitle}>
-          <Link href="/alarm" className={styles.alarmtext}>
-            알림
-          </Link>
-          <div className={styles.chattext}>채팅</div>
-        </div>
-        <div className={styles.deleteAllButtonBlock}>
-          <button className={styles.deleteAllButton} onClick={handleDeleteAll}>
-            전체 삭제
-          </button>
+        <div className={styles.challengeheader1}>
+          지난 챌린지 1위
         </div>
         <div
-          className={styles.alarms}
-          style={{maxHeight: '300px', overflowY: 'auto'}}
+          className={styles.ensembleVideoList}
+          style={{ maxHeight: '300px', overflowY: 'auto' }}
         >
-          {alarmList.length === 0 ? (
-            <div className={styles.noAlarms}>현재 받은 알림이 없습니다.</div>
+          {envideos.length === 0 ? (
+            <div className={styles.noEnsembleVideos}>이전에 선정된 챌린지 영상이 없습니다.</div>
           ) : (
-            alarmList.map(alarm => (
-              <div key={alarm.id} className={styles.alarm}>
-                <div className={styles.message}>{alarm.message}</div>
-                <div className={styles.date}>
-                  {calculateElapsedTime(alarm.date)}
+            envideos.map((video: ensembleVideoItem) => (
+              <div key={video.id} className={styles.ensembleVideo}>
+                <div className={styles.enMusicTitle}>{video.musicTitle}</div>
+                <div className={styles.enChallengeImage}>
+                  {video.challengeImage}
                 </div>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDeleteAlarm(alarm.id)}
-                >
-                  <Image
-                    src={'/Icon/minus.png'}
-                    alt="삭제"
-                    width={20}
-                    height={20}
-                  />
-                </button>
               </div>
             ))
           )}
+        </div>
+        <div className={styles.firstchallengelist}>
+          <button className={styles.deleteAllButton}>
+            챌린지 광고
+          </button>
+        </div>
+        <div className={styles.challengeheader2}>
+          현재 악기별 인기 챌린지 동영상
+        </div>
+        <div className={styles.instrumentBoxes}>
+          {instruments.map(instrument => (
+            <div key={instrument} className={styles.instrumentBox}>
+              {instrument}
+            </div>
+          ))}
+        </div>
+        <div className={styles.videocontainer}>
+          <div className={styles.videolist}>
+          {videos.length === 0 ? (
+            <div className={styles.noVideos}>현재 챌린지 영상이 없습니다.</div>
+          ) : (
+            videos.map((video: VideoItem) => (
+              <div key={video.id} className={styles.video}>
+                <div className={styles.MusicTitle}>{video.musicTitle}</div>
+                <div className={styles.ChallengeImage}>
+                  {video.challengeImage}
+                </div>
+              </div>
+            ))
+          )}
+          </div>
+          <div className={styles.videomargin}></div>
         </div>
       </div>
     </>
