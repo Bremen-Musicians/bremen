@@ -17,10 +17,11 @@ interface IReply {
 interface ReplyProps {
   reply: IReply,
   key: number,
+  deleteReply: (id: number) => void
   reReplyHandler: (reply: IReply) => void,
 }
 
-export default function Reply({reply, reReplyHandler}: ReplyProps) {
+export default function Reply({reply, deleteReply, reReplyHandler}: ReplyProps) {
   return (
     <div className={styles.reply}>
       <div className={styles.profileimg}>
@@ -33,7 +34,7 @@ export default function Reply({reply, reReplyHandler}: ReplyProps) {
           
           {/* 내가 단 댓글이면 보일 것 */}
           <div className={styles.modifydelete}>
-            <span>수정</span> | <span>삭제</span>
+            <span>수정</span> | <span onClick={() => deleteReply(reply.id)}>삭제</span>
           </div>
         </div>
         {/* 댓글 내용 */}

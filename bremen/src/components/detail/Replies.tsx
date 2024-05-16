@@ -56,6 +56,23 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
     })
   }
 
+  // 댓글 수정
+  const modifyReply = (id: number, content: string) => {
+    api.patch(`/comments`, {
+      id: id, // 댓글 id
+      content: content, // 수정된 댓글 내용
+    })
+  }
+
+  // 댓글 삭제
+  const deleteReply = (id: number) => {
+    api.delete(`/comments?id=${id}`).then(() => {
+      alert('댓글이 삭제되었습니다.');
+      getReply();
+    });
+  }
+
+  // 초기 댓글 조회
   useEffect(() => {
     getReply();
   }, []);
@@ -82,7 +99,7 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
         <ReReplies reply={openedReply!} />
       ) : (
         <div className={styles.replylist}>
-          {replyList && replyList.map((reply, key) => <Reply reply={reply} key={reply.id} reReplyHandler={handleReReply}/>)}
+          {replyList && replyList.map((reply, key) => <Reply reply={reply} key={reply.id} deleteReply={deleteReply} reReplyHandler={handleReReply}/>)}
         </div>
       )}
 
