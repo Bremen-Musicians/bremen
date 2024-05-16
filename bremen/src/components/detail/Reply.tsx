@@ -43,7 +43,11 @@ export default function Reply({reply, deleteReply, reReplyHandler}: ReplyProps) 
         </div>
         {/* 답글 버튼 */}
         <p className={styles.rereplybtn} >
-          {reply.groupCnt > 0 ? <span onClick={() => reReplyHandler(reply)}>답글 {reply.groupCnt}개</span> : <span>답글 달기</span>}
+          {
+            reply.groupCnt > 0
+            ? <span onClick={() => reReplyHandler(reply)}>답글 {reply.groupCnt}개</span>
+            : <span onClick={() => reReplyHandler(reply)}>답글 달기</span>
+          }
         </p>
       </div>
     </div>
