@@ -29,13 +29,13 @@ export default function replyHighlight({
         </div>
       </div>
       <div className={styles.videolist}>
+        {/* <Video />
         <Video />
         <Video />
         <Video />
         <Video />
         <Video />
-        <Video />
-        <Video />
+        <Video /> */}
       </div>
     </>
   );

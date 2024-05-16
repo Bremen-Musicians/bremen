@@ -5,7 +5,7 @@ export default function ChallengeVideo() {
   return (
     <div className={styles.video}>
       <input type="checkbox" />
-      <Video />
+      {/* <Video /> */}
     </div>
   );
 }
