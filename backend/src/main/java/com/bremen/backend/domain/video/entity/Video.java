@@ -53,6 +53,7 @@ public class Video {
 	@NotNull
 	@Column(name = "is_highlight", columnDefinition = "TINYINT(1)")
 	@ColumnDefault("false")
+	@Setter(AccessLevel.PROTECTED)
 	private boolean isHighlight;
 
 	@NotNull
@@ -80,24 +81,29 @@ public class Video {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
+	@Setter(AccessLevel.PROTECTED)
 	private User user;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "music_id")
+	@Setter(AccessLevel.PROTECTED)
 	private Music music;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "instrument_id")
+	@Setter(AccessLevel.PROTECTED)
 	private Instrument instrument;
 
-	public void setSavedVideo(User user, String imageUrl) {
-		this.user = user;
-		this.imageUrl = imageUrl;
+	public void setSavedVideo(User user, String imageUrl, Music music, Instrument instrument) {
+		setUser(user);
+		setImageUrl(imageUrl);
+		setMusic(music);
+		setInstrument(instrument);
 	}
 
 	public void setSavedVideo(boolean isHighlight, String videoUrl) {
-		this.isHighlight = isHighlight;
-		this.videoUrl = videoUrl;
+		setHighlight(isHighlight);
+		setVideoUrl(videoUrl);
 	}
 
 	public void deleteVideo() {
