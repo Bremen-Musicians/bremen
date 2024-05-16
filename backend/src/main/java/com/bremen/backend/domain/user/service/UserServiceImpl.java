@@ -124,4 +124,11 @@ public class UserServiceImpl implements UserService {
 		return authentication != null && !(authentication instanceof AnonymousAuthenticationToken)
 			&& authentication.isAuthenticated();
 	}
+
+	@Override
+	public void isEqualUser(User user) {
+		if (!getUserByToken().equals(user)) {
+			throw new CustomException(ErrorCode.INVALID_USER);
+		}
+	}
 }
