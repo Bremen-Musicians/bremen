@@ -5,14 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.bremen.backend.domain.notification.service.EmitterService;
 import com.bremen.backend.domain.notification.service.NotificationService;
 import com.bremen.backend.global.response.ListResponse;
+import com.bremen.backend.global.response.SingleResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -43,4 +46,10 @@ public class NotificationController {
 		return ResponseEntity.ok(listResponse);
 	}
 
+	@DeleteMapping()
+	@Operation(summary = "아이디를 기준으로 알림메세지를 삭제합니다.")
+	ResponseEntity<SingleResponse<Long>> deleteNotification(@RequestParam("id") Long id) {
+		notificationService.deleteNotification(id);
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "알림 메세지 삭제완료", id));
+	}
 }
