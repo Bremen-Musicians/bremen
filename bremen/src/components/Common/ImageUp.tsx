@@ -18,7 +18,7 @@ const ImageUp = ({
   buttonDetail: string;
   setUserImg: (newImg: string) => void;
   initialImg: string;
-  setUserImgFile: (newFile: FormData) => void;
+  setUserImgFile: (newFile: File) => void;
 }) => {
   const imgRef = useRef<HTMLInputElement>(null);
   const [presentImgUrl, setPresentImgUrl] = useState<string>(initialImg);
@@ -33,19 +33,15 @@ const ImageUp = ({
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         const formData = new FormData();
-        formData.append('userImg', file);
-        setUserImgFile(formData);
+        formData.append('profileImage', file);
+        // formData.append('userImgContentType', 'image/*');
+        setUserImgFile(file);
       };
     }
   };
 
   return (
     <div className={styles.container}>
-      {/* <form
-        method="POST"
-        encType="multipart/form-data"
-        action={`${process.env.NEXT_PUBLIC_BASE_URL}/user/profile`}
-      > */}
       <form method="POST" encType="multipart/form-data">
         <input
           type="file"

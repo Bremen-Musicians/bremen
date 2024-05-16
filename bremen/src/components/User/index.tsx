@@ -59,7 +59,7 @@ const SignUp = () => {
 
     return axios
       .get<ICheck>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/check-username?username=${isEmail}`,
+        `https://k10a104.p.ssafy.io/api/v1/users/check-username?username=${isEmail}`,
       )
       .then(response => {
         const isValid = response.status >= 200 && response.status < 300;
@@ -82,7 +82,7 @@ const SignUp = () => {
 
     return axios
       .get<ICheck>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/check-nickname?nickname=${isNickname}`,
+        `https://k10a104.p.ssafy.io/api/v1/users/check-nickname?nickname=${isNickname}`,
       )
       .then(response => {
         const isValid = response.status >= 200 && response.status < 300;
@@ -149,7 +149,7 @@ const SignUp = () => {
         agree: true,
       };
       const response = await axios.post<ISignUpResponse>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users`,
+        `https://k10a104.p.ssafy.io/api/v1/users`,
         signupData,
       );
       if (response.data.status >= 200 && response.data.status < 300) {

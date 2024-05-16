@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from '@/components/Alarm/Alarm.module.scss';
 import Header from '@/components/Common/Header';
 import Image from 'next/image';
