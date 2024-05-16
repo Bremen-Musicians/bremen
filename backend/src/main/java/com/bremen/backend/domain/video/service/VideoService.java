@@ -13,7 +13,7 @@ public interface VideoService {
 
 	Video getVideoById(Long videoId);
 
-	VideoResponse addVideo(VideoRequest videoRequest, MultipartFile thumnailFile, MultipartFile videoFile,
+	VideoResponse addVideo(VideoRequest videoRequest, MultipartFile thumbnailFile, MultipartFile videoFile,
 		MultipartFile highlightFile) throws
 		IOException;
 
