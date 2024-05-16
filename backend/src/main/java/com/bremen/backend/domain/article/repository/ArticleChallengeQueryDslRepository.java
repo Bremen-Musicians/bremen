@@ -33,7 +33,8 @@ public class ArticleChallengeQueryDslRepository {
 			.join(challengeArticle).on(article.id.eq(challengeArticle.article.id))
 			.where(
 				challengeArticle.challenge.id.eq(challengeId),
-				instrumentId != null ? article.video.instrument.id.eq(instrumentId) : null
+				instrumentId != null ? article.video.instrument.id.eq(instrumentId) : null,
+				article.isDeleted.isFalse()
 			)
 			.orderBy(POPULAR.getOrderSpecifier(article).toArray(OrderSpecifier[]::new));
 
