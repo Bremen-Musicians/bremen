@@ -30,6 +30,7 @@ export default function Home() {
     if (inView) {
       feedAPI();
       setPage(page+1);
+      console.log(page)
     }
   }, [inView])
 
@@ -41,10 +42,11 @@ export default function Home() {
         <div className={styles.videocontainer}>
           <div className={styles.shortstitle}>쇼츠</div>
           <div className={styles.videolist}>
-            {list.map((video, key) => <Video key={key} id={video.id} title={video.title} videoUrl={video.videoUrl} />)}
+          {list.map((video, key) => <Video key={key} id={video.id} title={video.title} videoUrl={video.videoUrl} thumbnail={video.imageUrl} ref={null} />)}
           </div>
           <div ref={ref} className={styles.videomargin}></div>
         </div>
+        
       </div>
       <Header />
       <Footer />

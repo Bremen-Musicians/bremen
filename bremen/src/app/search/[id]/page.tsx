@@ -7,18 +7,27 @@ import Modal from '@/components/Search/SearchModal';
 import styles from '@/app/search/[id]/page.module.scss';
 import api from '@/api/api';
 import Header from '@/components/Common/Header';
+import { useInView } from 'react-intersection-observer';
 
+
+interface VideoData {
+  id: number;
+  title: string;
+  videoUrl: string;
+  imageUrl: string;
+}
 export default function Page() {
   const param = useParams();
   const paramId = param.id;
-  console.log(param)
   const encodedString = paramId;
   const encodedString2 = Array.isArray(encodedString) ? encodedString[0] : encodedString;
   const decodedString = decodeURIComponent(encodedString2);
   const [CategorySelected, setCategorySelected] = useState<string>('전체');
   const [OrderSelected, setOrderSelected] = useState<string>('최신순');
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  
+  const [videos, setVideos] = useState<VideoData[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [ref, inView] = useInView();
 
   // Ensure this is typed correctly
   const filterOptions: { [key: string]: string } = {
@@ -36,6 +45,7 @@ export default function Page() {
     '12': '통기타',
     '13': '베이스기타',
     '14': '일렉기타',
+    '15': '보컬',
   };
   const [selectedFilters, setSelectedFilters] = useState<string[]>(Object.keys(filterOptions));
 
@@ -72,33 +82,65 @@ export default function Page() {
     '인기순': 'POPULAR'
   };
 
-  useEffect(() => {
-    const category = categoryMapping[CategorySelected];
-    const order = orderMapping[OrderSelected];
-    const instrumentIds = selectedFilters;
-    const keyword = decodedString || '';
 
-    const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=0&size=1&sort=string`;
-
-    api.get(url)
-      .then(response => {
-        console.log(url);
-        console.log(response.data);
-        // 응답 데이터 처리
-      })
-      .catch(error => {
+    const fetchData = async () => {
+      try {
+        const category = categoryMapping[CategorySelected];
+        const order = orderMapping[OrderSelected];
+        const instrumentIds = selectedFilters;
+        console.log(selectedFilters)
+        const keyword = decodedString || '';
+        setPage(0);
+        const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=${page}&size=12&sort=string`;
+        console.log('펫치',url)
+        const response = await api.get(url);
+        setVideos(response.data.items);
+      } catch (error) {
         console.error(error);
-        // 에러 처리
-      });
-  }, [CategorySelected, OrderSelected, selectedFilters, decodedString]);
+      }
+    };
+    const infiniteScroll = async () => {
+      try {
+        const category = categoryMapping[CategorySelected];
+        const order = orderMapping[OrderSelected];
+        const instrumentIds = selectedFilters;
+        const keyword = decodedString || '';
+  
+        const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=${page}&size=12&sort=string`;
+        console.log('무한',url)
+        const response = await api.get(url);
+        setVideos(prevVideos => [...prevVideos, ...response.data.items]);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
-  const selectCategoryItem = (item: string) => setCategorySelected(item);
-  const selectOrderItem = (item: string) => setOrderSelected(item);
+    useEffect(() => {
+      console.log('들어오냐?',inView)
+      if (inView) {
+        infiniteScroll();
+        setPage(page+1);
+      }
+      else{
+        console.log('else')
+        fetchData();
+      }
+      console.log(CategorySelected, OrderSelected, selectedFilters, decodedString, inView)
+  }, [CategorySelected, OrderSelected, selectedFilters, decodedString, inView]);
+  
+  const selectCategoryItem = (item: string) => {setCategorySelected(item);
+    // fetchData();
+  }
+  const selectOrderItem = (item: string) => {setOrderSelected(item);
+    // fetchData();
+  }
   const toggleModal = () => setModalOpen(!isModalOpen);
   const handleFilterApply = (filters: string[]) => {
     setSelectedFilters(filters);
     console.log("Filters applied:", filters);
-    console.log('send with', categoryMapping[CategorySelected], orderMapping[CategorySelected], filters)
+    console.log("Filters applied:", selectedFilters);
+    // console.log('send with', categoryMapping[CategorySelected], orderMapping[CategorySelected], filters)
+    // fetchData();
   };
 
   const categories = ['전체', '곡명', '아티스트', '제목', '작성자'];
@@ -190,16 +232,17 @@ export default function Page() {
       <Modal isOpen={isModalOpen} onClose={toggleModal} onApplyFilters={handleFilterApply} selectedFilters={selectedFilters} />
       <div className={styles.headerMargin}></div>
       <div className={styles.videolist}>
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-        <Video />
-      </div>
+  {videos.map((video, index) => (
+    <Video
+      key={index}
+      id={video.id}
+      title={video.title}
+      videoUrl={video.videoUrl}
+      thumbnail={video.imageUrl}
+      ref={index === 9 ? ref : null} // 10번째 비디오에만 ref 속성 추가
+    />
+  ))}
+</div>
       <div className={styles.empty}></div>
     </>
   );
