@@ -8,22 +8,31 @@ import Header from '@/components/Common/Header';
 import { useEffect, useState } from 'react';
 import api from '@/api/api';
 import {IMainResponse, IArticleList} from '@/types/ArticleListResponse'
+import { useInView } from 'react-intersection-observer';
 
 export default function Home() {
   const [order, setOrder] = useState<string>('POPULAR');
   const [page, setPage] = useState<number>(0);
-  const [size, setSize] = useState<number>(10);
   const [list, setList] = useState<IArticleList[]>([]);
-  // const [ref, inView] = useInView();
+  const [ref, inView] = useInView();
 
-  useEffect(() => {
-    api.get<IMainResponse>(`/articles/feed?order=${order}&page=${page}&size=${size}&sort=string`).then((response) => {
+  const feedAPI = () => {
+    api.get<IMainResponse>(`/articles/feed?order=${order}&page=${page}&size=12`).then((response) => {
       const listData = response.data.items;
-      setList(listData);
+      setList((prevList) => [...prevList, ...listData]);
     }).catch(error => {
       console.error('에러!', error);
     })
-  }, [])
+  }
+
+  // 페이지 하단 감지
+  useEffect(() => {
+    if (inView) {
+      feedAPI();
+      setPage(page+1);
+    }
+  }, [inView])
+
 
   return (
     <>
@@ -32,9 +41,9 @@ export default function Home() {
         <div className={styles.videocontainer}>
           <div className={styles.shortstitle}>쇼츠</div>
           <div className={styles.videolist}>
-            {list.map((video, key) => <Video id={video.id} title={video.title} />)}
+            {list.map((video, key) => <Video key={key} id={video.id} title={video.title} videoUrl={video.videoUrl} />)}
           </div>
-          <div className={styles.videomargin}></div>
+          <div ref={ref} className={styles.videomargin}></div>
         </div>
       </div>
       <Header />
