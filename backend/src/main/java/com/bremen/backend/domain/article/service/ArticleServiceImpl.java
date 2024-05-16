@@ -67,7 +67,11 @@ public class ArticleServiceImpl implements ArticleService {
 		Article article = ArticleMapper.INSTANCE.articleRequestToArticle(articleRequest);
 		article.saveArticle(userService.getUserByToken(), videoService.getVideoById(articleRequest.getVideoId()));
 		Article savedArticle = articleRepository.save(article);
-		challengeArticleService.addChallengeArticle(savedArticle);
+
+		if(savedArticle.isChallenge()){
+			challengeArticleService.addChallengeArticle(savedArticle);
+		}
+		
 		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
 		articleResponse.setHashtags(articleHashtagService.addHashtags(article, articleRequest.getHashtags()));
 		return articleResponse;
