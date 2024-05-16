@@ -104,4 +104,13 @@ public class ArticleController {
 		return ResponseEntity.ok(listResponse);
 	}
 
+	@GetMapping("/related")
+	@Operation(summary = "연관 게시글을 조회합니다")
+	ResponseEntity<ListResponse> getRelatedArticle(@RequestParam("id") Long id, Pageable pageable) {
+		ListResponse listResponse = articleService.findRelatedArticle(id, pageable);
+		listResponse.setStatus(HttpStatus.OK.value());
+		listResponse.setMessage("연관 게시글 조회 성공");
+		return ResponseEntity.ok(listResponse);
+	}
+
 }
