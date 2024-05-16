@@ -42,11 +42,6 @@ const ImageUp = ({
 
   return (
     <div className={styles.container}>
-      {/* <form
-        method="POST"
-        encType="multipart/form-data"
-        action={`${process.env.NEXT_PUBLIC_BASE_URL}/user/profile`}
-      > */}
       <form method="POST" encType="multipart/form-data">
         <input
           type="file"

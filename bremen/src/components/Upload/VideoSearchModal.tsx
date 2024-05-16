@@ -49,7 +49,7 @@ const VideoSearchModal = ({
     const searchWord = inputRef.current === null ? '' : inputRef.current.value;
     axios
       .get<IArticleResult>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/articles/search?category=${isSort}&order=POPULAR${searchInstrument}&keyword=${searchWord}&page=${isPage}&size=15`,
+        `https://k10a104.p.ssafy.io/api/v1/articles/search?category=${isSort}&order=POPULAR${searchInstrument}&keyword=${searchWord}&page=${isPage}&size=15`,
       )
       .then(response => {
         if (isPage === 0) {

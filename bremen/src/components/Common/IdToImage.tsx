@@ -29,7 +29,7 @@ const IdToImage = ({id, isLink}: {id: number; isLink: boolean}) => {
     /** 서버 연결해서 아이디로 회원 정보 조회(이미지 가져오기) */
     axios
       .get<IResponse>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users?id=${id}`,
+        `https://k10a104.p.ssafy.io/api/v1/users?id=${id}`,
       )
       .then(response => {
         const profileImg = response.data.item.profileImage;

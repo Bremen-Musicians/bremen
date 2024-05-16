@@ -33,7 +33,7 @@ const LoginIndex = () => {
         password: pw,
       };
       const response = await axios.post<LoginResponse>(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/users/login`,
+        `https://k10a104.p.ssafy.io/api/v1/users/login`,
         loginData,
       );
       if (response.data.status >= 200 && response.data.status < 300) {
