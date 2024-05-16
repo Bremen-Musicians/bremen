@@ -72,9 +72,14 @@ public class ChallengeServiceImpl implements ChallengeService {
 	}
 
 	@Override
-	public ChallengeResponse findLatestChallenge() {
+	public ChallengeResponse findLatestChallengeResponse() {
+		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(findLatestChallenge());
+	}
+
+	@Override
+	public Challenge findLatestChallenge() {
 		Challenge latestChallenge = challengeRepository.findFirstByOrderByEndTimeDesc()
 			.orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_CHALLENGE));
-		return ChallengeMapper.INSTANCE.challengeToChallengeResponse(latestChallenge);
+		return latestChallenge;
 	}
 }
