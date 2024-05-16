@@ -3,7 +3,7 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from './SearchModal.module.scss';
 
 interface ModalProps {
@@ -14,14 +14,19 @@ interface ModalProps {
 }
 
 interface CheckedItems {
-  [key: string]: boolean;  // Define an index signature for boolean values
+  [key: string]: boolean; // Define an index signature for boolean values
 }
 
 interface FilterOptions {
   [key: number]: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selectedFilters }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  onApplyFilters,
+  selectedFilters,
+}) => {
   if (!isOpen) return null;
 
   const filterOptions: FilterOptions = {
@@ -43,9 +48,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selected
 
   const [checkedItems, setCheckedItems] = useState<CheckedItems>(
     Object.keys(filterOptions).reduce<CheckedItems>((acc, key) => {
-      acc[key] = true;  // Initialize all as selected
+      acc[key] = true; // Initialize all as selected
       return acc;
-    }, {})
+    }, {}),
   );
 
   useEffect(() => {
@@ -54,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selected
         selectedFilters.reduce<CheckedItems>((acc, filterId) => {
           acc[filterId] = true;
           return acc;
-        }, {})
+        }, {}),
       );
     }
   }, [selectedFilters]);
@@ -63,10 +68,12 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selected
 
   const toggleAllCheckboxes = () => {
     const newState = !allSelected;
-    setCheckedItems(Object.keys(filterOptions).reduce<CheckedItems>((acc, key) => {
-      acc[key] = newState;
-      return acc;
-    }, {}));
+    setCheckedItems(
+      Object.keys(filterOptions).reduce<CheckedItems>((acc, key) => {
+        acc[key] = newState;
+        return acc;
+      }, {}),
+    );
   };
 
   const handleCheckboxChange = (key: string) => {
@@ -77,7 +84,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selected
   };
 
   const applyFilters = () => {
-    const selectedItems = Object.keys(checkedItems).filter(key => checkedItems[key]);
+    const selectedItems = Object.keys(checkedItems).filter(
+      key => checkedItems[key],
+    );
     onApplyFilters(selectedItems);
     onClose();
   };
@@ -92,7 +101,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onApplyFilters, selected
           {Object.entries(filterOptions).map(([key, value]) => (
             <button
               key={key}
-              className={checkedItems[key] ? styles.selectedItem : styles.unselectedItem}
+              className={
+                checkedItems[key] ? styles.selectedItem : styles.unselectedItem
+              }
               onClick={() => handleCheckboxChange(key)}
             >
               {value}

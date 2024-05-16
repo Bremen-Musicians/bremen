@@ -1,6 +1,10 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
+
 'use client';
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
+
+import React, {useState, useEffect} from 'react';
+import {useParams} from 'next/navigation';
 import SearchBar from '@/components/Search/SearchBar';
 import Video from '@/components/Common/Video';
 import Modal from '@/components/Search/SearchModal';
@@ -11,17 +15,18 @@ import Header from '@/components/Common/Header';
 export default function Page() {
   const param = useParams();
   const paramId = param.id;
-  console.log(param)
+  console.log(param);
   const encodedString = paramId;
-  const encodedString2 = Array.isArray(encodedString) ? encodedString[0] : encodedString;
+  const encodedString2 = Array.isArray(encodedString)
+    ? encodedString[0]
+    : encodedString;
   const decodedString = decodeURIComponent(encodedString2);
   const [CategorySelected, setCategorySelected] = useState<string>('전체');
   const [OrderSelected, setOrderSelected] = useState<string>('최신순');
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-  
 
   // Ensure this is typed correctly
-  const filterOptions: { [key: string]: string } = {
+  const filterOptions: {[key: string]: string} = {
     '1': '그 외',
     '2': '바이올린',
     '3': '비올라',
@@ -37,39 +42,42 @@ export default function Page() {
     '13': '베이스기타',
     '14': '일렉기타',
   };
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(Object.keys(filterOptions));
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(
+    Object.keys(filterOptions),
+  );
 
   const displaySelectedFilters = () => {
-    const allFiltersSelected = selectedFilters.length === Object.keys(filterOptions).length;
-    
+    const allFiltersSelected =
+      selectedFilters.length === Object.keys(filterOptions).length;
+
     if (allFiltersSelected) {
       return '전체';
-    } else if (selectedFilters.length === 1) {
-      return filterOptions[selectedFilters[0]];
-    } else {
-      return `${filterOptions[selectedFilters[selectedFilters.length - 1]]} 외 ${selectedFilters.length - 1}`;
     }
+    if (selectedFilters.length === 1) {
+      return filterOptions[selectedFilters[0]];
+    }
+    return `${filterOptions[selectedFilters[selectedFilters.length - 1]]} 외 ${selectedFilters.length - 1}`;
   };
 
   interface CategoryMap {
     [key: string]: string;
   }
-  
+
   const categoryMapping: CategoryMap = {
-    '전체': 'ALL',
-    '곡명': 'MUSIC',
-    '아티스트': 'ARTIST',
-    '제목': 'TITLE',
-    '작성자': 'WRITER'
+    전체: 'ALL',
+    곡명: 'MUSIC',
+    아티스트: 'ARTIST',
+    제목: 'TITLE',
+    작성자: 'WRITER',
   };
 
   interface OrderMap {
     [key: string]: string;
   }
-  
+
   const orderMapping: OrderMap = {
-    '최신순': 'LATEST',
-    '인기순': 'POPULAR'
+    최신순: 'LATEST',
+    인기순: 'POPULAR',
   };
 
   useEffect(() => {
@@ -80,7 +88,8 @@ export default function Page() {
 
     const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=0&size=1&sort=string`;
 
-    api.get(url)
+    api
+      .get(url)
       .then(response => {
         console.log(url);
         console.log(response.data);
@@ -97,8 +106,13 @@ export default function Page() {
   const toggleModal = () => setModalOpen(!isModalOpen);
   const handleFilterApply = (filters: string[]) => {
     setSelectedFilters(filters);
-    console.log("Filters applied:", filters);
-    console.log('send with', categoryMapping[CategorySelected], orderMapping[CategorySelected], filters)
+    console.log('Filters applied:', filters);
+    console.log(
+      'send with',
+      categoryMapping[CategorySelected],
+      orderMapping[CategorySelected],
+      filters,
+    );
   };
 
   const categories = ['전체', '곡명', '아티스트', '제목', '작성자'];
@@ -106,7 +120,7 @@ export default function Page() {
 
   return (
     <>
-      <Header/>
+      <Header />
       <div className={styles.headerMargin}></div>
       {/* Mobile View */}
       <div className={styles.mobileView}>
@@ -117,7 +131,9 @@ export default function Page() {
           {categories.map(category => (
             <span
               key={category}
-              className={CategorySelected === category ? styles.categorySelected : ''}
+              className={
+                CategorySelected === category ? styles.categorySelected : ''
+              }
               onClick={() => selectCategoryItem(category)}
             >
               {category}
@@ -131,7 +147,11 @@ export default function Page() {
           {orders.map(order => (
             <span
               key={order}
-              className={OrderSelected === order ? styles.orderSelected : styles.orderUnselected}
+              className={
+                OrderSelected === order
+                  ? styles.orderSelected
+                  : styles.orderUnselected
+              }
               onClick={() => selectOrderItem(order)}
             >
               {order}
@@ -139,55 +159,66 @@ export default function Page() {
           ))}
         </div>
       </div>
-  
+
       {/* Web View */}
       <div className={styles.webView}>
         <div className={styles.challenge}>챌린지광고</div>
         <div className={styles.test2}>
-        <div className={styles.test}>
-        <div className={styles.searchAndFilterContainer}>
-          <div>
-          </div>
-          <div className={styles.searchContainer}>
-            <SearchBar initialValue={decodedString || ''} />
-          </div>
-          <div className={styles.filterContainer}>
-            <span className={styles.filter} onClick={toggleModal}>
-              악기: {displaySelectedFilters()}
-            </span>
-          </div>
-          <div>
-          </div>
-        </div>
-        <div className={styles.categoryContainer}>
-          <div className={styles.category}>
-          {categories.map(category => (
-            <span
-            key={category}
-            className={CategorySelected === category ? styles.categorySelected : ''}
-            onClick={() => selectCategoryItem(category)}
-            >
-              {category}
-            </span>
-          ))}
+          <div className={styles.test}>
+            <div className={styles.searchAndFilterContainer}>
+              <div></div>
+              <div className={styles.searchContainer}>
+                <SearchBar initialValue={decodedString || ''} />
+              </div>
+              <div className={styles.filterContainer}>
+                <span className={styles.filter} onClick={toggleModal}>
+                  악기: {displaySelectedFilters()}
+                </span>
+              </div>
+              <div></div>
+            </div>
+            <div className={styles.categoryContainer}>
+              <div className={styles.category}>
+                {categories.map(category => (
+                  <span
+                    key={category}
+                    className={
+                      CategorySelected === category
+                        ? styles.categorySelected
+                        : ''
+                    }
+                    onClick={() => selectCategoryItem(category)}
+                  >
+                    {category}
+                  </span>
+                ))}
               </div>
               <div className={styles.order}>
-            {orders.map(order => (
-              <span
-                key={order}
-                className={OrderSelected === order ? styles.orderSelected : styles.orderUnselected}
-                onClick={() => selectOrderItem(order)}
-              >
-                {order}
-              </span>
-            ))}
+                {orders.map(order => (
+                  <span
+                    key={order}
+                    className={
+                      OrderSelected === order
+                        ? styles.orderSelected
+                        : styles.orderUnselected
+                    }
+                    onClick={() => selectOrderItem(order)}
+                  >
+                    {order}
+                  </span>
+                ))}
+              </div>
             </div>
-        </div>
-        </div>
+          </div>
         </div>
       </div>
-  
-      <Modal isOpen={isModalOpen} onClose={toggleModal} onApplyFilters={handleFilterApply} selectedFilters={selectedFilters} />
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={toggleModal}
+        onApplyFilters={handleFilterApply}
+        selectedFilters={selectedFilters}
+      />
       <div className={styles.headerMargin}></div>
       <div className={styles.videolist}>
         <Video />
@@ -203,4 +234,4 @@ export default function Page() {
       <div className={styles.empty}></div>
     </>
   );
-          }
+}
