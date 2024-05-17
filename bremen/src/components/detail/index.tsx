@@ -1,14 +1,16 @@
 'use client';
 
+/* eslint-disable no-console */
+
 import {useEffect, useState} from 'react';
-import Tag from '@/components/Common/Tag';
-import api from '@/api/api';
 import moment from 'moment';
+import {useParams} from 'next/navigation';
+import {MdThumbUp} from 'react-icons/md';
 import 'moment/locale/ko';
+import api from '@/api/api';
+import Tag from '@/components/Common/Tag';
 import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
-import { MdThumbUp } from "react-icons/md";
-import { useParams } from 'next/navigation';
 
 interface IPost {
   title: string;
@@ -38,7 +40,8 @@ export default function Page() {
   const [didMount, setDidMount] = useState(false);
 
   // 게시글 전체 정보 받기
-  useEffect(() => { 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
     setDidMount(true);
     return () => {};
   });
@@ -46,9 +49,11 @@ export default function Page() {
   useEffect(() => {
     // 2번 게시글 조회(임시)
     if (didMount) {
+      const searchArticle: string =
+        typeof articleId === 'string' ? articleId : articleId[0];
       api
-        .get<IPostResponse>(`/articles?id=${articleId}`)
-        .then((response) => {
+        .get<IPostResponse>(`/articles/detail?id=${searchArticle}`)
+        .then(response => {
           const postData = response.data.item;
           setPost(postData);
           setLiked(postData.like);
@@ -57,12 +62,16 @@ export default function Page() {
           console.error('에러!', error);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [didMount]);
   // 게시글 전체 정보 받기 끝
 
   // 게시글 좋아요 누르기
   const clickLikeBtn = () => {
-    api.post(`/articles/like?articleId=${articleId}`, { liked: !isLiked })
+    const searchArticle: string =
+      typeof articleId === 'string' ? articleId : articleId[0];
+    api
+      .post(`/articles/like?articleId=${searchArticle}`, {liked: !isLiked})
       .then(response => {
         if (response.status < 300) {
           setPost(prevPost => {
@@ -70,28 +79,28 @@ export default function Page() {
               // 이전 상태가 없는 경우에 대한 처리
               return prevPost;
             }
-  
+
             // 이전 상태가 있는 경우
-            const updatedPost = { ...prevPost };
-  
+            const updatedPost = {...prevPost};
+
             if (isLiked) {
-              updatedPost.likeCnt--;
+              updatedPost.likeCnt -= 1;
             } else {
-              updatedPost.likeCnt++;
+              updatedPost.likeCnt += 1;
             }
-  
+
             return updatedPost;
           });
-  
+
           setLiked(!isLiked);
         } else {
-          console.error("좋아요 업데이트 실패:", response.status);
+          console.error('좋아요 업데이트 실패:', response.status);
         }
       })
       .catch(error => {
-        console.error("좋아요 업데이트 실패:", error);
+        console.error('좋아요 업데이트 실패:', error);
       });
-  }
+  };
 
   return (
     <>
@@ -102,9 +111,7 @@ export default function Page() {
       <div>
         {/* 영상 제목 */}
         <div className={styles.title}>
-          <p>
-            {post?.title}
-          </p>
+          <p>{post?.title}</p>
         </div>
 
         {/* 영상 추가 정보(조회수, 올린 시간 및 날짜) */}
@@ -125,11 +132,13 @@ export default function Page() {
         <div className={styles.taglist}>
           {isLiked ? (
             <div className={styles.liked} onClick={clickLikeBtn}>
-              <MdThumbUp /><span>{post && post.likeCnt}</span>
+              <MdThumbUp />
+              <span>{post && post.likeCnt}</span>
             </div>
           ) : (
             <div className={styles.disliked} onClick={clickLikeBtn}>
-              <MdThumbUp /><span>{post && post.likeCnt}</span>
+              <MdThumbUp />
+              <span>{post && post.likeCnt}</span>
             </div>
           )}
           <Tag />

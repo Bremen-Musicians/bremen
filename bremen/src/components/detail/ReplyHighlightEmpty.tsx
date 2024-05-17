@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from '@/components/detail/ReplyHighlight.module.scss';
 import Video from '@/components/Common/Video';
 import useUserInfoStore from '@/stores/UserInfo';
@@ -17,7 +18,7 @@ export default function ReplyHighlightEmpty({
         </div>
         <div className={styles.reply}>
           <div className={styles.profileimg}>
-            <img src={myProfileImage} alt='myProfileImage' />
+            <img src={myProfileImage} alt="myProfileImage" />
           </div>
           <div>댓글 입력 ...</div>
         </div>

@@ -6,11 +6,14 @@ interface IntroChallengeProps {
   onFileUpload: (file: File, id: string) => void;
 }
 
-export default function IntroChallenge({ onFileUpload }: IntroChallengeProps) {
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
+export default function IntroChallenge({onFileUpload}: IntroChallengeProps) {
+  const handleFileChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: string,
+  ) => {
     const file = event.target.files ? event.target.files[0] : null;
     if (file) {
-      onFileUpload(file, id);  // Call the callback function with the file object and identifier
+      onFileUpload(file, id); // Call the callback function with the file object and identifier
     }
   };
 
@@ -23,7 +26,7 @@ export default function IntroChallenge({ onFileUpload }: IntroChallengeProps) {
           type="file"
           accept="image/jpg,image/png,image/jpeg,image/gif"
           id="main"
-          onChange={(event) => handleFileChange(event, 'main')}
+          onChange={event => handleFileChange(event, 'main')}
         />
       </div>
 
@@ -34,7 +37,7 @@ export default function IntroChallenge({ onFileUpload }: IntroChallengeProps) {
           type="file"
           accept="image/jpg,image/png,image/jpeg,image/gif"
           id="challenge"
-          onChange={(event) => handleFileChange(event, 'challenge')}
+          onChange={event => handleFileChange(event, 'challenge')}
         />
       </div>
     </div>

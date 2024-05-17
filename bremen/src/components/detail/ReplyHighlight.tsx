@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import styles from '@/components/detail/ReplyHighlight.module.scss';
 import Video from '@/components/Common/Video';
 
@@ -8,10 +9,10 @@ export default function replyHighlight({
   replyCnt,
   replyHandler,
 }: {
-  profileImgH: string,
-  contentH: string,
-  deletedH: boolean,
-  replyCnt: number,
+  profileImgH: string;
+  contentH: string;
+  deletedH: boolean;
+  replyCnt: number;
   replyHandler: () => void;
 }) {
   return (
@@ -23,7 +24,7 @@ export default function replyHighlight({
         </div>
         <div className={styles.reply}>
           <div className={styles.profileimg}>
-            {!deletedH && <img src={profileImgH} alt='profileImage' />}
+            {!deletedH && <img src={profileImgH} alt="profileImage" />}
           </div>
           <div>{deletedH ? '(삭제된 댓글입니다)' : contentH}</div>
         </div>

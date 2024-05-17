@@ -6,15 +6,32 @@
     color: var(--light-gray-color);
 }
 
+.replytop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: calc(100vw - 75px);
+}
+
 .replier {
     align-items: center;
     margin: 0 0 5px;
+}
+
+.modifydelete {
+    align-items: center;
+    margin: 0 0 5px;
+
+    span {
+        cursor: pointer;
+    }
 }
 
 .rereplybtn {
     margin: 5px 0;
     color: var(--light-blue-color);
     text-decoration: underline;
+    cursor: pointer;
 }
 
 .profileimg {
