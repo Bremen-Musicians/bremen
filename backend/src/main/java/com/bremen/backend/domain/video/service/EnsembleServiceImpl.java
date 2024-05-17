@@ -2,6 +2,7 @@ package com.bremen.backend.domain.video.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,14 @@ public class EnsembleServiceImpl implements EnsembleService {
 		}
 
 		return videoList;
+	}
+
+	@Override
+	public List<Video> getEnsembleVideoList(Video owner) {
+		return ensembleRepository.findByOwnerVideo(owner)
+			.stream()
+			.map(Ensemble::getParticipant)
+			.collect(Collectors.toList());
 	}
 
 }
