@@ -79,6 +79,7 @@ public class Challenge {
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
 
+	@Setter(AccessLevel.PROTECTED)
 	@JoinColumn(name = "article_id")
 	@OneToOne(fetch = FetchType.LAZY, optional = true)
 	private Article article;
@@ -99,5 +100,9 @@ public class Challenge {
 		setChallengeImage(null);
 		setDeleted(true);
 		setDeleteTime(LocalDateTime.now());
+	}
+
+	public void registEnsemble(Article article) {
+		setArticle(article);
 	}
 }

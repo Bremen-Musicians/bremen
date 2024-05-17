@@ -19,8 +19,10 @@ import com.bremen.backend.domain.article.repository.ArticleQueryDslRepository;
 import com.bremen.backend.domain.article.repository.ArticleQueryRepository;
 import com.bremen.backend.domain.article.repository.ArticleRepository;
 import com.bremen.backend.domain.challenge.service.ChallengeArticleService;
+import com.bremen.backend.domain.challenge.service.ChallengeService;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
+import com.bremen.backend.domain.video.entity.Video;
 import com.bremen.backend.domain.video.service.VideoService;
 import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
@@ -32,12 +34,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 	private final ArticleRepository articleRepository;
-	private final UserService userService;
-	private final VideoService videoService;
-	private final ArticleQueryRepository articleQueryRepository;
-	private final LikeService likeService;
 	private final ArticleHashtagService articleHashtagService;
+	private final ArticleQueryRepository articleQueryRepository;
 	private final ArticleQueryDslRepository articleQueryDslRepository;
+
+	private final UserService userService;
+	private final LikeService likeService;
+	private final VideoService videoService;
+	private final ChallengeService challengeService;
 	private final ChallengeArticleService challengeArticleService;
 
 	@Override
@@ -65,15 +69,22 @@ public class ArticleServiceImpl implements ArticleService {
 	@Transactional
 	public ArticleResponse addArticle(ArticleRequest articleRequest) {
 		Article article = ArticleMapper.INSTANCE.articleRequestToArticle(articleRequest);
-		article.saveArticle(userService.getUserByToken(), videoService.getVideoById(articleRequest.getVideoId()));
+		User user = userService.getUserByToken();
+		Video video = videoService.getVideoById(articleRequest.getVideoId());
+		article.saveArticle(user, video);
 		Article savedArticle = articleRepository.save(article);
 
-		if(savedArticle.isChallenge()){
+		if (savedArticle.isChallenge()) {
 			challengeArticleService.addChallengeArticle(savedArticle);
+			
+			if (user.getRole().equals("ROLE_ADMIN") && video.isEnsemble()) {
+				challengeService.registEnsemble(article);
+			}
 		}
-		
+
 		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
 		articleResponse.setHashtags(articleHashtagService.addHashtags(article, articleRequest.getHashtags()));
+
 		return articleResponse;
 	}
 
