@@ -149,11 +149,10 @@ export default function Page() {
               <span>{post && post.likeCnt}</span>
             </div>
           )}
-          <Tag />
-          <Tag />
-          <Tag />
-          <Tag />
-          <Tag />
+          {post?.hashtags &&
+            post.hashtags.map((hashtag, key) => (
+              <Tag tag={hashtag} key={key} />
+            ))}
         </div>
       </div>
 
