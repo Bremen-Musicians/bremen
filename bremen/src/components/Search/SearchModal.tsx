@@ -44,6 +44,7 @@ const Modal: React.FC<ModalProps> = ({
     12: '통기타',
     13: '베이스기타',
     14: '일렉기타',
+    15: '보컬',
   };
 
   const [checkedItems, setCheckedItems] = useState<CheckedItems>(
