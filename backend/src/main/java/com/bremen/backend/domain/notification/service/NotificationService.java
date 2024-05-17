@@ -1,5 +1,8 @@
 package com.bremen.backend.domain.notification.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 
 import com.bremen.backend.domain.notification.NotificationDto;
@@ -10,6 +13,6 @@ public interface NotificationService {
 
 	ListResponse getNotification(Pageable pageable);
 
-	void deleteNotification(Long id);
+	Long deleteNotification(ArrayList<Long> ids);
 	
 }

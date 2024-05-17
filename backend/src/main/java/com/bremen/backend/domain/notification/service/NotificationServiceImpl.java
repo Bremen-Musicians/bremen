@@ -1,5 +1,6 @@
 package com.bremen.backend.domain.notification.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bremen.backend.domain.notification.NotificationDto;
 import com.bremen.backend.domain.notification.entity.Notification;
 import com.bremen.backend.domain.notification.mapper.NotificationMapper;
+import com.bremen.backend.domain.notification.repository.NotificationQueryDslRepository;
 import com.bremen.backend.domain.notification.repository.NotificationRepository;
+import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
@@ -24,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class NotificationServiceImpl implements NotificationService {
 	private final NotificationRepository notificationRepository;
 	private final UserService userService;
+	private final NotificationQueryDslRepository notificationQueryDslRepository;
 
 	@Override
 	@Transactional
@@ -53,10 +57,10 @@ public class NotificationServiceImpl implements NotificationService {
 
 	@Override
 	@Transactional
-	public void deleteNotification(Long id) {
-		Notification notification = getNotification(id);
-		userService.isEqualUser(notification.getUser());
-		notification.deleteNotification();
+	public Long deleteNotification(ArrayList<Long> ids) {
+		User user = userService.getUserByToken();
+		Long updateCount = notificationQueryDslRepository.updateColumnForIds(ids,user.getId());
+		return updateCount;
 	}
 
 }
