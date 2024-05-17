@@ -64,7 +64,7 @@ const Challenge: React.FC = () => {
         {/* envideos를 한 줄에 표시 */}
         {envideos.map(video => (
           <div key={video.id} className={styles.video}>
-            <img src={video.challengeImage} alt={video.musicTitle} className={styles.roundedImage}/>
+            <img src={video.challengeImage} alt={video.musicTitle}/>
             <div className={styles.title}>{video.musicTitle}</div>
           </div>
         ))}
