@@ -58,6 +58,9 @@ public class NotificationServiceImpl implements NotificationService {
 	@Override
 	@Transactional
 	public Long deleteNotification(ArrayList<Long> ids) {
+		if(ids.isEmpty()){
+			throw new CustomException(ErrorCode.INVALID_PARAMETER);
+		}
 		User user = userService.getUserByToken();
 		Long updateCount = notificationQueryDslRepository.updateColumnForIds(ids,user.getId());
 		return updateCount;
