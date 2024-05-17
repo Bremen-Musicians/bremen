@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Common/Header';
 import api from '@/api/api';
 import styles from '@/components/Challenge/Challenge.module.scss';
-import {EnsembleVideoItem, VideoItem} from '@/types/Challenge';
+import { EnsembleVideoItem, VideoItem } from '@/types/Challenge';
 
 const instruments = ['전체', '기타', '베이스', '드럼', '키보드', '보컬(여)'];
 
@@ -59,6 +59,15 @@ const Challenge: React.FC = () => {
     <div className={styles.container}>
       {showHeader && <Header />}
       <div className={styles.challengeHeader}>지난 챌린지 선정영상</div>
+      <div className={styles.ensembleVideos}>
+        {/* envideos를 한 줄에 표시 */}
+        {envideos.map(video => (
+          <div key={video.id} className={styles.video}>
+            <img src={video.challengeImage} alt={video.musicTitle} />
+            <div className={styles.title}>{video.musicTitle}</div>
+          </div>
+        ))}
+      </div>
       <div className={styles.currentChallenge}>
         <h2>이 주의 챌린지</h2>
         <p>작은 것들을 위한 시 - BTS</p>
