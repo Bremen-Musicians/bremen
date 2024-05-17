@@ -105,7 +105,12 @@ export default function Page() {
   return (
     <>
       {/* 영상 재생 영역 */}
-      <div className={styles.video}></div>
+      <div className={styles.video}>
+        <video
+          src={`https://bremen-music.s3.ap-northeast-2.amazonaws.com/${post?.videoUrl}`}
+          controls
+        ></video>
+      </div>
 
       {/* 영상 설명 영역 */}
       <div>
