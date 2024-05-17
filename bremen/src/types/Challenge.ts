@@ -1,7 +1,8 @@
 interface EnsembleVideoItem {
   id: number;
   musicTitle: string;
-  challengeImage: string;
+  startTime: string;
+  endTime: string;
 }
 
 interface VideoItem {

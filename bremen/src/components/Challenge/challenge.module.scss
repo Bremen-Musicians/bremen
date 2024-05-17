@@ -41,6 +41,7 @@
   background-color: #000;
   text-align: center;
   padding: 10px 0;
+  margin-bottom: 10px;
 }
 
 .videoSection .instruments {
@@ -96,4 +97,24 @@
   display: flex;
   flex-wrap: nowrap; /* 줄 바꿈 방지 */
   overflow-x: auto; /* 넘치는 경우 스크롤 가능하도록 */
+}
+
+.instrumentBoxes {
+  display: flex; /* 가로로 나열되도록 설정 */
+  overflow-x: auto; /* 요소들이 넘칠 경우 가로 스크롤 추가 */
+  -webkit-overflow-scrolling: touch; /* 모바일에서 자연스러운 스크롤을 위해 추가 */
+}
+
+.instrumentBox {
+  flex: 0 0 auto; /* 가로 크기를 고정하고 자동으로 크기 조절 */
+  width: fit-content; /* 내용에 맞게 크기 조정 */
+  height: fit-content; /* 내용에 맞게 크기 조정 */
+  background-color: #333; /* Just for demonstration */
+  color: white;
+  padding: 5px; /* 패딩 조정 */
+  margin-right: 10px; /* 오른쪽 여백 추가 */
+  text-align: center;
+  white-space: nowrap; /* 텍스트 줄 바꿈 허용 */
+  font-size: 16px; /* 글꼴 크기 조절 */
+  border-radius: 30%; /* 테두리 곡률 조정 */
 }
