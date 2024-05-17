@@ -63,8 +63,6 @@ export default function Reply({
         </div>
         {/* 댓글 내용 */}
         <div>{reply.content}</div>
-        {/* 댓글 내용 */}
-        <div>{reply.content}</div>
         {/* 답글 버튼 */}
         <p className={styles.rereplybtn}>
           {reply.groupCnt > 0 ? (
