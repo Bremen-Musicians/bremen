@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import styles from '@/components/detail/ReplyHighlight.module.scss';
-import Video from '@/components/Common/Video';
+// import Video from '@/components/Common/Video';
 
 export default function replyHighlight({
   profileImgH,
@@ -30,13 +30,13 @@ export default function replyHighlight({
         </div>
       </div>
       <div className={styles.videolist}>
+        {/* <Video />
         <Video />
         <Video />
         <Video />
         <Video />
         <Video />
-        <Video />
-        <Video />
+        <Video /> */}
       </div>
     </>
   );
