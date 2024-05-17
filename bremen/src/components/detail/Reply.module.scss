@@ -42,3 +42,18 @@
     border-radius: 100%;
     background-color: var(--origin-blue-color);
 }
+
+.modify {
+    padding: 5px;
+
+    input {
+        padding: 3px;
+        border-radius: 5px;
+        min-height: 30px;
+        width: 100%;
+    }
+
+    input:focus {
+        outline: none;
+    }
+}
