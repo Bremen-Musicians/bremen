@@ -74,6 +74,7 @@ public class ArticleChallengeQueryDslRepository {
 			.where(challengeArticle.challenge.id.eq(challengeId)
 				.and(video.instrument.id.in(instrumentMaxPopularValues.keySet()))
 				.and(popularValue.in(instrumentMaxPopularValues.values()))
+				.and(article.isDeleted.isFalse())
 			);
 
 		return query.fetch();
