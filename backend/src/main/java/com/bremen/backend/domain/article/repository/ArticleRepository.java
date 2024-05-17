@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.bremen.backend.domain.article.entity.Article;
+import com.bremen.backend.domain.video.entity.Video;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
@@ -16,5 +17,8 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	Optional<Article> findById(@Param("id") Long id);
 
 	@Query("SELECT a FROM Article a WHERE a.user.id = :userId AND a.isDeleted = false")
-	List<Article> findArticlesByUser(@Param("userId")Long userId);
+	List<Article> findArticlesByUser(@Param("userId") Long userId);
+
+	@Query("SELECT a FROM Article a WHERE a.video = :video")
+	Article findByVideo(@Param("video") Video video);
 }

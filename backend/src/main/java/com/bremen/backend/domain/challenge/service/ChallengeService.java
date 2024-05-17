@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bremen.backend.domain.article.dto.ArticleListResponse;
+import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
 import com.bremen.backend.domain.challenge.dto.ChallengeResponse;
@@ -34,4 +35,6 @@ public interface ChallengeService {
 	Page<ArticleListResponse> findChallengeArticle(Long instrumentId, Pageable pageable);
 
 	List<ArticleListResponse> findChallengeWinner();
+
+	Long registEnsemble(Article article);
 }

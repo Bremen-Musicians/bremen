@@ -23,6 +23,7 @@ public interface ArticleMapper {
 	@Mapping(target = "imageUrl", source = "article.video.imageUrl")
 	ArticleResponse articleToArticleResponse(Article article);
 
+	@Mapping(target = "isChallenge", source = "articleRequest.challenge")
 	@Mapping(target = "video.id", source = "articleRequest.videoId")
 	Article articleRequestToArticle(ArticleRequest articleRequest);
 

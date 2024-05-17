@@ -20,8 +20,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
 	private static final String HEAD = "/api/v1";
 	private static final List<String> SECURED_URIS = Arrays.asList(
-		HEAD + "/secure1",
-		HEAD + "/secure2"
+		HEAD + "/articles/challenge"
 		// Add more secured URIs here...
 	);
 

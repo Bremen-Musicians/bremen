@@ -1,6 +1,9 @@
 package com.bremen.backend.domain.challenge.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.challenge.entity.Challenge;
@@ -24,5 +27,12 @@ public class ChallengeArticleServiceImpl implements ChallengeArticleService {
 			.challenge(challenge)
 			.build();
 		challengeArticleRepository.save(challengeArticle);
+	}
+
+	@Override
+	@Transactional
+	public int regiestWinners(List<Article> articles) {
+		challengeArticleRepository.findByArticle(articles).forEach(ChallengeArticle::registWinner);
+		return articles.size();
 	}
 }

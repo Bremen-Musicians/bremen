@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bremen.backend.domain.article.dto.ArticleListResponse;
+import com.bremen.backend.domain.article.entity.Article;
 import com.bremen.backend.domain.article.service.ArticleChallengeService;
 import com.bremen.backend.domain.challenge.dto.ChallengeArticleResponse;
 import com.bremen.backend.domain.challenge.dto.ChallengeRequest;
@@ -104,6 +105,13 @@ public class ChallengeServiceImpl implements ChallengeService {
 	@Override
 	public List<ArticleListResponse> findChallengeWinner() {
 		return articleChallengeService.findWinnersByChallengeId(findLatestChallenge().getId());
+	}
+
+	@Override
+	@Transactional
+	public Long registEnsemble(Article article) {
+		getChallengeById(findLatestChallenge().getId()).registEnsemble(article);
+		return article.getId();
 	}
 
 }
