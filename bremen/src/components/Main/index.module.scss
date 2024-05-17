@@ -6,7 +6,7 @@
 .challenge {
     width: 100%;
     height: calc(100vw * 4 / 3);
-    background-color: #66bb11;
+    background-color: #ffffff80;
 }
 
 .shortstitle {
@@ -26,20 +26,22 @@
 .videomargin {
     height: 100px;
 }
+.topMargin{
+    height: 50px;
+}
 
 @media (min-width: 450px) {
     .container{
         display: flex;
         flex-direction: row-reverse;
         margin-top: 17vmin;
-        // background-color: white;
         justify-content: space-between;
     }
     .challenge {
         margin: 2vw;
         width: 21vw;
         height: 28vw;
-        background-color: red;
+        background-color: #ffffff80;
         position: fixed;
         top: 12vw; /* 원하는 위치로 조정하세요. */
         margin-right:3vw;
