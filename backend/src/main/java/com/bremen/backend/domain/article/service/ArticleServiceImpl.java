@@ -23,6 +23,7 @@ import com.bremen.backend.domain.challenge.service.ChallengeService;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.service.UserService;
 import com.bremen.backend.domain.video.entity.Video;
+import com.bremen.backend.domain.video.service.EnsembleService;
 import com.bremen.backend.domain.video.service.VideoService;
 import com.bremen.backend.global.CustomException;
 import com.bremen.backend.global.response.ErrorCode;
@@ -41,6 +42,7 @@ public class ArticleServiceImpl implements ArticleService {
 	private final UserService userService;
 	private final LikeService likeService;
 	private final VideoService videoService;
+	private final EnsembleService ensembleService;
 	private final ChallengeService challengeService;
 	private final ChallengeArticleService challengeArticleService;
 
@@ -76,9 +78,10 @@ public class ArticleServiceImpl implements ArticleService {
 
 		if (savedArticle.isChallenge()) {
 			challengeArticleService.addChallengeArticle(savedArticle);
-			
 			if (user.getRole().equals("ROLE_ADMIN") && video.isEnsemble()) {
 				challengeService.registEnsemble(article);
+				challengeArticleService.regiestWinners(ensembleService.getEnsembleVideoList(video)
+					.stream().map(this::findArticlesByVideo).collect(Collectors.toList()));
 			}
 		}
 
@@ -154,6 +157,11 @@ public class ArticleServiceImpl implements ArticleService {
 			.map(ArticleMapper.INSTANCE::articleToArticleResponse)
 			.collect(Collectors.toList());
 		return new ListResponse(articles, pages.getTotalElements(), pages.getPageable());
+	}
+
+	@Override
+	public Article findArticlesByVideo(Video video) {
+		return articleRepository.findByVideo(video);
 	}
 
 }
