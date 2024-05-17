@@ -13,6 +13,7 @@ public class ArticleListResponse {
 	private Long id;
 	private String title;
 	private int hitCnt;
+	private int likeCnt;
 
 	/* VIDEO */
 	VideoUrlResponse video;
