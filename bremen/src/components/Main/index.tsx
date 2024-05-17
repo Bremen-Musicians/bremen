@@ -12,12 +12,15 @@ import {useEffect, useState} from 'react';
 import api from '@/api/api';
 import {IMainResponse, IArticleList} from '@/types/ArticleListResponse';
 import {useInView} from 'react-intersection-observer';
+import Link from 'next/link';
+import ChallengeBanner from '../Common/ChallengeBanner';
 
 export default function Home() {
   const [order] = useState<string>('POPULAR');
   const [page, setPage] = useState<number>(0);
   const [list, setList] = useState<IArticleList[]>([]);
   const [ref, inView] = useInView();
+  const [challengeImage, setChallengeImage] = useState<string>();
 
   const feedAPI = () => {
     api
@@ -30,9 +33,25 @@ export default function Home() {
         console.error('에러!', error);
       });
   };
-
+  interface ChallengeData {
+    item: {
+      mainImage: string;
+    };
+  }
+  const fetchLatestChallenge = async () => {
+    try {
+      const url = '/challenges/latest';
+      const response = await api.get<ChallengeData>(url);
+      console.log('최신 챌린지:', response.data);
+      console.log('이미지', response.data.item.mainImage);
+      setChallengeImage(response.data.item.mainImage);
+    } catch (error) {
+      console.error('최신 챌린지를 불러오는 중 오류가 발생했습니다:', error);
+    }
+  };
   // 페이지 하단 감지
   useEffect(() => {
+    fetchLatestChallenge().catch(error => console.error(error));
     if (inView) {
       feedAPI();
       setPage(page + 1);
@@ -43,7 +62,10 @@ export default function Home() {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.challenge}>챌린지광고</div>
+        <div className={styles.topMargin}></div>
+        <Link href="/challenge" className={styles.challenge}>
+          <ChallengeBanner image={challengeImage || ''} />
+        </Link>
         <div className={styles.videocontainer}>
           <div className={styles.shortstitle}>쇼츠</div>
           <div className={styles.videolist}>

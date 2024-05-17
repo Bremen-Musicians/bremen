@@ -12,6 +12,8 @@ import styles from '@/app/search/[id]/page.module.scss';
 import api from '@/api/api';
 import Header from '@/components/Common/Header';
 import {useInView} from 'react-intersection-observer';
+import Link from 'next/link';
+import ChallengeBanner from '@/components/Common/ChallengeBanner';
 
 interface VideoData {
   id: number;
@@ -33,6 +35,7 @@ export default function Page() {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [page, setPage] = useState<number>(0);
   const [ref, inView] = useInView();
+  const [challengeImage, setChallengeImage] = useState<string>();
 
   // Ensure this is typed correctly
   const filterOptions: {[key: string]: string} = {
@@ -90,6 +93,11 @@ export default function Page() {
       items: VideoData[];
     };
   }
+  interface ChallengeData {
+    item: {
+      mainImage: string;
+    };
+  }
   const orderMapping: OrderMap = {
     최신순: 'LATEST',
     인기순: 'POPULAR',
@@ -128,7 +136,37 @@ export default function Page() {
     }
   };
 
+  const selectCategoryItem = (item: string) => {
+    setCategorySelected(item);
+    // fetchData();
+  };
+  const selectOrderItem = (item: string) => {
+    setOrderSelected(item);
+    // fetchData();
+  };
+  const toggleModal = () => setModalOpen(!isModalOpen);
+  const handleFilterApply = (filters: string[]) => {
+    setSelectedFilters(filters);
+    console.log('Filters applied:', filters);
+    console.log('Filters applied:', selectedFilters);
+    // console.log('send with', categoryMapping[CategorySelected], orderMapping[CategorySelected], filters)
+    // fetchData();
+  };
+  const fetchLatestChallenge = async () => {
+    try {
+      const url = '/challenges/latest';
+      const response = await api.get<ChallengeData>(url);
+      console.log('최신 챌린지:', response.data);
+      console.log('이미지', response.data.item.mainImage);
+      setChallengeImage(response.data.item.mainImage);
+    } catch (error) {
+      console.error('최신 챌린지를 불러오는 중 오류가 발생했습니다:', error);
+    }
+  };
+  const categories = ['전체', '곡명', '아티스트', '제목', '작성자'];
+  const orders = ['최신순', '인기순'];
   useEffect(() => {
+    fetchLatestChallenge().catch(error => console.error(error));
     console.log('들어오냐?', inView);
     if (inView) {
       infiniteScroll()
@@ -152,27 +190,6 @@ export default function Page() {
       inView,
     );
   }, [CategorySelected, OrderSelected, selectedFilters, decodedString, inView]);
-
-  const selectCategoryItem = (item: string) => {
-    setCategorySelected(item);
-    // fetchData();
-  };
-  const selectOrderItem = (item: string) => {
-    setOrderSelected(item);
-    // fetchData();
-  };
-  const toggleModal = () => setModalOpen(!isModalOpen);
-  const handleFilterApply = (filters: string[]) => {
-    setSelectedFilters(filters);
-    console.log('Filters applied:', filters);
-    console.log('Filters applied:', selectedFilters);
-    // console.log('send with', categoryMapping[CategorySelected], orderMapping[CategorySelected], filters)
-    // fetchData();
-  };
-
-  const categories = ['전체', '곡명', '아티스트', '제목', '작성자'];
-  const orders = ['최신순', '인기순'];
-
   return (
     <>
       <Header />
@@ -217,7 +234,9 @@ export default function Page() {
 
       {/* Web View */}
       <div className={styles.webView}>
-        <div className={styles.challenge}>챌린지광고</div>
+        <Link href="/challenge" className={styles.challenge}>
+          <ChallengeBanner image={challengeImage || ''} />
+        </Link>
         <div className={styles.test2}>
           <div className={styles.test}>
             <div className={styles.searchAndFilterContainer}>
