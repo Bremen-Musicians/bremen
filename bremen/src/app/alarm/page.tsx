@@ -1,12 +1,12 @@
 'use client';
 
 import Footer from '@/components/Common/Footer';
-import Alarm from '@/components/Alarm/Alarm';
+// import Alarm from '@/components/Alarm/Alarm';
 
 export default function Page() {
   return (
     <div>
-      <Alarm />
+      {/* <Alarm /> */}
       <Footer />
     </div>
   );
