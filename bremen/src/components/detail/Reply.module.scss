@@ -50,10 +50,19 @@
         padding: 3px;
         border-radius: 5px;
         min-height: 30px;
-        width: 100%;
+        width: calc(100vw - 90px);
     }
 
     input:focus {
         outline: none;
+    }
+
+    .btn {
+        align-items: center;
+        margin: 0 0 5px;
+
+        span {
+            cursor: pointer;
+        }
     }
 }

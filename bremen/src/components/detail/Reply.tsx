@@ -48,9 +48,9 @@ export default function Reply({
   };
 
   // 댓글 수정 창 닫기
-  // const cancleModify = () => {
-  //   setModifyStatus(false);
-  // };
+  const cancleModify = () => {
+    setModifyStatus(false);
+  };
 
   // 댓글 수정 api
   const modifyReply = (id: number, content: string) => {
@@ -89,6 +89,11 @@ export default function Reply({
               e.key === 'Enter' ? modifyReply(reply.id, input) : null
             }
           />
+
+          <div className={styles.btn}>
+            <span onClick={cancleModify}>닫기</span> |{' '}
+            <span onClick={() => modifyReply(reply.id, input)}>수정</span>
+          </div>
         </div>
       ) : (
         <div>
