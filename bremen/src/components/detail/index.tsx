@@ -13,16 +13,19 @@ import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
 
 interface IPost {
+  id: number;
   title: string;
   content: string;
   hitCnt: number;
   likeCnt: number;
   createTime: string;
+  userId: number;
   username: string; // 이메일
   nickname: string;
   videoId: number;
   videoUrl: string;
   imageUrl: string;
+  hashtags: string[]; // 해시태그
   like: boolean;
 }
 
