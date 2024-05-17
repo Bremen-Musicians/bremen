@@ -1,5 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import moment from 'moment';
 import styles from '@/components/detail/Reply.module.scss';
+import {useEffect, useState} from 'react';
+import useUserInfoStore from '@/stores/UserInfo';
 import ProfileImage from '../Common/ProfileImage';
 
 interface IReply {
@@ -17,10 +20,24 @@ interface IReply {
 interface ReplyProps {
   reply: IReply;
   key: number;
+  deleteReply: (id: number) => void;
   reReplyHandler: (reply: IReply) => void;
 }
 
-export default function Reply({reply, reReplyHandler}: ReplyProps) {
+export default function Reply({
+  reply,
+  deleteReply,
+  reReplyHandler,
+}: ReplyProps) {
+  const [myReply, setMyReply] = useState<boolean>(false);
+  const {zustandUserNickname} = useUserInfoStore.getState();
+
+  useEffect(() => {
+    if (zustandUserNickname === reply.writerNickname) {
+      setMyReply(true);
+    }
+  }, []);
+
   return (
     <div className={styles.reply}>
       <div className={styles.profileimg}>
@@ -30,18 +47,32 @@ export default function Reply({reply, reReplyHandler}: ReplyProps) {
         />
       </div>
       <div>
-        {/* 댓글 단 사람 */}
-        <div className={styles.replier}>
-          {reply.writerNickname} | {moment(reply.createTime).fromNow()}
+        <div className={styles.replytop}>
+          {/* 댓글 단 사람 */}
+          <div className={styles.replier}>
+            {reply.writerNickname} | {moment(reply.createTime).fromNow()}
+          </div>
+
+          {/* 내가 단 댓글이면 보일 것 */}
+          {myReply && (
+            <div className={styles.modifydelete}>
+              <span>수정</span> |{' '}
+              <span onClick={() => deleteReply(reply.id)}>삭제</span>
+            </div>
+          )}
         </div>
         {/* 댓글 내용 */}
         <div>{reply.content}</div>
+        {/* 댓글 내용 */}
+        <div>{reply.content}</div>
         {/* 답글 버튼 */}
-        <p className={styles.rereplybtn} onClick={() => reReplyHandler(reply)}>
+        <p className={styles.rereplybtn}>
           {reply.groupCnt > 0 ? (
-            <span>답글 {reply.groupCnt}개</span>
+            <span onClick={() => reReplyHandler(reply)}>
+              답글 {reply.groupCnt}개
+            </span>
           ) : (
-            <span>답글 달기</span>
+            <span onClick={() => reReplyHandler(reply)}>답글 달기</span>
           )}
         </p>
       </div>

@@ -1,4 +1,4 @@
-import WaveSurfer from 'wavesurfer.js';
+// import WaveSurfer from 'wavesurfer.js';
 
 const SoundWaveMusic = () => {
   /**
@@ -11,16 +11,16 @@ const SoundWaveMusic = () => {
 
   /** 오디오 변환 */
   /** 파형 제작 */
-  const wavesurfer = WaveSurfer.create({
-    container: '#waveform',
-    waveColor: '#4F4A85',
-    progressColor: '#383351',
-    url: '/audio.mp3',
-  });
+  // const wavesurfer = WaveSurfer.create({
+  //   container: '#waveform',
+  //   waveColor: '#4F4A85',
+  //   progressColor: '#383351',
+  //   url: '/audio.mp3',
+  // });
 
-  wavesurfer.on('click', () => {
-    // wavesurfer.play();
-  });
+  // wavesurfer.on('click', () => {
+  //   // wavesurfer.play();
+  // });
   return <div></div>;
 };
 export default SoundWaveMusic;

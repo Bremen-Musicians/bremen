@@ -52,7 +52,7 @@ export default function Page() {
       const searchArticle: string =
         typeof articleId === 'string' ? articleId : articleId[0];
       api
-        .get<IPostResponse>(`/articles?id=${searchArticle}`)
+        .get<IPostResponse>(`/articles/detail?id=${searchArticle}`)
         .then(response => {
           const postData = response.data.item;
           setPost(postData);
