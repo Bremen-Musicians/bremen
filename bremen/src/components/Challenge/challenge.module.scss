@@ -72,11 +72,14 @@
   height: 200px;
   background-color: #eee;
   text-align: center;
+  margin-right: 10px;
 }
 
 .video img {
   width: 100%;
   height: 140px;
+  border-radius: 50%; /* 이미지를 원형으로 만듦 */
+  object-fit: cover; /* 이미지를 잘라내어 원하는 비율로 표시 */
 }
 
 .video .title {

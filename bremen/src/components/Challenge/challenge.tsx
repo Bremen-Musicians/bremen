@@ -4,6 +4,7 @@ import api from '@/api/api';
 import styles from '@/components/Challenge/Challenge.module.scss';
 import { EnsembleVideoItem, VideoItem } from '@/types/Challenge';
 
+
 const instruments = ['전체', '기타', '베이스', '드럼', '키보드', '보컬(여)'];
 
 const Challenge: React.FC = () => {
@@ -63,7 +64,7 @@ const Challenge: React.FC = () => {
         {/* envideos를 한 줄에 표시 */}
         {envideos.map(video => (
           <div key={video.id} className={styles.video}>
-            <img src={video.challengeImage} alt={video.musicTitle} />
+            <img src={video.challengeImage} alt={video.musicTitle} className={styles.roundedImage}/>
             <div className={styles.title}>{video.musicTitle}</div>
           </div>
         ))}
