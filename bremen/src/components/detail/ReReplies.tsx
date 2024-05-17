@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 import moment from 'moment';
 import styles from '@/components/detail/ReReplies.module.scss';
 import ReReply from '@/components/detail/ReReply';
@@ -17,7 +19,13 @@ interface IReply {
   updated: boolean;
 }
 
-export default function ReReplies({reply}: {reply: IReply}) {
+export default function ReReplies({
+  reply,
+  getReply,
+}: {
+  reply: IReply;
+  getReply: () => void;
+}) {
   const [input, setInput] = useState<string>('');
 
   const postReReply = () => {
@@ -32,6 +40,18 @@ export default function ReReplies({reply}: {reply: IReply}) {
       })
       .catch(error => {
         // eslint-disable-next-line no-console
+        console.error(error, '에러!');
+      });
+  };
+
+  const deleteReply = (id: number) => {
+    api
+      .delete(`/comments?id=${id}`)
+      .then(() => {
+        alert('댓글이 삭제되었습니다.');
+        getReply();
+      })
+      .catch(error => {
         console.error(error, '에러!');
       });
   };
@@ -60,7 +80,12 @@ export default function ReReplies({reply}: {reply: IReply}) {
         {/* 답댓글 리스트 */}
         {reply.children &&
           reply.children.map((rereply, key) => (
-            <ReReply rereply={rereply} key={key} />
+            <ReReply
+              rereply={rereply}
+              deleteReply={deleteReply}
+              getReply={getReply}
+              key={key}
+            />
           ))}
       </div>
       <div className={styles.rereplyinput}>

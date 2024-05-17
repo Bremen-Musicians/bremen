@@ -117,7 +117,7 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
       </div>
 
       {openReReply ? (
-        <ReReplies reply={openedReply!} />
+        <ReReplies reply={openedReply!} getReply={getReply} />
       ) : (
         <div className={styles.replylist}>
           {replyList &&
