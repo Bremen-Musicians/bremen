@@ -1,5 +1,8 @@
 package com.bremen.backend.domain.notification.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -48,8 +51,8 @@ public class NotificationController {
 
 	@DeleteMapping()
 	@Operation(summary = "아이디를 기준으로 알림메세지를 삭제합니다.")
-	ResponseEntity<SingleResponse<Long>> deleteNotification(@RequestParam("id") Long id) {
-		notificationService.deleteNotification(id);
-		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "알림 메세지 삭제완료", id));
+	ResponseEntity<SingleResponse<Long>> deleteNotification(@RequestParam ArrayList<Long> ids) {
+		Long updateCount = notificationService.deleteNotification(ids);
+		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "알림 메세지 삭제완료", updateCount));
 	}
 }
