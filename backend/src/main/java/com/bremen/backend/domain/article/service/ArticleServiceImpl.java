@@ -78,11 +78,6 @@ public class ArticleServiceImpl implements ArticleService {
 
 		if (savedArticle.isChallenge()) {
 			challengeArticleService.addChallengeArticle(savedArticle);
-			if (user.getRole().equals("ROLE_ADMIN") && video.isEnsemble()) {
-				challengeService.registEnsemble(article);
-				challengeArticleService.regiestWinners(ensembleService.getEnsembleVideoList(video)
-					.stream().map(this::findArticlesByVideo).collect(Collectors.toList()));
-			}
 		}
 
 		ArticleResponse articleResponse = ArticleMapper.INSTANCE.articleToArticleResponse(savedArticle);
@@ -162,6 +157,21 @@ public class ArticleServiceImpl implements ArticleService {
 	@Override
 	public Article findArticlesByVideo(Video video) {
 		return articleRepository.findByVideo(video);
+	}
+
+	@Override
+	@Transactional
+	public ArticleResponse addChallengeEnsembleArticle(ArticleRequest articleRequest) {
+		ArticleResponse articleResponse = addArticle(articleRequest);
+		Article article = getArticleById(articleResponse.getId());
+		challengeService.registEnsemble(article);
+		challengeArticleService.regiestWinners(
+			ensembleService.getEnsembleVideoList(videoService.getVideoById(article.getVideo().getId()))
+				.stream()
+				.map(this::findArticlesByVideo)
+				.collect(Collectors.toList())
+		);
+		return articleResponse;
 	}
 
 }

@@ -33,4 +33,6 @@ public interface ArticleService {
 	ListResponse findRelatedArticle(Long id, Pageable pageable);
 
 	Article findArticlesByVideo(Video video);
+
+	ArticleResponse addChallengeEnsembleArticle(ArticleRequest articleRequest);
 }
