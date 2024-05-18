@@ -32,9 +32,9 @@ public class UserController {
 	private final RegistrationService registrationService;
 
 	@GetMapping()
-	@Operation(summary = "유저 아이디로 유저 정보를 조회합니다.", description = "유저의 id값을 파라미터로 받습니다.")
-	ResponseEntity<SingleResponse<UserResponse>> userDetails(@RequestParam("id") Long id) {
-		UserResponse userResponse = userService.findUserById(id);
+	@Operation(summary = "유저 닉네임으로 유저 정보를 조회합니다.", description = "유저의 닉네임값을 파라미터로 받습니다.")
+	ResponseEntity<SingleResponse<UserResponse>> userDetails(@RequestParam("nickname") String nickname) {
+		UserResponse userResponse = userService.findUserByNickname(nickname);
 		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "조회 성공", userResponse));
 	}
 

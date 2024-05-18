@@ -6,11 +6,13 @@ import com.bremen.backend.domain.user.dto.UserUpdateRequest;
 import com.bremen.backend.domain.user.entity.User;
 
 public interface UserService {
-	UserResponse findUserById(Long memberId);
+	UserResponse findUserByNickname(String nickname);
 
 	User getUserById(Long memberId);
 
 	User getUserByUsername(String username);
+
+	User getUserByNickname(String nickname);
 
 	User getUserByToken();
 

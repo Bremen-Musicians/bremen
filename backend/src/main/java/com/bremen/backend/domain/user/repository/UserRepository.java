@@ -17,6 +17,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	Optional<User> findByUsername(String username);
 
+	@Query("SELECT u FROM User u WHERE u.nickname = :nickname AND u.isDeleted = false")
+	Optional<User> findByNickname(String nickname);
+
 	boolean existsByUsername(String username);
 
 	boolean existsByNickname(String nickname);

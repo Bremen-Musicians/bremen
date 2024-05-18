@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
 	private final FollowService followService;
 
 	@Override
-	public UserResponse findUserById(Long userId) {
-		User user = getUserById(userId);
+	public UserResponse findUserByNickname(String nickname) {
+		User user = getUserByNickname(nickname);
 		User currUser;
 
 		UserResponse userResponse = UserMapper.INSTANCE.userToUserResponse(user);
@@ -53,6 +53,11 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsername(username).orElseThrow(
 			() -> new CustomException(ErrorCode.NOT_FOUND_USER)
 		);
+	}
+
+	@Override
+	public User getUserByNickname(String nickname) {
+		return userRepository.findByNickname(nickname).orElseThrow(() -> new CustomException(ErrorCode.NOT_FOUND_USER));
 	}
 
 	@Override
