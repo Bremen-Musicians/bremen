@@ -8,8 +8,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 import com.bremen.backend.global.CustomException;
+import com.bremen.backend.global.response.ErrorCode;
 import com.bremen.backend.global.response.ErrorResponse;
 
 @RestControllerAdvice
@@ -33,6 +35,21 @@ public class ExceptionManager {
 	@ExceptionHandler({IOException.class})
 	protected ResponseEntity handleIOException(IOException ex) {
 		return new ResponseEntity(new ErrorResponse(400, ex.getMessage()), HttpStatus.CONFLICT);
+	}
+
+	@ExceptionHandler(MissingServletRequestPartException.class)
+	public ResponseEntity<ErrorResponse> handleMissingServletRequestPartException(
+		MissingServletRequestPartException ex) {
+		String missingPartName = ex.getRequestPartName();
+
+		ErrorCode errorCode = switch (missingPartName) {
+			case "video" -> ErrorCode.NO_VIDEO_FILE_ATTACHED;
+			case "thumbnail" -> ErrorCode.NO_THUMBNAIL_FILE_ATTACHED;
+			default -> ErrorCode.NO_FILE_ATTACHED;
+		};
+
+		ErrorResponse errorResponse = new ErrorResponse(errorCode.getStatus(), errorCode.getMessage());
+		return ResponseEntity.badRequest().body(errorResponse);
 	}
 
 }

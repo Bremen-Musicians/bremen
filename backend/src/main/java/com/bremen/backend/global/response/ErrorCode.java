@@ -12,7 +12,10 @@ public enum ErrorCode {
 	INVALID_FILE_PARAMETER(400, "파일의 값을 확인해주세요."),
 	TERMS_OF_SERVICE_AGREEMENT_REQUIRED_ERROR(400, "약관에 동의하지않으면 서비스를 이용할 수 없습니다."),
 	INVALID_USER(400, "잘못된 접근입니다."),
-
+	NO_VIDEO_FILE_ATTACHED(400, "비디오 파일이 첨부되지 않았습니다."),
+	NO_THUMBNAIL_FILE_ATTACHED(400, "썸네일 파일이 첨부되지 않았습니다."),
+	NO_FILE_ATTACHED(400, "파일이 첨부되지 않았습니다."),
+	NO_ENSEMBLE_VIDEO_UPLOADED(400, "합주 영상이 추가되지 않았습니다."),
 	//403
 	UNAUTHORIZED_S3_ERROR(403, "S3 접근 권한을 확인해주세요."),
 

@@ -44,32 +44,26 @@ public class VideoServiceImpl implements VideoService {
 	public VideoResponse addVideo(VideoRequest videoRequest, MultipartFile thumbnailFile, MultipartFile videoFile,
 		MultipartFile highlightFile) throws
 		IOException {
+
 		Video video = VideoMapper.INSTANCE.videoRequestToVideo(videoRequest);
 
 		video.setSavedVideo(userService.getUserByToken(),
 			s3Service.streamUpload("thumbnail", thumbnailFile),
 			musicService.getMusicById(videoRequest.getMusicId()),
 			instrumentService.getInstrumentById(videoRequest.getInstrumentId()));
+		// 영상 기본 정보 세팅
 
-		String videoUrl = "";
-		// 영상
-		if (highlightFile != null && !highlightFile.isEmpty()) {
-			videoUrl = s3Service.streamUpload("video", highlightFile);
-			video.setSavedVideo(true, videoUrl);
-			videoRepository.save(video);
-		}
-		videoUrl = s3Service.streamUpload("video", videoFile);
-		video.setSavedVideo(false, videoUrl);
+		boolean isHighLight = highlightFile.isEmpty();
+		video = saveVideo(video, isHighLight ? highlightFile : videoFile, !isHighLight);
+		// 하이라이트 영상 or 일반 영상
 
 		Video savedVideo = videoRepository.save(video);
 
-		//합주 영상일 경우
 		if (videoRequest.isEnsemble()) {
-			for (Long id : videoRequest.getEnsembleList()) {
-				Video ensembleVideo = getVideoById(id);
-				ensembleService.addEnsemble(savedVideo, ensembleVideo);
-			}
+			saveEnsemble(videoRequest, savedVideo);
 		}
+		// 합주 영상 저장
+
 		return VideoMapper.INSTANCE.videoToVideoResponse(savedVideo);
 	}
 
@@ -79,6 +73,23 @@ public class VideoServiceImpl implements VideoService {
 		Video video = getVideoById(videoId);
 		video.deleteVideo();
 		return video.getId();
+	}
+
+	public Video saveVideo(Video video, MultipartFile multipartFile, boolean isHighLight) throws IOException {
+		String videoUrl = s3Service.streamUpload("video", multipartFile);
+		video.setSavedVideo(isHighLight, videoUrl);
+		return video;
+	}
+
+	public void saveEnsemble(VideoRequest videoRequest, Video savedVideo) {
+		if (videoRequest.getEnsembleList() == null || videoRequest.getEnsembleList().isEmpty()) {
+			throw new CustomException(ErrorCode.NO_ENSEMBLE_VIDEO_UPLOADED);
+		}
+
+		for (Long id : videoRequest.getEnsembleList()) {
+			Video ensembleVideo = getVideoById(id);
+			ensembleService.addEnsemble(savedVideo, ensembleVideo);
+		}
 	}
 
 }
