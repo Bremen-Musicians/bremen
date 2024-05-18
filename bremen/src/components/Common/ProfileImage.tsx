@@ -32,6 +32,9 @@ export default function ProfileImage({
       className={styles.profileImage}
       src={`https://bremen-music.s3.ap-northeast-2.amazonaws.com/${profileImage}`}
       alt="profileImage"
+      layout="responsive"
+      width={1}
+      height={1}
       onClick={moveToProfile}
     />
   );

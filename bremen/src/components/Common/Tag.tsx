@@ -1,5 +1,5 @@
 import styles from '@/components/Common/Tag.module.scss';
 
-export default function Tag() {
-  return <div className={styles.tag}>베이스</div>;
+export default function Tag({tag}: {tag: string}) {
+  return <div className={styles.tag}>{tag}</div>;
 }

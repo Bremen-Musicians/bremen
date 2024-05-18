@@ -1,6 +1,10 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 import moment from 'moment';
 import styles from '@/components/detail/ReReplies.module.scss';
 import ReReply from '@/components/detail/ReReply';
+import api from '@/api/api';
+import {useState} from 'react';
 import ProfileImage from '../Common/ProfileImage';
 
 interface IReply {
@@ -15,7 +19,43 @@ interface IReply {
   updated: boolean;
 }
 
-export default function ReReplies({reply}: {reply: IReply}) {
+export default function ReReplies({
+  reply,
+  getReply,
+}: {
+  reply: IReply;
+  getReply: () => void;
+}) {
+  const [input, setInput] = useState<string>('');
+
+  const postReReply = () => {
+    api
+      .post(`/comments`, {
+        groupId: reply.id,
+        content: input,
+        articleId: 2,
+      })
+      .then(() => {
+        setInput('');
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.error(error, '에러!');
+      });
+  };
+
+  const deleteReply = (id: number) => {
+    api
+      .delete(`/comments?id=${id}`)
+      .then(() => {
+        alert('댓글이 삭제되었습니다.');
+        getReply();
+      })
+      .catch(error => {
+        console.error(error, '에러!');
+      });
+  };
+
   return (
     <>
       <div className={styles.rereplylist}>
@@ -40,11 +80,22 @@ export default function ReReplies({reply}: {reply: IReply}) {
         {/* 답댓글 리스트 */}
         {reply.children &&
           reply.children.map((rereply, key) => (
-            <ReReply rereply={rereply} key={key} />
+            <ReReply
+              rereply={rereply}
+              deleteReply={deleteReply}
+              getReply={getReply}
+              key={key}
+            />
           ))}
       </div>
       <div className={styles.rereplyinput}>
-        <input type="text"></input>
+        <input
+          type="text"
+          placeholder="답글 입력..."
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => (e.key === 'Enter' ? postReReply() : null)}
+        />
         <div>등록</div>
       </div>
       <div className={styles.pagebottom} />

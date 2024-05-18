@@ -76,14 +76,6 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
       });
   };
 
-  // 댓글 수정
-  // const modifyReply = (id: number, content: string) => {
-  //   api.patch(`/comments`, {
-  //     id, // 댓글 id
-  //     content, // 수정된 댓글 내용
-  //   });
-  // };
-
   // 댓글 삭제
   const deleteReply = (id: number) => {
     api
@@ -125,7 +117,7 @@ export default function Replies({replyHandler}: {replyHandler: () => void}) {
       </div>
 
       {openReReply ? (
-        <ReReplies reply={openedReply!} />
+        <ReReplies reply={openedReply!} getReply={getReply} />
       ) : (
         <div className={styles.replylist}>
           {replyList &&
