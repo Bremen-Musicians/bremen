@@ -15,7 +15,7 @@ public interface VideoMapper {
 
 	VideoResponse videoToVideoResponse(Video video);
 
-	@Mapping(target = "isEnsemble",source = "videoRequest.ensemble")
+	@Mapping(target = "isEnsemble", source = "videoRequest.ensemble")
 	Video videoRequestToVideo(VideoRequest videoRequest);
 
 	@Mapping(target = "musicId", source = "video.music.id")

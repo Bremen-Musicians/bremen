@@ -38,7 +38,8 @@ public class ExceptionManager {
 	}
 
 	@ExceptionHandler(MissingServletRequestPartException.class)
-	public ResponseEntity<ErrorResponse> handleMissingServletRequestPartException(MissingServletRequestPartException ex) {
+	public ResponseEntity<ErrorResponse> handleMissingServletRequestPartException(
+		MissingServletRequestPartException ex) {
 		String missingPartName = ex.getRequestPartName();
 
 		ErrorCode errorCode = switch (missingPartName) {

@@ -60,7 +60,7 @@ public class VideoServiceImpl implements VideoService {
 		Video savedVideo = videoRepository.save(video);
 
 		if (videoRequest.isEnsemble()) {
-			saveEnsemble(videoRequest,savedVideo);
+			saveEnsemble(videoRequest, savedVideo);
 		}
 		// 합주 영상 저장
 
@@ -75,14 +75,14 @@ public class VideoServiceImpl implements VideoService {
 		return video.getId();
 	}
 
-	public Video saveVideo(Video video,MultipartFile multipartFile,boolean isHighLight) throws IOException {
+	public Video saveVideo(Video video, MultipartFile multipartFile, boolean isHighLight) throws IOException {
 		String videoUrl = s3Service.streamUpload("video", multipartFile);
 		video.setSavedVideo(isHighLight, videoUrl);
 		return video;
 	}
 
-	public void saveEnsemble(VideoRequest videoRequest,Video savedVideo){
-		if(videoRequest.getEnsembleList() == null || videoRequest.getEnsembleList().isEmpty()){
+	public void saveEnsemble(VideoRequest videoRequest, Video savedVideo) {
+		if (videoRequest.getEnsembleList() == null || videoRequest.getEnsembleList().isEmpty()) {
 			throw new CustomException(ErrorCode.NO_ENSEMBLE_VIDEO_UPLOADED);
 		}
 
@@ -91,6 +91,5 @@ public class VideoServiceImpl implements VideoService {
 			ensembleService.addEnsemble(savedVideo, ensembleVideo);
 		}
 	}
-
 
 }
