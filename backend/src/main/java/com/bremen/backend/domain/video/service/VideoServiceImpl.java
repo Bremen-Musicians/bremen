@@ -53,11 +53,8 @@ public class VideoServiceImpl implements VideoService {
 			instrumentService.getInstrumentById(videoRequest.getInstrumentId()));
 		// 영상 기본 정보 세팅
 
-		if (!highlightFile.isEmpty()) {
-			video = saveVideo(video,highlightFile,true);
-		}else{
-			video = saveVideo(video,videoFile,false);
-		}
+		boolean isHighLight = highlightFile.isEmpty();
+		video = saveVideo(video, isHighLight ? highlightFile : videoFile, !isHighLight);
 		// 하이라이트 영상 or 일반 영상
 
 		Video savedVideo = videoRepository.save(video);
