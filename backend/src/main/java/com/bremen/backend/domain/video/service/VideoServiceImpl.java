@@ -79,8 +79,7 @@ public class VideoServiceImpl implements VideoService {
 	}
 
 	public Video saveVideo(Video video,MultipartFile multipartFile,boolean isHighLight) throws IOException {
-		String videoUrl = "";
-		videoUrl = s3Service.streamUpload("video", multipartFile);
+		String videoUrl = s3Service.streamUpload("video", multipartFile);
 		video.setSavedVideo(isHighLight, videoUrl);
 		return video;
 	}
