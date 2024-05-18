@@ -14,7 +14,6 @@ public enum ErrorCode {
 	INVALID_USER(400, "잘못된 접근입니다."),
 	NO_VIDEO_FILE_ATTACHED(400, "비디오 파일이 첨부되지 않았습니다."),
 	NO_THUMBNAIL_FILE_ATTACHED(400, "썸네일 파일이 첨부되지 않았습니다."),
-	NO_HIGHLIGHT_FILE_ATTACHED(400, "하이라이트 파일이 첨부되지 않았습니다."),
 	NO_FILE_ATTACHED(400, "파일이 첨부되지 않았습니다."),
 	NO_ENSEMBLE_VIDEO_UPLOADED(400,"합주 영상이 추가되지 않았습니다."),
 	//403

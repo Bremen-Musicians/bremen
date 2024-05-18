@@ -44,7 +44,6 @@ public class ExceptionManager {
 		ErrorCode errorCode = switch (missingPartName) {
 			case "video" -> ErrorCode.NO_VIDEO_FILE_ATTACHED;
 			case "thumbnail" -> ErrorCode.NO_THUMBNAIL_FILE_ATTACHED;
-			case "highlight" -> ErrorCode.NO_HIGHLIGHT_FILE_ATTACHED;
 			default -> ErrorCode.NO_FILE_ATTACHED;
 		};
 
