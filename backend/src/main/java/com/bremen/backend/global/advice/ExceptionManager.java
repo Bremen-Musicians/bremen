@@ -40,25 +40,15 @@ public class ExceptionManager {
 	@ExceptionHandler(MissingServletRequestPartException.class)
 	public ResponseEntity<ErrorResponse> handleMissingServletRequestPartException(MissingServletRequestPartException ex) {
 		String missingPartName = ex.getRequestPartName();
-		ErrorCode errorCode = null;
-		String errorMessage = "";
 
-		switch (missingPartName) {
-			case "video":
-				errorCode = ErrorCode.NO_VIDEO_FILE_ATTACHED;
-				errorMessage = "비디오 파일이 첨부되지 않았습니다.";
-				break;
-			case "thumbnail":
-				errorCode = ErrorCode.NO_THUMBNAIL_FILE_ATTACHED;
-				errorMessage = "썸네일 파일이 첨부되지 않았습니다.";
-				break;
-			case "highlight":
-				errorCode = ErrorCode.NO_HIGHLIGHT_FILE_ATTACHED;
-				errorMessage = "하이라이트 파일이 첨부되지 않았습니다.";
-				break;
-		}
+		ErrorCode errorCode = switch (missingPartName) {
+			case "video" -> ErrorCode.NO_VIDEO_FILE_ATTACHED;
+			case "thumbnail" -> ErrorCode.NO_THUMBNAIL_FILE_ATTACHED;
+			case "highlight" -> ErrorCode.NO_HIGHLIGHT_FILE_ATTACHED;
+			default -> ErrorCode.NO_FILE_ATTACHED;
+		};
 
-		ErrorResponse errorResponse = new ErrorResponse(errorCode.getStatus(), errorMessage);
+		ErrorResponse errorResponse = new ErrorResponse(errorCode.getStatus(), errorCode.getMessage());
 		return ResponseEntity.badRequest().body(errorResponse);
 	}
 
