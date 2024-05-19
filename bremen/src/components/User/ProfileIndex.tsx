@@ -12,6 +12,7 @@ import ImageUp from '@/components/Common/ImageUp';
 import ProfileInput from '@/components/User/ProfileInput';
 import useUserInfoStore from '@/stores/UserInfo';
 import styles from '@/components/User/ProfileIndex.module.scss';
+import bremenWalk from '../../../public/bremenWalk.png';
 
 // TODO: 서버에서 랜덤이미지 받기
 // TODO: 주스탠드 부르기, 저장, 서버 전송
@@ -140,7 +141,7 @@ const ProfileIndex = () => {
       </Container>
       <Image
         loading="lazy"
-        src="/bremenWalk.png"
+        src={bremenWalk}
         width={300}
         height={300}
         alt="브레멘"
