@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import moment from 'moment';
@@ -7,7 +7,7 @@ import 'moment/locale/ko';
 import api from '@/api/api';
 import styles from '@/components/Alarm/Alarm.module.scss';
 import Header from '@/components/Common/Header';
-import { AlarmContent, IAlarmResponse } from '@/types/Alarm';
+import {AlarmContent} from '@/types/Alarm';
 
 type NotificationItem = {
   id: number;
@@ -16,32 +16,26 @@ type NotificationItem = {
   createTime: string;
 };
 
-type Alarm = {
-  id: number;
-  content: string;
-  type: string;
-  createTime: string;
+type NotificationResponse = {
+  items: NotificationItem[];
 };
 
 const Page = () => {
   const [alarmList, setAlarmList] = useState<AlarmContent[]>([]);
-  const [showHeader, setShowHeader] = useState(true);
 
-  //TODO: 알람 response 파악 후 정리
   const handleDeleteAlarm = (id: number) => {
-    try {
-      api.delete(`/notification?id=${id}`)
-        .then((response) => {
-          if (response.status >= 200 && response.status < 300) {
-            setAlarmList((prevAlarms) => prevAlarms.filter(alarm => alarm.id !== id));
-          }
-        })
-        .catch(error => {
-          console.error('알림 삭제 중 에러 발생:', error);
-        });
-    } catch (error) {
-      console.error('알림 삭제 중 에러 발생:', error);
-    }
+    api
+      .delete(`/notification?id=${id}`)
+      .then(response => {
+        if (response.status >= 200 && response.status < 300) {
+          setAlarmList(prevAlarms =>
+            prevAlarms.filter(alarm => alarm.id !== id),
+          );
+        }
+      })
+      .catch(error => {
+        console.error('알림 삭제 중 에러 발생:', error);
+      });
   };
 
   const handleDeleteAll = () => {
@@ -49,28 +43,10 @@ const Page = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setShowHeader(window.innerWidth >= 450);
-    }
-
-    const handleResize = () => {
-      if (typeof window !== 'undefined') {
-        setShowHeader(window.innerWidth >= 450);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const response = await api.get('/notification');
-        const mappedAlarms = response.data.items.map(
+        const response = await api.get<NotificationResponse>('/notification');
+        const mappedAlarms: AlarmContent[] = response.data.items.map(
           (item: NotificationItem) => ({
             id: item.id,
             content: item.content,
@@ -84,9 +60,8 @@ const Page = () => {
       }
     };
 
-    fetchNotifications();
+    fetchNotifications().catch(error => console.error(error));
   }, []);
-
   return (
     <>
       <Header />
@@ -105,10 +80,12 @@ const Page = () => {
           {alarmList.length === 0 ? (
             <div className={styles.noAlarms}>현재 받은 알림이 없습니다.</div>
           ) : (
-            alarmList.map((alarm: Alarm) => (
+            alarmList.map((alarm: AlarmContent) => (
               <div key={alarm.id} className={styles.alarm}>
                 <div className={styles.message}>{alarm.content}</div>
-                <div className={styles.date}>{moment(alarm.createTime).fromNow()}</div>
+                <div className={styles.date}>
+                  {moment(alarm.createTime).fromNow()}
+                </div>
                 <button
                   className={styles.deleteButton}
                   onClick={() => handleDeleteAlarm(alarm.id)}
