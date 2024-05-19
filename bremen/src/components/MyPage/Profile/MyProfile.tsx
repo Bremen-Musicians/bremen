@@ -4,11 +4,34 @@ import MyPageHeader from '@/components/MyPage/Profile/MyPageHeader';
 import {useEffect, useState} from 'react';
 import api from '@/api/api';
 import useUserInfoStore from '@/stores/UserInfo';
-import {IMainResponse, IArticleList} from '@/types/ArticleListResponse';
 import {useInView} from 'react-intersection-observer';
 import Video from '@/components/Common/Video';
 import MyInfo from './MyInfo';
 import MyButtons from './MyButtons';
+
+interface IMainResponse {
+  status: number;
+  message: string;
+  item: IArticleList[];
+  size: number;
+}
+
+interface IArticleList {
+  id: number;
+  title: string;
+  content: string;
+  hitCnt: number;
+  likeCnt: number;
+  createdTime: string;
+  userId: number;
+  username: string;
+  nickname: string;
+  videoId: number;
+  videoUrl: string;
+  imageUrl: string;
+  hashtags: string[];
+  like: boolean;
+}
 
 interface IUser {
   username: string;
@@ -37,10 +60,10 @@ export default function MyProfile() {
   const getArticles = () => {
     api
       .get<IMainResponse>(
-        `/articels?nickname=${zustandUserNickname}&page=${page}$size=12`,
+        `/articles?nickname=${zustandUserNickname}&page=${page}&size=12`,
       )
       .then(response => {
-        const listData = response.data.items;
+        const listData: IArticleList[] = response.data.item;
         setMyArticles(prevList => [...prevList, ...listData]);
       })
       .catch(error => {
@@ -56,7 +79,7 @@ export default function MyProfile() {
       setPage(page + 1);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [inView]);
 
   // 처음 페이지 방문 시
   useEffect(() => {
