@@ -11,6 +11,23 @@ import api from '@/api/api';
 import Tag from '@/components/Common/Tag';
 import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
+import ProfileImage from '../Common/ProfileImage';
+
+interface IUser {
+  username: string;
+  nickname: string;
+  introduce: string;
+  profileImage: string;
+  followerCnt: number;
+  followCnt: number;
+  follow: boolean;
+}
+
+interface IUserResponse {
+  status: number;
+  message: string;
+  item: IUser;
+}
 
 interface IPost {
   id: number;
@@ -39,6 +56,7 @@ export default function Page() {
   const param = useParams();
   const articleId = param.id;
   const [post, setPost] = useState<IPost>();
+  const [writer, setWriter] = useState<IUser>();
   const [isLiked, setLiked] = useState(false);
   const [didMount, setDidMount] = useState(false);
 
@@ -48,6 +66,31 @@ export default function Page() {
     setDidMount(true);
     return () => {};
   });
+
+  // 게시글 작성자 정보 받아오기
+  const getUserInfo = () => {
+    api
+      .get<IUserResponse>(`/users?nickname=${post?.nickname}`)
+      .then(response => {
+        setWriter(response.data.item);
+      })
+      .catch(error => {
+        console.error(error, '에러!');
+      });
+  };
+
+  // 팔로우 하기
+  const followWriter = () => {
+    api
+      .get(`/users/follow?nickname=${post?.nickname}`)
+      .then(() => {
+        // eslint-disable-next-line no-alert
+        alert('팔로우 하였습니다.');
+      })
+      .catch(error => {
+        console.error(error, '에러!');
+      });
+  };
 
   useEffect(() => {
     // 2번 게시글 조회(임시)
@@ -68,6 +111,12 @@ export default function Page() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [didMount]);
   // 게시글 전체 정보 받기 끝
+
+  // 유저 정보 받아오기
+  useEffect(() => {
+    getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [post]);
 
   // 게시글 좋아요 누르기
   const clickLikeBtn = () => {
@@ -130,10 +179,17 @@ export default function Page() {
 
         {/* 영상 게시자 정보 */}
         <div className={styles.userinfo}>
-          <div className={styles.profileimg} />
-          <p>{post?.nickname}</p>
-          <p>12</p>
-          <p>팔로우</p>
+          <div className={styles.profileimg}>
+            {writer && (
+              <ProfileImage
+                userNickname={writer.nickname}
+                profileImage={writer.profileImage}
+              />
+            )}
+          </div>
+          <span>{post && post.nickname}</span>
+          <span>{writer && writer.followerCnt}</span>
+          <span onClick={() => followWriter}>팔로우</span>
         </div>
 
         {/* 좋아요 버튼 및 태그 */}
