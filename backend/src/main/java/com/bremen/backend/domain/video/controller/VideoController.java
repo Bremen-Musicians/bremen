@@ -33,7 +33,7 @@ public class VideoController {
 	@Operation(summary = "영상 정보를 등록합니다.", description = "영상과 영상정보를 입력받아 영상 데이터를 등록합니다.")
 	ResponseEntity<SingleResponse<VideoResponse>> videoAdd(
 		@RequestPart(value = "videoInfo") VideoRequest videoRequest,
-		@RequestPart(value = "thumbnail") MultipartFile thumbnail,
+		@RequestPart(value = "thumbnail", required = false) MultipartFile thumbnail,
 		@RequestPart(value = "video") MultipartFile video,
 		@RequestPart(value = "highlight", required = false) MultipartFile highlight) throws IOException {
 		VideoResponse videoResponse = videoService.addVideo(videoRequest, thumbnail, video, highlight);
