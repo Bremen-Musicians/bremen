@@ -6,32 +6,10 @@ import api from '@/api/api';
 import useUserInfoStore from '@/stores/UserInfo';
 import {useInView} from 'react-intersection-observer';
 import Video from '@/components/Common/Video';
+import {IMainResponse, IArticleList} from '@/types/ArticleListResponse';
 import MyInfo from './MyInfo';
 import MyButtons from './MyButtons';
-
-interface IMainResponse {
-  status: number;
-  message: string;
-  item: IArticleList[];
-  size: number;
-}
-
-interface IArticleList {
-  id: number;
-  title: string;
-  content: string;
-  hitCnt: number;
-  likeCnt: number;
-  createdTime: string;
-  userId: number;
-  username: string;
-  nickname: string;
-  videoId: number;
-  videoUrl: string;
-  imageUrl: string;
-  hashtags: string[];
-  like: boolean;
-}
+import styles from './MyProfile.module.scss';
 
 interface IUser {
   username: string;
@@ -52,6 +30,7 @@ interface IUserResponse {
 export default function MyProfile() {
   const {zustandUserNickname} = useUserInfoStore.getState();
   const [me, setMe] = useState<IUser>();
+  const [size, setSize] = useState<number>(0);
   const [myArticles, setMyArticles] = useState<IArticleList[]>([]);
   const [page, setPage] = useState<number>(0);
   const [ref, inView] = useInView();
@@ -63,8 +42,9 @@ export default function MyProfile() {
         `/articles?nickname=${zustandUserNickname}&page=${page}&size=12`,
       )
       .then(response => {
-        const listData: IArticleList[] = response.data.item;
+        const listData: IArticleList[] = response.data.items;
         setMyArticles(prevList => [...prevList, ...listData]);
+        setSize(response.data.size);
       })
       .catch(error => {
         // eslint-disable-next-line no-console
@@ -102,19 +82,26 @@ export default function MyProfile() {
       {me && (
         <>
           <MyPageHeader nickname={me.nickname} />
-          <MyInfo me={me} />
+          <MyInfo me={me} articleCnt={size} />
           <MyButtons />
-          {myArticles &&
-            myArticles.map((video, key) => (
-              <Video
-                key={key}
-                id={video.id}
-                title={video.title}
-                videoUrl={video.videoUrl}
-                thumbnail={video.imageUrl}
-                ref={null}
-              />
-            ))}
+          {myArticles.length !== 0 ? (
+            <div className={styles.content}>
+              {myArticles.map((video, key) => (
+                <Video
+                  key={key}
+                  id={video.id}
+                  title={video.title}
+                  videoUrl={video.videoUrl}
+                  thumbnail={video.imageUrl}
+                  ref={null}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className={styles.nocontent}>
+              <span>작성된 게시글이 없습니다</span>
+            </div>
+          )}
           <div ref={ref}></div>
         </>
       )}
