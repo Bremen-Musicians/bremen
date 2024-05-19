@@ -1,11 +1,15 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/components/Common/Header.module.scss';
 import FootProfile from '@/components/Common/FooterProfile';
-
-const islogin = false; // 이 값을 변경하여 테스트해보세요
+import useUserInfoStore from '@/stores/UserInfo';
 
 const Header = () => {
+  const {zustandToken, zustandUserId} = useUserInfoStore();
+  const islogin = Boolean(zustandToken && zustandUserId);
+
   return (
     <div className={styles.firstContainer}>
       <div className={styles.Container}>
