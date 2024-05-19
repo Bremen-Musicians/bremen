@@ -95,6 +95,23 @@
   color:gray;
   margin-top: 10px;
 }
+.navButtonLeft {
+  width: 5vw;
+  font-weight: bolder;
+  font-size: larger;
+  color:white;
+  margin-top: 10px;
+  margin-left:5px;
+}
+
+.navButtonDisabledLeft {
+  width: 5vw;
+  font-weight: bolder;
+  font-size: larger;
+  color:gray;
+  margin-top: 10px;
+  margin-left:5px;
+}
 
 .videolist{
   display:flex;
