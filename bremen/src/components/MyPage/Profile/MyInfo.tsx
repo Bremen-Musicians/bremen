@@ -11,7 +11,13 @@ interface IUser {
   follow: boolean;
 }
 
-export default function MyInfo({me}: {me: IUser}) {
+export default function MyInfo({
+  me,
+  articleCnt,
+}: {
+  me: IUser;
+  articleCnt: number;
+}) {
   return (
     <>
       <div className={styles.myprofile}>
@@ -26,7 +32,7 @@ export default function MyInfo({me}: {me: IUser}) {
         {/* 연주, 팔로워, 팔로잉 */}
         <div className={styles.counts}>
           <div>
-            <span className={styles.bold}>6</span>
+            <span className={styles.bold}>{articleCnt}</span>
             <span>연주</span>
           </div>
           <div>
