@@ -1,11 +1,27 @@
-import styles from '@/components/MyPage/Profile/MyInfo.module.scss';
+import ProfileImage from '@/components/Common/ProfileImage';
+import styles from './MyInfo.module.scss';
 
-export default function MyInfo() {
+interface IUser {
+  username: string;
+  nickname: string;
+  introduce: string;
+  profileImage: string;
+  followerCnt: number;
+  followCnt: number;
+  follow: boolean;
+}
+
+export default function MyInfo({user}: {user: IUser}) {
   return (
     <>
       <div className={styles.myprofile}>
         {/* 프사 */}
-        <div className={styles.profileimg} />
+        <div className={styles.profileimg}>
+          <ProfileImage
+            userNickname={user.nickname}
+            profileImage={user.profileImage}
+          />
+        </div>
 
         {/* 연주, 팔로워, 팔로잉 */}
         <div className={styles.counts}>
@@ -14,11 +30,11 @@ export default function MyInfo() {
             <span>연주</span>
           </div>
           <div>
-            <span className={styles.bold}>12</span>
+            <span className={styles.bold}>{user.followerCnt}</span>
             <span>팔로워</span>
           </div>
           <div>
-            <span className={styles.bold}>34</span>
+            <span className={styles.bold}>{user.followCnt}</span>
             <span>팔로잉</span>
           </div>
         </div>
@@ -27,15 +43,12 @@ export default function MyInfo() {
       <div className={styles.myname}>
         {/* 닉네임 */}
         <div>
-          <span className={styles.nick}>닉네임닉네임</span>
+          <span className={styles.nick}>{user.nickname}</span>
         </div>
 
         {/* 소개 */}
         <div>
-          <span>
-            초보 베이시스트입니다. 잘 부탁드립니다! 저에게 연락을 하고 싶으시면
-            카카오톡 2389479lasd로 연락을 주시길 바랍니다.
-          </span>
+          <span>{user.introduce}</span>
         </div>
       </div>
     </>
