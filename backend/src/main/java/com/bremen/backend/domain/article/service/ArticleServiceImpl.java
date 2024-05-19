@@ -119,8 +119,8 @@ public class ArticleServiceImpl implements ArticleService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<ArticleResponse> findArticleByUser(Long userId) {
-		List<Article> articles = articleRepository.findArticlesByUser(userId);
+	public List<ArticleResponse> findArticleByNickname(String nickname) {
+		List<Article> articles = articleRepository.findArticlesByNickname(nickname);
 		return articles.stream().map(ArticleMapper.INSTANCE::articleToArticleResponse).collect(Collectors.toList());
 	}
 
