@@ -1,10 +1,23 @@
-import styles from '@/components/MyPage/Profile/MyButtons.module.scss';
+import styles from '@/components/User/UserPage/Profile/MyButtons.module.scss';
 
-export default function MyButtons() {
+export default function MyButtons({
+  follow,
+  handleFollow,
+}: {
+  follow: boolean;
+  handleFollow: () => void;
+}) {
   return (
     <div className={styles.buttons}>
-      <div className={styles.editbutton}>팔로우</div>
-      <div className={styles.messagebutton}>메시지</div>
+      {follow ? (
+        <div onClick={handleFollow} className={styles.messagebutton}>
+          언팔로우
+        </div>
+      ) : (
+        <div onClick={handleFollow} className={styles.editbutton}>
+          팔로우
+        </div>
+      )}
     </div>
   );
 }
