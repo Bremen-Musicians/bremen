@@ -23,9 +23,9 @@ public class FollowUserServiceImpl implements FollowUserService {
 
 	@Override
 	@Transactional
-	public boolean followUser(Long followingId) {
+	public boolean followUser(String nickname) {
 		User follower = userService.getUserByToken(); // 토큰으로 현재 로그인한 유저 조회
-		User follow = userService.getUserById(followingId);
+		User follow = userService.getUserByNickname(nickname);
 
 		boolean isExist = followService.isFollower(follow, follower);
 		String message = follower.getNickname();
