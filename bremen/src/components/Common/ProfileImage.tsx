@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import {useRouter} from 'next/navigation';
-import Image from 'next/image';
 import useUserInfoStore from '@/stores/UserInfo';
 import styles from './ProfileImage.module.scss';
 
@@ -28,13 +27,11 @@ export default function ProfileImage({
   };
 
   return (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       className={styles.profileImage}
       src={`https://bremen-music.s3.ap-northeast-2.amazonaws.com/${profileImage}`}
       alt="profileImage"
-      layout="responsive"
-      width={1}
-      height={1}
       onClick={moveToProfile}
     />
   );
