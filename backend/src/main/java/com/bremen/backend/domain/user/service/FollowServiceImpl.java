@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bremen.backend.domain.user.entity.Follow;
 import com.bremen.backend.domain.user.entity.User;
 import com.bremen.backend.domain.user.repository.FollowRepository;
+import com.bremen.backend.global.CustomException;
+import com.bremen.backend.global.response.ErrorCode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +19,7 @@ public class FollowServiceImpl implements FollowService {
 	@Override
 	@Transactional
 	public void addFollow(Follow follow) {
+		preventSelfFollow(follow);
 		followRepository.save(follow);
 	}
 
@@ -54,6 +57,12 @@ public class FollowServiceImpl implements FollowService {
 
 		follower.removeFollow();
 		follow.removeFollower();
+	}
+
+	private void preventSelfFollow(Follow follow) {
+		if (follow.getFollower().equals(follow.getFollow())) {
+			throw new CustomException(ErrorCode.CANNOT_FOLLOW_SELF);
+		}
 	}
 
 }
