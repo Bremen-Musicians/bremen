@@ -25,6 +25,7 @@ const Header = () => {
                 width={50}
                 height={50}
               />
+              <div className={styles.space}></div>
               <div>
                 <br />
                 Bremen
