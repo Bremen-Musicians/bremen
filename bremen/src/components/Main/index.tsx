@@ -67,7 +67,6 @@ export default function Home() {
           <ChallengeBanner image={challengeImage || ''} />
         </Link>
         <div className={styles.videocontainer}>
-          <div className={styles.shortstitle}>쇼츠</div>
           <div className={styles.videolist}>
             {list.map((video, key) => (
               <Video
