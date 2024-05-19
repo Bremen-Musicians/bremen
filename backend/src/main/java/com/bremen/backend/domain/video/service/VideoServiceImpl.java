@@ -48,7 +48,8 @@ public class VideoServiceImpl implements VideoService {
 		Video video = VideoMapper.INSTANCE.videoRequestToVideo(videoRequest);
 
 		video.setSavedVideo(userService.getUserByToken(),
-			thumbnailFile.isEmpty() ? null : s3Service.streamUpload("thumbnail", thumbnailFile),
+			thumbnailFile == null || thumbnailFile.isEmpty() ? null :
+				s3Service.streamUpload("thumbnail", thumbnailFile),
 			musicService.getMusicById(videoRequest.getMusicId()),
 			instrumentService.getInstrumentById(videoRequest.getInstrumentId()));
 		// 영상 기본 정보 세팅
