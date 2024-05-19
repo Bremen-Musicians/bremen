@@ -7,7 +7,6 @@
 }
 
 .currentChallenge {
-  background-color: #00a500;
   color: #fff;
   text-align: center;
   padding: 20px 0;
@@ -85,6 +84,14 @@
   width: 10vw;
   font-weight: bolder;
   font-size: larger;
+  color:white;
+}
+
+.navButtonDisabled {
+  width: 10vw;
+  font-weight: bolder;
+  font-size: larger;
+  color:gray;
 }
 
 .videolist{

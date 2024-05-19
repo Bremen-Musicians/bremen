@@ -4,7 +4,7 @@
     width: 100%;
     background-color: var(--header-background-color);
     align-items: center;
-    gap: calc(50vw - 20px - 32/432*530px - 44px);
+    gap: 2vw;
 }
 
 .image{
@@ -13,7 +13,7 @@
 }
 
 .logo{
-    height: 100%;
+    height: 80%;
     display: flex;
     align-items: center;
     text-align: center;
@@ -34,5 +34,6 @@
 @media (min-width: 450px) {
     .container{
     height: 7vmin;
+    gap: calc(50vw - 20px - 32/432*530px - 44px);
     }
 }
