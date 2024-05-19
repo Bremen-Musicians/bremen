@@ -9,6 +9,7 @@ import Video from '@/components/Common/Video';
 import {IMainResponse, IArticleList} from '@/types/ArticleListResponse';
 import MyInfo from './MyInfo';
 import MyButtons from './MyButtons';
+import styles from './MyProfile.module.scss';
 
 interface IUser {
   username: string;
@@ -83,7 +84,7 @@ export default function MyProfile() {
           <MyPageHeader nickname={me.nickname} />
           <MyInfo me={me} articleCnt={size} />
           <MyButtons />
-          {myArticles &&
+          {myArticles.length !== 0 ? (
             myArticles.map((video, key) => (
               <Video
                 key={key}
@@ -93,7 +94,12 @@ export default function MyProfile() {
                 thumbnail={video.imageUrl}
                 ref={null}
               />
-            ))}
+            ))
+          ) : (
+            <div className={styles.nocontent}>
+              <span>작성된 게시글이 없습니다</span>
+            </div>
+          )}
           <div ref={ref}></div>
         </>
       )}

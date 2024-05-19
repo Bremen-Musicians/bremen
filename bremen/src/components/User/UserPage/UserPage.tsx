@@ -9,6 +9,7 @@ import Video from '@/components/Common/Video';
 import UserPageHeader from './Profile/MyPageHeader';
 import UserInfo from './Profile/MyInfo';
 import UserButtons from './Profile/MyButtons';
+import styles from './UserPage.module.scss';
 
 interface IUser {
   username: string;
@@ -109,7 +110,7 @@ export default function UserPage() {
           <UserPageHeader nickname={user.nickname} />
           <UserInfo user={user} articleCnt={size} />
           <UserButtons follow={user.follow} handleFollow={handleFollow} />
-          {userArticles &&
+          {userArticles.length !== 0 ? (
             userArticles.map((video, key) => (
               <Video
                 key={key}
@@ -119,7 +120,12 @@ export default function UserPage() {
                 thumbnail={video.imageUrl}
                 ref={null}
               />
-            ))}
+            ))
+          ) : (
+            <div className={styles.nocontent}>
+              <span>작성된 게시글이 없습니다</span>
+            </div>
+          )}
           <div ref={ref}></div>
         </>
       )}
