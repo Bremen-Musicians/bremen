@@ -26,7 +26,7 @@ public interface ArticleService {
 
 	List<ArticleResponse> findEnsembleArticles(Long musicId, List<Long> instrumentsIds, String title, String nickname);
 
-	List<ArticleResponse> findArticleByUser(Long userId);
+	List<ArticleResponse> findArticleByNickname(String nickname);
 
 	ListResponse findArticle(ArticleOrderBy articleOrderBy, Pageable pageable);
 
