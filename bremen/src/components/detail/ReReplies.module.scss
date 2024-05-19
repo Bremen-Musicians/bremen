@@ -44,6 +44,10 @@
         height: 30px;
         border-radius: 15px;
     }
+    
+    input:focus {
+        outline: none;
+    }
 
     div {
         width: 60px;

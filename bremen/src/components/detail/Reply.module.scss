@@ -42,3 +42,27 @@
     border-radius: 100%;
     background-color: var(--origin-blue-color);
 }
+
+.modify {
+    padding: 5px;
+
+    input {
+        padding: 3px;
+        border-radius: 5px;
+        min-height: 30px;
+        width: calc(100vw - 90px);
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    .btn {
+        align-items: center;
+        margin: 0 0 5px;
+
+        span {
+            cursor: pointer;
+        }
+    }
+}

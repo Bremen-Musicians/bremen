@@ -13,16 +13,19 @@ import ReplyArea from './ReplyArea';
 import styles from './index.module.scss';
 
 interface IPost {
+  id: number;
   title: string;
   content: string;
   hitCnt: number;
   likeCnt: number;
   createTime: string;
+  userId: number;
   username: string; // 이메일
   nickname: string;
   videoId: number;
   videoUrl: string;
   imageUrl: string;
+  hashtags: string[]; // 해시태그
   like: boolean;
 }
 
@@ -105,7 +108,12 @@ export default function Page() {
   return (
     <>
       {/* 영상 재생 영역 */}
-      <div className={styles.video}></div>
+      <div className={styles.video}>
+        <video
+          src={`https://bremen-music.s3.ap-northeast-2.amazonaws.com/${post?.videoUrl}`}
+          controls
+        ></video>
+      </div>
 
       {/* 영상 설명 영역 */}
       <div>
@@ -141,11 +149,10 @@ export default function Page() {
               <span>{post && post.likeCnt}</span>
             </div>
           )}
-          <Tag />
-          <Tag />
-          <Tag />
-          <Tag />
-          <Tag />
+          {post?.hashtags &&
+            post.hashtags.map((hashtag, key) => (
+              <Tag tag={hashtag} key={key} />
+            ))}
         </div>
       </div>
 

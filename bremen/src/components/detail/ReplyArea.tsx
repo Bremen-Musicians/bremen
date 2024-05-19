@@ -61,9 +61,9 @@ export default function ReplyArea() {
         setReplyList(replyData);
 
         if (replyData.length > 0) {
-          setProfileImgH(replyData[replyData.length - 1].profile);
-          setContentH(replyData[replyData.length - 1].content);
-          setDeletedH(replyData[replyData.length - 1].deleted);
+          setProfileImgH(replyData[0].profile);
+          setContentH(replyData[0].content);
+          setDeletedH(replyData[0].deleted);
         }
       });
   };
