@@ -7,7 +7,7 @@ import {useRef, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import axios from 'axios';
 import {useInView} from 'react-intersection-observer';
-import {LuMusic4} from 'react-icons/lu';
+import {LuMusic4, LuFilePlus, LuCamera} from 'react-icons/lu';
 import useUserInfoStore from '@/stores/UserInfo';
 import api from '@/api/api';
 import Video from '@/components/Common/Video';
@@ -201,14 +201,7 @@ const Form = () => {
             onClick={handleClick}
           >
             <div>
-              <img
-                loading="lazy"
-                className={styles.buttonImg}
-                src="/Icon/camera.png"
-                height={58}
-                width={58}
-                alt="버튼이미지"
-              />
+              <LuCamera height={58} width={58} className={styles.icon} />
               <div className={styles.detail}>녹화하기</div>
             </div>
           </button>
@@ -258,14 +251,7 @@ const Form = () => {
                 onClick={handleUploadClick}
               >
                 <div>
-                  <img
-                    loading="lazy"
-                    className={styles.buttonImg}
-                    src="/Icon/filePlus.png"
-                    height={58}
-                    width={58}
-                    alt="버튼이미지"
-                  />
+                  <LuFilePlus height={58} width={58} className={styles.icon} />
                   <div className={styles.detail}>파일업로드</div>
                 </div>
               </div>

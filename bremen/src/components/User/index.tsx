@@ -11,6 +11,7 @@ import ModalForm from '@/components/Common/ModalForm';
 import InputCheck from '@/components/User/InputCheck';
 import {ICheck, ISignUpResponse} from '@/types/UserResponse';
 import useUserInfoStore from '@/stores/UserInfo';
+import bremenWalk from '../../../public/bremenWalk.png';
 
 const SignUp = () => {
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -300,7 +301,7 @@ const SignUp = () => {
       </div>
       <Image
         loading="lazy"
-        src="/bremenWalk.png"
+        src={bremenWalk}
         width={300}
         height={300}
         alt="브레멘"

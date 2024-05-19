@@ -10,6 +10,7 @@ import axios from 'axios';
 import styles from '@/components/User/LoginIndex.module.scss';
 import useUserInfoStore from '@/stores/UserInfo';
 import {LoginResponse} from '@/types/UserResponse';
+import bremenStand from '../../../public/bremenStand.png';
 
 const LoginIndex = () => {
   const [isIDPass, setIsIDPass] = useState<boolean>(true);
@@ -135,7 +136,7 @@ const LoginIndex = () => {
       <Image
         loading="lazy"
         className={styles.bremen}
-        src="/bremenStand.png"
+        src={bremenStand}
         alt="bremen"
         width={100}
         height={100}
