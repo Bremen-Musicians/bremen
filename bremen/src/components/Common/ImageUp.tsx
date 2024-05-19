@@ -54,6 +54,7 @@ const ImageUp = ({
         <label className={styles.changeLabel} htmlFor="profileImg">
           <div className={styles.profileImageContainer}>
             <Image
+              loading="lazy"
               className={styles.profileImg}
               src={presentImgUrl}
               alt="프로필 사진"

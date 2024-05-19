@@ -1,10 +1,10 @@
 'use client';
 
-import MyPageHeader from '@/components/MyPage/Profile/MyPageHeader';
 import {useEffect, useState} from 'react';
+import {useInView} from 'react-intersection-observer';
+import MyPageHeader from '@/components/MyPage/Profile/MyPageHeader';
 import api from '@/api/api';
 import useUserInfoStore from '@/stores/UserInfo';
-import {useInView} from 'react-intersection-observer';
 import Video from '@/components/Common/Video';
 import {IMainResponse, IArticleList} from '@/types/ArticleListResponse';
 import MyInfo from './MyInfo';

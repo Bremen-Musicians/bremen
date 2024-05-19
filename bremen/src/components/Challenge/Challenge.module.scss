@@ -1,7 +1,7 @@
 .challengeHeader {
   font-size: 20px;
   color: #fff;
-  background-color: #000;
+  background-color: #001533;
   text-align: center;
   padding: 10px 0;
 }
@@ -20,7 +20,7 @@
 .videoSection h3 {
   font-size: 18px;
   color: #fff;
-  background-color: #000;
+  background-color: #001533;
   text-align: center;
   padding: 10px 0;
   margin-bottom: 10px;
@@ -81,17 +81,36 @@
 }
 
 .navButton {
-  width: 10vw;
+  width: 5vw;
   font-weight: bolder;
   font-size: larger;
   color:white;
+  margin-top: 10px;
 }
 
 .navButtonDisabled {
-  width: 10vw;
+  width: 5vw;
   font-weight: bolder;
   font-size: larger;
   color:gray;
+  margin-top: 10px;
+}
+.navButtonLeft {
+  width: 5vw;
+  font-weight: bolder;
+  font-size: larger;
+  color:white;
+  margin-top: 10px;
+  margin-left:5px;
+}
+
+.navButtonDisabledLeft {
+  width: 5vw;
+  font-weight: bolder;
+  font-size: larger;
+  color:gray;
+  margin-top: 10px;
+  margin-left:5px;
 }
 
 .videolist{

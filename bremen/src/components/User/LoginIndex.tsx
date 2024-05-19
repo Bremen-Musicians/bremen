@@ -133,12 +133,12 @@ const LoginIndex = () => {
         </div>
       </form>
       <Image
+        loading="lazy"
         className={styles.bremen}
         src="/bremenStand.png"
         alt="bremen"
         width={100}
         height={100}
-        priority
       />
     </div>
   );
