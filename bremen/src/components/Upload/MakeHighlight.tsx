@@ -29,7 +29,8 @@ const FF = createFFmpeg({
 
 // TODO: 테스트는 로컬에서 올려서 사용하기
 // TODO: 주스탠드 만들기
-const SoundWaveMusic = () => {
+/** 하이라이트 제작 */
+const MakeHighlight = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState<string>(''); // 인풋 비디오 url, 나중에는 주스탠드에서 가져오기
   const [videoTrimmedUrl, setVideoTrimmedUrl] = useState<string>(''); // 자른 후
   const [trimIsProcessing, setTrimIsProcessing] = useState<boolean>(false);
@@ -39,26 +40,12 @@ const SoundWaveMusic = () => {
   const [thumbnailIsProcessing, setThumbnailIsProcessing] = useState(false);
   const [thumbNails, setThumbNails] = useState<string[]>([]);
 
-  /** 자르기 */
-
   /** 파일 인풋 -> url 넣기 */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const url = URL.createObjectURL(file);
       setInputVideoUrl(url);
-      // helpers
-      //   .readFileAsBase64(file)
-      //   .then(base64String => {
-      //     if (typeof base64String === 'string') {
-      //       setInputVideoUrl(base64String);
-      //     } else {
-      //       console.error('Invalid base64 string received');
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.error('Error reading file as base64:', error);
-      //   });
     }
   };
 
@@ -126,7 +113,7 @@ const SoundWaveMusic = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputVideoUrl]);
 
-  /** 자르기 */
+  /** 자르기 최대 100초 */
   const handleTrim = async () => {
     setTrimIsProcessing(true);
 
@@ -135,6 +122,7 @@ const SoundWaveMusic = () => {
       (rEnd / 100) * videoTrimDuration -
       Number(startTime)
     ).toFixed(2);
+    const highlightOffset = Number(offset) > 100 ? 100 : Number(offset);
 
     try {
       const videoData = await fetchFile(inputVideoUrl);
@@ -145,7 +133,7 @@ const SoundWaveMusic = () => {
         '-i',
         'input.mp4',
         '-t',
-        helpers.toTimeString(Number(offset), true),
+        helpers.toTimeString(Number(highlightOffset), true),
         '-c',
         'copy',
         'output.mp4',
@@ -153,9 +141,6 @@ const SoundWaveMusic = () => {
       const data = FF.FS('readFile', 'output.mp4');
       const videoBlob = new Blob([data], {type: 'video/mp4'});
       const dataUrl = URL.createObjectURL(videoBlob);
-      // const dataURL = await helpers.readFileAsBase64(
-      //   new Blob([data.buffer], { type: "video/mp4" })
-      // );
       setVideoTrimmedUrl(dataUrl);
     } catch (error) {
       console.error(error);
@@ -218,4 +203,5 @@ const SoundWaveMusic = () => {
     </div>
   );
 };
-export default SoundWaveMusic;
+
+export default MakeHighlight;

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable no-console */
 
 'use client';
@@ -5,9 +7,8 @@
 import {useState, useEffect, ChangeEvent} from 'react';
 
 import {createFFmpeg, fetchFile} from '@ffmpeg/ffmpeg';
-import VideoTrim from '@/components/Upload/VideoTrim';
-import OutputVideo from '@/components/Upload/OutputVideo';
 import VideoFilePicker from '@/components/Upload/VideoFilePicker';
+import SlideBar from '@/components/Upload/SlideBar';
 import * as helpers from '@/utils/helpers';
 
 const FF = createFFmpeg({
@@ -29,17 +30,15 @@ const FF = createFFmpeg({
 
 // TODO: 테스트는 로컬에서 올려서 사용하기
 // TODO: 주스탠드 만들기
-const SoundWaveMusic = () => {
+/** 썸네일 제작 */
+const MakeThumbnail = () => {
   const [inputVideoUrl, setInputVideoUrl] = useState<string>(''); // 인풋 비디오 url, 나중에는 주스탠드에서 가져오기
-  const [videoTrimmedUrl, setVideoTrimmedUrl] = useState<string>(''); // 자른 후
-  const [trimIsProcessing, setTrimIsProcessing] = useState<boolean>(false);
-  const [rStart, setRstart] = useState<number>(0);
-  const [rEnd, setRend] = useState<number>(10);
   const [videoTrimDuration, setVideoTrimDuration] = useState<number>(0);
   const [thumbnailIsProcessing, setThumbnailIsProcessing] = useState(false);
-  const [thumbNails, setThumbNails] = useState<string[]>([]);
-
-  /** 자르기 */
+  const [thumbNails, setThumbNails] = useState<string[]>([]); // 선택할 썸네일들
+  const [thumbnailTime, setThumbnailTime] = useState<number>(0); // 썸네일 시간
+  const [selectedTumbNail, setSelectedThumbNail] = useState<string>(''); // 썸네일 선택
+  const [isThumbnail, setIsThumbnail] = useState<boolean>(false); // 썸네일 선택 중
 
   /** 파일 인풋 -> url 넣기 */
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,18 +46,6 @@ const SoundWaveMusic = () => {
       const file = e.target.files[0];
       const url = URL.createObjectURL(file);
       setInputVideoUrl(url);
-      // helpers
-      //   .readFileAsBase64(file)
-      //   .then(base64String => {
-      //     if (typeof base64String === 'string') {
-      //       setInputVideoUrl(base64String);
-      //     } else {
-      //       console.error('Invalid base64 string received');
-      //     }
-      //   })
-      //   .catch(error => {
-      //     console.error('Error reading file as base64:', error);
-      //   });
     }
   };
 
@@ -126,82 +113,77 @@ const SoundWaveMusic = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputVideoUrl]);
 
-  /** 자르기 */
-  const handleTrim = async () => {
-    setTrimIsProcessing(true);
+  /** 숫자-> 00:00:00 형식의 시간으로 바꾸기 */
+  function formatTime(seconds: number) {
+    const pad = (num: number) => String(num).padStart(2, '0');
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
 
-    const startTime = ((rStart / 100) * videoTrimDuration).toFixed(2);
-    const offset = (
-      (rEnd / 100) * videoTrimDuration -
-      Number(startTime)
-    ).toFixed(2);
+    return `${pad(hours)}:${pad(minutes)}:${pad(secs)}`;
+  }
+
+  /** 썸네일 선택 */
+  const selectThumbnail = async () => {
+    if (!FF.isLoaded()) await FF.load();
+
+    const videoData = await fetchFile(inputVideoUrl);
+    console.log('videoData', videoData);
+    FF.FS('writeFile', 'bremen', videoData);
 
     try {
-      const videoData = await fetchFile(inputVideoUrl);
-      FF.FS('writeFile', 'input.mp4', videoData);
+      const time = formatTime(
+        thumbnailTime > 0 ? thumbnailTime : videoTrimDuration / 2,
+      );
       await FF.run(
         '-ss',
-        helpers.toTimeString(Number(startTime), true),
+        `${time}`,
         '-i',
-        'input.mp4',
-        '-t',
-        helpers.toTimeString(Number(offset), true),
-        '-c',
-        'copy',
-        'output.mp4',
+        'bremen',
+        '-vf',
+        `scale=150:-1`,
+        '-vframes',
+        '1',
+        `img.png`,
       );
-      const data = FF.FS('readFile', 'output.mp4');
-      const videoBlob = new Blob([data], {type: 'video/mp4'});
-      const dataUrl = URL.createObjectURL(videoBlob);
-      // const dataURL = await helpers.readFileAsBase64(
-      //   new Blob([data.buffer], { type: "video/mp4" })
-      // );
-      setVideoTrimmedUrl(dataUrl);
+      const data = FF.FS('readFile', `img.png`);
+
+      const blob = new Blob([data.buffer], {type: 'image/png'});
+      const dataUrl = URL.createObjectURL(blob);
+      // FF.FS('unlink', `img${i}.png`);
+      setSelectedThumbNail(dataUrl);
+      // arrayOfImageURIs.push(dataURI);
     } catch (error) {
-      console.error(error);
-    } finally {
-      setTrimIsProcessing(false);
+      console.log({message: error});
     }
   };
 
-  /** 자르기 비동기여서 바로 못 넣-> 자르기 유발 함수 */
-  const handleTrimClick = () => {
-    handleTrim().catch(error => {
-      console.error('Error during handleTrim execution:', error);
-    });
+  const handleClick = () => {
+    setIsThumbnail(true);
   };
 
-  /** 바꾼 길이 */
-  const handleUpdateRange = (func: (value: number) => void) => {
-    return ({target: {value}}: React.ChangeEvent<HTMLInputElement>) => {
-      func(Number(value));
-    };
+  const handleStore = () => {
+    selectThumbnail().catch(error => console.error(error));
+    setIsThumbnail(false);
   };
-
   return (
     <div>
-      {videoTrimmedUrl && <video src={videoTrimmedUrl} controls />}
+      썸네일:
+      <img src={selectedTumbNail} />
+      <div onClick={handleClick}>
+        <img src="/Icon/plus.png" />
+      </div>
+      <div onClick={handleStore}> 저장</div>
       <br />
-      <VideoTrim
-        rEnd={rEnd}
-        rStart={rStart}
-        handleUpdaterStart={handleUpdateRange(setRstart)}
-        handleUpdaterEnd={handleUpdateRange(setRend)}
-        loading={thumbnailIsProcessing}
-        duration={videoTrimDuration}
-        control={
-          <div className="u-center">
-            <button
-              onClick={handleTrimClick}
-              className="btn btn_b"
-              disabled={trimIsProcessing}
-            >
-              {trimIsProcessing ? 'trimming...' : 'trim selected'}
-            </button>
-          </div>
-        }
-        thumbNails={thumbNails}
-      />
+      {isThumbnail && (
+        <SlideBar
+          duration={videoTrimDuration}
+          thumbNails={thumbNails}
+          setThumbnailTime={setThumbnailTime}
+          max={videoTrimDuration}
+          loading={thumbnailIsProcessing}
+        />
+      )}
       <VideoFilePicker handleChange={handleChange} showVideo={!!inputVideoUrl}>
         <video
           src={inputVideoUrl || ''}
@@ -211,11 +193,8 @@ const SoundWaveMusic = () => {
           width="450"
         ></video>
       </VideoFilePicker>
-      <OutputVideo
-        videoSrc={videoTrimmedUrl}
-        handleDownload={() => helpers.download(videoTrimmedUrl)}
-      />
     </div>
   );
 };
-export default SoundWaveMusic;
+
+export default MakeThumbnail;

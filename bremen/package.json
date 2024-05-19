@@ -10,7 +10,7 @@
     "prettify": "prettier --write *.js **/*.js"
   },
   "dependencies": {
-    "@ffmpeg/ffmpeg": "^0.12.10",
+    "@ffmpeg/ffmpeg": "0.10.1",
     "axios": "^1.6.8",
     "date-fns": "^3.6.0",
     "moment": "^2.30.1",
@@ -23,10 +23,8 @@
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.2",
     "react-quill": "^2.0.0",
-    "react-wavesurfer": "^0.8.6",
     "sass": "^1.75.0",
     "styled-components": "^6.1.8",
-    "wavesurfer.js": "^7.7.14",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
