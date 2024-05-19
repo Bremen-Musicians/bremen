@@ -165,13 +165,17 @@ const Challenge: React.FC = () => {
       <div className={styles.headerMargin}></div>
       <div className={styles.challengeHeader}>지난 챌린지 선정영상</div>
       <div className={styles.ensembleVideos}>
-        <button
-          className={styles.navButton}
+        <div
+          className={
+            currentIndex === enVideos.length - 1
+              ? styles.navButtonDisabled
+              : styles.navButton
+          }
           onClick={showNextVideo}
-          disabled={currentIndex === enVideos.length - 1}
         >
           {'◀'}
-        </button>
+        </div>
+
         {enVideos.length > 0 && (
           <div key={enVideos[currentIndex].id} className={styles.video}>
             <div className={styles.title}>
@@ -185,13 +189,14 @@ const Challenge: React.FC = () => {
             </div>
           </div>
         )}
-        <button
-          className={styles.navButton}
+        <div
+          className={
+            currentIndex === 0 ? styles.navButtonDisabled : styles.navButton
+          }
           onClick={showPreviousVideo}
-          disabled={currentIndex === 0}
         >
           {'▶'}
-        </button>
+        </div>
       </div>
       <div className={styles.currentChallenge}>
         <img

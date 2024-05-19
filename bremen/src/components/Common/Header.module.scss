@@ -1,5 +1,5 @@
 .firstContainer{
-    height: 24vmin;
+    height: 15vmin;
     width: 100%;
     display:flex;
     justify-content: center; 
@@ -33,7 +33,7 @@
     z-index:1000
 }
 .rightContainer {
-    width: 30%;
+    width: 20%;
     background-color: var(--header-background-color);
     display: flex;
     justify-content: space-around;
