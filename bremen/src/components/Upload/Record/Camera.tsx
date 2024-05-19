@@ -14,8 +14,8 @@ import Video from '@/components/Upload/Record/Video';
 import Header from '@/components/Upload/Record/Header';
 import styles from '@/components/Upload/Record/Camera.module.scss';
 import useUserInfoStore from '@/stores/UserInfo';
-import VideoSearchModal from '@/components/Upload/VideoSearchModal';
-import BlueModalForm from '@/components/Common/BlueModalForm';
+// import VideoSearchModal from '@/components/Upload/VideoSearchModal';
+// import BlueModalForm from '@/components/Common/BlueModalForm';
 
 const DynamicMetronome = dynamic(
   () => import('@/components/Upload/Record/Metronome'),
@@ -31,9 +31,9 @@ const Camera = () => {
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const [videoData, setVideoData] = useState<File | null>(null);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [isVideo, setIsVideo] = useState<number[]>([]); // 모달에서 선택한 아티클 비디오 id
-  const [isInstruments, setIsInstruments] = useState<number[]>([]);
+  // const [openModal, setOpenModal] = useState<boolean>(false);
+  // const [isVideo, setIsVideo] = useState<number[]>([]); // 모달에서 선택한 아티클 비디오 id
+  // const [isInstruments, setIsInstruments] = useState<number[]>([]);
   const {zustandToken} = useUserInfoStore();
   // const [mediaData, setMediaData] = useState<BlobPart[]>([]);
 
@@ -56,22 +56,22 @@ const Camera = () => {
       .catch(error => console.error(error));
   }, [isRecording]);
 
-  const closeModal = () => {
-    setOpenModal(false);
-  };
-  const handleClickModal = () => {
-    setOpenModal(true);
-  };
+  // const closeModal = () => {
+  //   setOpenModal(false);
+  // };
+  // const handleClickModal = () => {
+  //   setOpenModal(true);
+  // };
 
-  const handleInstrumentList = (newNumber: number) => {
-    setIsInstruments(prevInstruments => {
-      const index = prevInstruments.indexOf(newNumber);
-      if (index !== -1) {
-        return prevInstruments.filter(num => num !== newNumber);
-      }
-      return [...prevInstruments, newNumber];
-    });
-  };
+  // const handleInstrumentList = (newNumber: number) => {
+  //   setIsInstruments(prevInstruments => {
+  //     const index = prevInstruments.indexOf(newNumber);
+  //     if (index !== -1) {
+  //       return prevInstruments.filter(num => num !== newNumber);
+  //     }
+  //     return [...prevInstruments, newNumber];
+  //   });
+  // };
 
   const startRecording = () => {
     if (isRecording) return;
@@ -195,11 +195,12 @@ const Camera = () => {
           isRecording={isRecording}
         />
         <DynamicMetronome />
-        {isVideo.length > 0 ? (
+        {/* {isVideo.length > 0 ? (
           <div>
             <div>곡 컴포넌트 넣기</div>
             <div onClick={handleClickModal}>
               <Image
+                loading="lazy"
                 src="/Icon/plus.png"
                 width={100}
                 height={100}
@@ -219,6 +220,7 @@ const Camera = () => {
           <div>
             <div onClick={handleClickModal}>
               <Image
+                loading="lazy"
                 src="/Icon/plus.png"
                 width={100}
                 height={100}
@@ -234,62 +236,72 @@ const Camera = () => {
               />
             </BlueModalForm>
           </div>
-        )}
-        {!isRecording && (
-          <div onClick={startRecording}>
-            <Image
-              src="/Icon/videoStart.png"
-              width={200}
-              height={200}
-              alt="녹화 시작"
-              className={styles.start}
-            />
-          </div>
-        )}
-        {isRecording && (
-          <div className={styles.isStarted}>
-            {isPaused ? (
-              <div onClick={restartRecording}>
-                <Image
-                  src="/Icon/videoRestart.png"
-                  width={200}
-                  height={200}
-                  alt="녹화 재시작"
-                  className={styles.restart}
-                />
-              </div>
-            ) : (
-              <div onClick={stopRecording}>
-                <Image
-                  src="/Icon/videoStop.png"
-                  width={200}
-                  height={200}
-                  alt="녹화 중지"
-                  className={styles.stop}
-                />
-              </div>
-            )}
-            <div onClick={finishRecording}>
+        )} */}
+        <div className={styles.state}>
+          {!isRecording && (
+            <div onClick={startRecording}>
               <Image
-                src="/Icon/videoFinish.png"
+                loading="lazy"
+                src="/Icon/videoStart.png"
                 width={200}
                 height={200}
-                alt="녹화 종료"
-                className={styles.finish}
+                alt="녹화 시작"
+                className={styles.start}
               />
             </div>
-          </div>
-        )}
+          )}
+          {isRecording && (
+            <div className={styles.isStarted}>
+              {isPaused ? (
+                <div onClick={restartRecording}>
+                  <Image
+                    loading="lazy"
+                    src="/Icon/videoRestart.png"
+                    width={200}
+                    height={200}
+                    alt="녹화 재시작"
+                    className={styles.restart}
+                  />
+                </div>
+              ) : (
+                <div onClick={stopRecording}>
+                  <Image
+                    loading="lazy"
+                    src="/Icon/videoStop.png"
+                    width={200}
+                    height={200}
+                    alt="녹화 중지"
+                    className={styles.stop}
+                  />
+                </div>
+              )}
+              <div onClick={finishRecording}>
+                <Image
+                  loading="lazy"
+                  src="/Icon/videoFinish.png"
+                  width={200}
+                  height={200}
+                  alt="녹화 종료"
+                  className={styles.finish}
+                />
+              </div>
+            </div>
+          )}
+        </div>
 
-        <button
-          onClick={downloadRecording}
-          disabled={recordedMediaUrl === null}
-          className={styles.download}
-        >
-          녹화 다운로드
-        </button>
-        <input type="file" accept="image/*" id="thumbnail" />
-        <button onClick={handleGoNext}>다음</button>
+        <div className={styles.button}>
+          <button
+            onClick={downloadRecording}
+            disabled={recordedMediaUrl === null}
+            className={styles.download}
+          >
+            녹화 다운로드
+          </button>
+          {/* <input type="file" accept="image/*" id="thumbnail" /> */}
+          <button onClick={handleGoNext} className={styles.next}>
+            다음
+          </button>
+        </div>
       </div>
     </div>
   );

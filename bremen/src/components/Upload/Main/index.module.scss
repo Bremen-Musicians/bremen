@@ -25,22 +25,43 @@
     color: white;
     font-size: 2.5vmin;
 }
+.icon{
+    width: 46px;
+    height: 46px;
+}
 
 .buttonGroup{
     display: flex;
     padding-bottom: 10vmin;
     gap: 10vmin
 }
+.buttonDis{
+    height: calc( 30px + 125 / 9 * 1vmin);
+    width: calc( 30px + 125 / 9 * 1vmin);
+    cursor: default;
+    background-color: var( --disabled-button-color);
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1010104D;
+}
+
 .buttonContainer{
-    height: calc( 50px + 125 / 9 * 1vmin);
-    width: calc( 50px + 125 / 9 * 1vmin);
-    background-color: var(--light-gray-color);
+    height: calc( 30px + 125 / 9 * 1vmin);
+    width: calc( 30px + 125 / 9 * 1vmin);
+    background-color: var(--able-button-color);
     display: flex;
     border-radius: 10px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    &:disabled{
+        cursor: default;
+        background-color: var( --disabled-button-color);
+    }
    }
    
    .buttonImg{

@@ -43,6 +43,34 @@ height: 15.5vmin;
     flex-wrap: wrap;
 }
 
+.state{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap : 10px;
+}
+
+.next{
+    height: fit-content;
+    padding: 2vmin;
+    border-radius: 10px;
+}
+.stop{
+    height: fit-content;
+    padding:2vmin;
+}
+.download{
+    height: fit-content;
+    padding: 2vmin;
+    border-radius: 10px;
+}
+
 @media (min-width: 450px) {
     .start{
         width: 4.5vw;

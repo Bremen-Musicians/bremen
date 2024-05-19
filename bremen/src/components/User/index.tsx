@@ -299,6 +299,7 @@ const SignUp = () => {
         </button>
       </div>
       <Image
+        loading="lazy"
         src="/bremenWalk.png"
         width={300}
         height={300}

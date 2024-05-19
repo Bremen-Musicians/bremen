@@ -139,6 +139,7 @@ const ProfileIndex = () => {
         <NextButton onClick={handleClick}>다음</NextButton>
       </Container>
       <Image
+        loading="lazy"
         src="/bremenWalk.png"
         width={300}
         height={300}
