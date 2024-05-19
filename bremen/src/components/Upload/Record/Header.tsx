@@ -11,6 +11,7 @@ const Header = () => {
   return (
     <div className={styles.container}>
       <Image
+        loading="lazy"
         className={styles.goBack}
         src="/Icon/goBack.png"
         width={100}
@@ -21,6 +22,7 @@ const Header = () => {
       <Link href="/">
         <div className={styles.logo}>
           <Image
+            loading="lazy"
             className={styles.image}
             src="/header/mainLogo.png"
             width={100}

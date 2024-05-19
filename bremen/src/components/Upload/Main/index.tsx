@@ -6,13 +6,16 @@
 import {useRef, useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
 import axios from 'axios';
+import {useInView} from 'react-intersection-observer';
+import {LuMusic4} from 'react-icons/lu';
+import useUserInfoStore from '@/stores/UserInfo';
+import api from '@/api/api';
+import Video from '@/components/Common/Video';
 import Header from '@/components/Common/Header';
 import styles from '@/components/Upload/Main/index.module.scss';
-import UploadVideo from '@/components/Upload/Main/UploadVideo';
 import VideoInfo from '@/stores/VideoInfo';
 import ModalForm from '@/components/Common/ModalForm';
 import FindSongModal from '@/components/Admin/Challenge/FindSongModal';
-import useUserInfoStore from '@/stores/UserInfo';
 import {instruments} from '@/constants/instruments';
 import {VideoResponse} from '@/types/Video';
 
@@ -22,18 +25,48 @@ interface SongData {
   id: number;
 }
 
+interface IMainResponse {
+  status: number;
+  message: string;
+  item: IArticleList[];
+  size: number;
+}
+
+interface IArticleList {
+  id: number;
+  title: string;
+  content: string;
+  hitCnt: number;
+  likeCnt: number;
+  createdTime: string;
+  userId: number;
+  username: string;
+  nickname: string;
+  videoId: number;
+  videoUrl: string;
+  imageUrl: string;
+  hashtags: string[];
+  like: boolean;
+}
+
 const Form = () => {
   const [isMusicId, setIsMusicId] = useState<number>(0);
   const [isInstrumentId, setIsInstrumentId] = useState<number>(0);
   const [selectedValue, setSelectedValue] = useState<number>(0);
   const [openModal, setOpenModal] = useState(false);
   const videoRef = useRef<HTMLInputElement>(null);
+  const {zustandUserNickname} = useUserInfoStore.getState();
+  const [myArticles, setMyArticles] = useState<IArticleList[]>([]);
+  const [page, setPage] = useState<number>(0);
+  const [ref, inView] = useInView();
   const {
     setZustandVideoId,
     setZustandVideoUrl,
     setZustandInstrumentId,
     setZustandMusicId,
-    zustandVideoUrl,
+    // zustandVideoUrl,
+    // zustandMusicId,
+    // zustandInstrumentId,
   } = VideoInfo();
   const {zustandToken} = useUserInfoStore();
   const router = useRouter();
@@ -42,20 +75,6 @@ const Form = () => {
     setOpenModal(false);
   };
 
-  useEffect(() => {
-    if (isMusicId !== 0 && isInstrumentId !== 0 && zustandVideoUrl !== '') {
-      console.log('1번 유즈이펙트');
-      router.push('/upload/explanationsolo');
-    } else if (
-      isMusicId !== 0 &&
-      isInstrumentId !== 0 &&
-      zustandVideoUrl === ''
-    ) {
-      console.log('2번 유즈이펙트');
-      router.push('/upload/record');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isMusicId, isInstrumentId, zustandVideoUrl]);
   const saveMovieFile = () => {
     if (
       videoRef.current &&
@@ -95,9 +114,10 @@ const Form = () => {
           )
           .then(response => {
             // eslint-disable-next-line no-console
-            setZustandVideoId(response.data.item.id);
             setZustandVideoUrl(response.data.item.videoUrl);
+            setZustandVideoId(response.data.item.id);
             console.log('파일O요청, axios, boundary: ', response);
+            router.push('/upload/explanationsolo');
           })
           .catch(Error => {
             // eslint-disable-next-line no-console
@@ -107,57 +127,13 @@ const Form = () => {
     }
   };
 
-  const stepByStep = async () => {
-    setOpenModal(true); // 모달 열기
-
-    // 특정 조건을 만족할 때까지 기다리는 함수
-    const waitForConditions = () => {
-      return new Promise<void>(resolve => {
-        const checkConditions = () => {
-          if (isMusicId !== 0 && isInstrumentId !== 0) {
-            setOpenModal(false); // 모달 닫기
-            resolve();
-          } else {
-            requestAnimationFrame(checkConditions); // 다음 프레임에서 다시 확인
-          }
-        };
-        checkConditions();
-      });
-    };
-
-    await waitForConditions(); // 조건 만족을 기다림
-    // eslint-disable-next-line @typescript-eslint/await-thenable
-    await saveMovieFile(); // 파일 저장
-
-    router.push('upload/explanationsolo'); // 라우터 이동
-  };
-
-  const toUpload = async () => {
-    setOpenModal(true);
-
-    const waitForConditions = () => {
-      return new Promise<void>(resolve => {
-        const checkConditions = () => {
-          if (isMusicId !== 0 && isInstrumentId !== 0) {
-            setOpenModal(false);
-            resolve();
-          } else {
-            requestAnimationFrame(checkConditions);
-          }
-        };
-        checkConditions();
-      });
-    };
-    await waitForConditions();
-    router.push('/upload/record');
-  };
-
   const handleClick = () => {
-    toUpload().catch(error => console.error(error));
+    router.push('upload/record');
   };
 
   const handleUploadClick = () => {
-    stepByStep().catch(error => console.error(error));
+    saveMovieFile();
+    // router.push('/upload/explanationsolo');
   };
 
   const registSong = (songData: SongData) => {
@@ -174,13 +150,59 @@ const Form = () => {
     setSelectedValue(Number(e.target.value));
   };
 
+  const handleModalClick = () => {
+    setOpenModal(true);
+  };
+
+  const getArticles = () => {
+    api
+      .get<IMainResponse>(
+        `/articles?nickname=${zustandUserNickname}&page=${page}&size=12`,
+      )
+      .then(response => {
+        const listData: IArticleList[] = response.data.item;
+        if (listData.length > 0) {
+          setMyArticles(prevList => [...prevList, ...listData]);
+        }
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.error(error, '에러!');
+      });
+  };
+
+  useEffect(() => {
+    if (inView) {
+      getArticles();
+      setPage(page + 1);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
+
+  useEffect(() => {
+    getArticles();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [zustandUserNickname]);
+
   return (
     <div>
       <div className={styles.container}>
         <div className={styles.buttonGroup}>
-          <div className={styles.buttonContainer} onClick={handleClick}>
+          <button className={styles.buttonContainer} onClick={handleModalClick}>
+            <div>
+              <LuMusic4 height={58} width={58} className={styles.icon} />
+              <div className={styles.detail}>곡, 악기 선택</div>
+            </div>
+          </button>
+          <button
+            disabled={isMusicId === 0 || isInstrumentId === 0}
+            className={styles.buttonContainer}
+            onClick={handleClick}
+          >
             <div>
               <img
+                loading="lazy"
                 className={styles.buttonImg}
                 src="/Icon/camera.png"
                 height={58}
@@ -189,7 +211,8 @@ const Form = () => {
               />
               <div className={styles.detail}>녹화하기</div>
             </div>
-          </div>
+          </button>
+
           <ModalForm isOpen={openModal} onClose={closeModal}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
               <div className={styles.instrument}>
@@ -207,6 +230,7 @@ const Form = () => {
                   <button
                     className={styles.instrumentButton}
                     onClick={handleButtonClick}
+                    style={{cursor: 'pointer'}}
                   >
                     확인
                   </button>
@@ -226,11 +250,16 @@ const Form = () => {
             />
             <label className={styles.changeLabel} htmlFor="musicVideo">
               <div
-                className={styles.buttonContainer}
+                className={
+                  isMusicId === 0 || isInstrumentId === 0
+                    ? styles.buttonDis
+                    : styles.buttonContainer
+                }
                 onClick={handleUploadClick}
               >
                 <div>
                   <img
+                    loading="lazy"
                     className={styles.buttonImg}
                     src="/Icon/filePlus.png"
                     height={58}
@@ -250,16 +279,18 @@ const Form = () => {
               내 기존 동영상을 이용해 편집할 수 있습니다.
             </div>
           </div>
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
-          <UploadVideo />
+          {myArticles &&
+            myArticles.map((video, key) => (
+              <Video
+                key={key}
+                id={video.id}
+                title={video.title}
+                videoUrl={video.videoUrl}
+                thumbnail={video.imageUrl}
+                ref={null}
+              />
+            ))}
+          <div ref={ref}></div>
         </div>
       </div>
       <Header />
