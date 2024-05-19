@@ -1,0 +1,112 @@
+.challengeHeader {
+  font-size: 20px;
+  color: #fff;
+  background-color: #000;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.currentChallenge {
+  background-color: #00a500;
+  color: #fff;
+  text-align: center;
+  padding: 20px 0;
+  margin: 10px 0;
+}
+
+.videoSection {
+  margin: 20px 0;
+}
+
+.videoSection h3 {
+  font-size: 18px;
+  color: #fff;
+  background-color: #000;
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 10px;
+}
+
+.videoSection .instruments {
+  display: flex;
+  justify-content: flex-start;
+  margin: 10px 0;
+  overflow-x: auto;
+  gap: 10px; /* Adds some spacing between the buttons */
+}
+
+.videoSection .instruments button {
+  padding: 5px 10px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  white-space: nowrap; /* Prevents the button text from wrapping */
+  border-radius: 10px; /* Adds rounded corners */
+  cursor: pointer;
+  flex-shrink: 0; /* Prevents buttons from shrinking */
+}
+
+.video {
+  width: 80vw;
+  height: 50px;
+  text-align: center;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.video .title {
+  font-size: 14px;
+  padding: 5px 0;
+}
+
+.ensembleVideos {
+  display: flex;
+  flex-wrap: nowrap; /* 줄 바꿈 방지 */
+  align-content: space-between;
+  color: white;
+}
+
+.headerMargin {
+  margin: 14vmin;
+}
+
+@media (min-width: 450px) {
+  .headerMargin {
+    margin: 7vw;
+  }
+}
+
+.bottomMargin {
+  margin: 8vmin;
+  // margin:100px;
+}
+
+.navButton {
+  width: 10vw;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.videolist{
+  display:flex;
+  align-content: space-around;
+}
+
+.videoContainer{
+  padding-left:5px;
+}
+.noVideos {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  
+
+}
+.noVideosContainer {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  // background-color:white;
+  margin: 0 auto;
+  height:30vh;
+}
