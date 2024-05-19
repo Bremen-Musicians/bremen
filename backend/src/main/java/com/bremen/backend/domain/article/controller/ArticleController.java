@@ -2,6 +2,7 @@ package com.bremen.backend.domain.article.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,9 +90,12 @@ public class ArticleController {
 
 	@GetMapping()
 	@Operation(summary = "유저가 작성한 게시글을 조회합니다", description = "유저의 닉네임 값을 파라미터로 받습니다.")
-	ResponseEntity<SingleResponse<List<ArticleResponse>>> articleListByUser(@RequestParam("nickname") String nickname) {
-		List<ArticleResponse> articleResponses = articleService.findArticleByNickname(nickname);
-		return ResponseEntity.ok(new SingleResponse<>(HttpStatus.OK.value(), "조회 성공", articleResponses));
+	ResponseEntity<ListResponse> articleListByUser(@RequestParam("nickname") String nickname, Pageable pageable) {
+		Page<ArticleResponse> articles = articleService.findArticleByNickname(nickname, pageable);
+		return ResponseEntity.ok(
+			new ListResponse(HttpStatus.OK.value(), "조회 성공", articles.getContent(),
+				articles.getTotalElements(),
+				articles.getPageable()));
 	}
 
 	@GetMapping("/feed")
