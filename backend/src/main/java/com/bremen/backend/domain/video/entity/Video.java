@@ -42,7 +42,6 @@ public class Video {
 	@Setter(AccessLevel.PROTECTED)
 	private String videoUrl;
 
-	@NotNull
 	@Column(name = "image_url", length = 2083)
 	@Setter(AccessLevel.PROTECTED)
 	private String imageUrl;
