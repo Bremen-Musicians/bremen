@@ -23,8 +23,10 @@
     "react-icons": "^5.2.1",
     "react-intersection-observer": "^9.10.2",
     "react-quill": "^2.0.0",
+    "react-slick": "^0.30.2",
     "react-wavesurfer": "^0.8.6",
     "sass": "^1.75.0",
+    "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
     "wavesurfer.js": "^7.7.14",
     "zustand": "^4.5.2"

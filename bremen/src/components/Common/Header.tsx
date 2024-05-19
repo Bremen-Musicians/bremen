@@ -1,11 +1,18 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '@/components/Common/Header.module.scss';
 import FootProfile from '@/components/Common/FooterProfile';
-
-const islogin = false; // 이 값을 변경하여 테스트해보세요
+import useUserInfoStore from '@/stores/UserInfo';
+import mainLogo from '../../../public/header/mainLogo.png';
+import bell from '../../../public/header/bell.png';
+import message from '../../../public/header/message.png';
 
 const Header = () => {
+  const {zustandToken, zustandUserId} = useUserInfoStore();
+  const islogin = Boolean(zustandToken && zustandUserId);
+
   return (
     <div className={styles.firstContainer}>
       <div className={styles.Container}>
@@ -14,7 +21,7 @@ const Header = () => {
             <Link href="/" className={styles.home}>
               <Image
                 className={styles.img}
-                src="/header/mainLogo.png"
+                src={mainLogo}
                 alt="mainLogo"
                 width={100}
                 height={100}
@@ -61,7 +68,7 @@ const Header = () => {
             <Link href="/alarm" className={styles.bell}>
               <Image
                 className={styles.img}
-                src="/header/bell.png"
+                src={bell}
                 alt="bell"
                 width={100}
                 height={100}
@@ -72,7 +79,7 @@ const Header = () => {
             <Link href="/" className={styles.message}>
               <Image
                 className={styles.img}
-                src="/header/message.png"
+                src={message}
                 alt="message"
                 width={100}
                 height={100}

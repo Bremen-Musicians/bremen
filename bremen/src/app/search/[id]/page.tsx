@@ -3,7 +3,7 @@
 
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useParams} from 'next/navigation';
 import SearchBar from '@/components/Search/SearchBar';
 import Video from '@/components/Common/Video';
@@ -21,6 +21,7 @@ interface VideoData {
   videoUrl: string;
   imageUrl: string;
 }
+
 export default function Page() {
   const param = useParams();
   const paramId = param.id;
@@ -34,10 +35,13 @@ export default function Page() {
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [ref, inView] = useInView();
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [ref, inView] = useInView({
+    threshold: 0,
+    triggerOnce: false,
+  });
   const [challengeImage, setChallengeImage] = useState<string>();
 
-  // Ensure this is typed correctly
   const filterOptions: {[key: string]: string} = {
     '1': '그 외',
     '2': '바이올린',
@@ -103,24 +107,27 @@ export default function Page() {
     인기순: 'POPULAR',
   };
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const category = categoryMapping[CategorySelected];
       const order = orderMapping[OrderSelected];
       const instrumentIds = selectedFilters;
-      console.log(selectedFilters);
       const keyword = decodedString || '';
-      setPage(0);
-      const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=${page}&size=12&sort=string`;
-      console.log('펫치', url);
+      const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=0&size=12&sort=string`;
+      console.log('Fetching URL:', url);
       const response = await api.get<ApiResponse>(url);
 
       setVideos(response.data.items);
+      setPage(1); // Reset page to 1 after initial fetch
+      setHasMore(response.data.items.length > 0); // Check if there's more data
     } catch (error) {
       console.error(error);
     }
-  };
-  const infiniteScroll = async () => {
+  }, [CategorySelected, OrderSelected, selectedFilters, decodedString]);
+
+  const infiniteScroll = useCallback(async () => {
+    if (!hasMore) return; // If no more data, return early
+
     try {
       const category = categoryMapping[CategorySelected];
       const order = orderMapping[OrderSelected];
@@ -128,68 +135,73 @@ export default function Page() {
       const keyword = decodedString || '';
 
       const url = `/articles/search?category=${category}&order=${order}&instrumentIds=${instrumentIds.join('&instrumentIds=')}&keyword=${keyword}&page=${page}&size=12&sort=string`;
-      console.log('무한', url);
+      console.log('Infinite Scroll Fetching URL:', url);
       const response = await api.get<ApiResponse>(url);
-      setVideos(prevVideos => [...prevVideos, ...response.data.items]);
+
+      if (response.data.items.length === 0) {
+        setHasMore(false); // No more data to load
+      } else {
+        setVideos(prevVideos => [...prevVideos, ...response.data.items]);
+        setPage(prevPage => prevPage + 1); // Increment page after fetching
+      }
     } catch (error) {
       console.error(error);
     }
-  };
+  }, [
+    CategorySelected,
+    OrderSelected,
+    selectedFilters,
+    decodedString,
+    page,
+    hasMore,
+  ]);
 
   const selectCategoryItem = (item: string) => {
     setCategorySelected(item);
-    // fetchData();
+    setPage(0); // Reset page to 0 when category changes
+    setHasMore(true); // Reset hasMore when category changes
   };
+
   const selectOrderItem = (item: string) => {
     setOrderSelected(item);
-    // fetchData();
+    setPage(0); // Reset page to 0 when order changes
+    setHasMore(true); // Reset hasMore when order changes
   };
+
   const toggleModal = () => setModalOpen(!isModalOpen);
   const handleFilterApply = (filters: string[]) => {
     setSelectedFilters(filters);
-    console.log('Filters applied:', filters);
-    console.log('Filters applied:', selectedFilters);
-    // console.log('send with', categoryMapping[CategorySelected], orderMapping[CategorySelected], filters)
-    // fetchData();
+    setPage(0); // Reset page to 0 when filters change
+    setHasMore(true); // Reset hasMore when filters change
   };
+
   const fetchLatestChallenge = async () => {
     try {
       const url = '/challenges/latest';
       const response = await api.get<ChallengeData>(url);
-      console.log('최신 챌린지:', response.data);
-      console.log('이미지', response.data.item.mainImage);
       setChallengeImage(response.data.item.mainImage);
     } catch (error) {
-      console.error('최신 챌린지를 불러오는 중 오류가 발생했습니다:', error);
+      console.error('Error fetching latest challenge:', error);
     }
   };
+
   const categories = ['전체', '곡명', '아티스트', '제목', '작성자'];
   const orders = ['최신순', '인기순'];
+
   useEffect(() => {
     fetchLatestChallenge().catch(error => console.error(error));
-    console.log('들어오냐?', inView);
+  }, []);
+
+  useEffect(() => {
+    fetchData().catch(error => console.error(error));
+  }, [fetchData]);
+
+  useEffect(() => {
     if (inView) {
-      infiniteScroll()
-        .then(() => {
-          setPage(page + 1);
-        })
-        .catch(() => {
-          console.log('error');
-        });
-    } else {
-      console.log('else');
-      fetchData()
-        .then(() => {})
-        .catch(() => {});
+      infiniteScroll().catch(error => console.error(error));
     }
-    console.log(
-      CategorySelected,
-      OrderSelected,
-      selectedFilters,
-      decodedString,
-      inView,
-    );
-  }, [CategorySelected, OrderSelected, selectedFilters, decodedString, inView]);
+  }, [inView, infiniteScroll]);
+
   return (
     <>
       <Header />
@@ -302,9 +314,10 @@ export default function Page() {
             title={video.title}
             videoUrl={video.videoUrl}
             thumbnail={video.imageUrl}
-            ref={index === 9 ? ref : null} // 10번째 비디오에만 ref 속성 추가
+            ref={null}
           />
         ))}
+        <div ref={ref} className={styles.videomargin}></div>{' '}
       </div>
       <div className={styles.empty}></div>
     </>

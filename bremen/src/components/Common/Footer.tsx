@@ -2,14 +2,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import styles from '@/components/Common/Footer.module.scss';
-// import FootProfile from '@/components/Common/FooterProfile';
+import home from '../../../public/footer/home.png';
+import search from '../../../public/footer/search.png';
+import upload from '../../../public/footer/upload.png';
+import challenge from '../../../public/footer/challenge.png';
+import loading from '../../../public/loading.gif';
 
 const DynamicFooterProfile = dynamic(
   () => import('@/components/Common/FooterProfile'),
   {
     loading: () => (
       <Image
-        src="/loading.gif"
+        src={loading}
         width={200}
         height={200}
         alt="로딩"
@@ -29,7 +33,7 @@ const Footer = () => {
             <Link href="/">
               <Image
                 style={{width: '8vmin', height: '8vmin'}}
-                src={'/footer/home.png'}
+                src={home}
                 alt="홈"
                 width={200}
                 height={200}
@@ -41,7 +45,7 @@ const Footer = () => {
             <Link href="/search">
               <Image
                 style={{width: '8vmin', height: '8vmin'}}
-                src={'/footer/search.png'}
+                src={search}
                 alt="검색"
                 width={200}
                 height={200}
@@ -54,7 +58,7 @@ const Footer = () => {
               <Image
                 priority={true}
                 style={{width: '8vmin', height: 'auto'}}
-                src={'/footer/upload.png'}
+                src={upload}
                 alt="업로드"
                 width={200}
                 height={200}
@@ -65,7 +69,7 @@ const Footer = () => {
           <div className={styles.challenge}>
             <Link href="/challenge">
               <Image
-                src={'/footer/challenge.png'}
+                src={challenge}
                 alt="챌린지"
                 width={200}
                 height={200}
@@ -77,7 +81,6 @@ const Footer = () => {
           <div className={styles.mypage}>
             <Link href="/mypage">
               <div className={styles.image}>
-                {/* <FootProfile /> */}
                 <DynamicFooterProfile />
                 <div>마이페이지</div>
               </div>
