@@ -9,7 +9,7 @@ export default function ReplyHighlightEmpty({
 }: {
   replyHandler: () => void;
 }) {
-  const {zustandUserImage, zustandUserNickname} = useUserInfoStore.getState();
+  const {zustandUserNickname} = useUserInfoStore.getState();
   return (
     <>
       <div className={styles.cell} onClick={replyHandler}>
@@ -20,7 +20,7 @@ export default function ReplyHighlightEmpty({
           <div className={styles.profileimg}>
             {/* <img src={myProfileImage} alt="myProfileImage" /> */}
             <ProfileImage
-              profileImage={zustandUserImage}
+              profileImage="profile/818958f93bdc48138ec826f726902509-20240519224050.jpg"
               userNickname={zustandUserNickname}
             />
           </div>

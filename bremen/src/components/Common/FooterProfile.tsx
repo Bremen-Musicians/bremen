@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 'use client';
 
 import Image from 'next/image';
@@ -33,7 +35,7 @@ const FootProfile = () => {
   return (
     <Profile>
       {typeof userImage === 'string' && userImage !== '' ? (
-        <Image
+        <img
           src={userImage}
           width={200}
           height={200}
