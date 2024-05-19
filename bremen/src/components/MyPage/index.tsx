@@ -1,15 +1,9 @@
-import MyPageHeader from '@/components/MyPage/Profile/MyPageHeader';
-import MyInfo from './Profile/MyInfo';
-import Tabs from './Plays/Tabs';
-import MyButtons from './Profile/MyButtons';
+import MyProfile from './Profile/MyProfile';
 
 export default function index() {
   return (
     <div>
-      <MyPageHeader />
-      <MyInfo />
-      <MyButtons />
-      <Tabs />
+      <MyProfile />
     </div>
   );
 }
