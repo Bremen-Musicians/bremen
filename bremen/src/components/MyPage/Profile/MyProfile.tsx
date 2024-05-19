@@ -85,16 +85,18 @@ export default function MyProfile() {
           <MyInfo me={me} articleCnt={size} />
           <MyButtons />
           {myArticles.length !== 0 ? (
-            myArticles.map((video, key) => (
-              <Video
-                key={key}
-                id={video.id}
-                title={video.title}
-                videoUrl={video.videoUrl}
-                thumbnail={video.imageUrl}
-                ref={null}
-              />
-            ))
+            <div className={styles.content}>
+              {myArticles.map((video, key) => (
+                <Video
+                  key={key}
+                  id={video.id}
+                  title={video.title}
+                  videoUrl={video.videoUrl}
+                  thumbnail={video.imageUrl}
+                  ref={null}
+                />
+              ))}
+            </div>
           ) : (
             <div className={styles.nocontent}>
               <span>작성된 게시글이 없습니다</span>

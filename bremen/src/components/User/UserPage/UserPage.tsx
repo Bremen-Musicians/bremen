@@ -111,16 +111,18 @@ export default function UserPage() {
           <UserInfo user={user} articleCnt={size} />
           <UserButtons follow={user.follow} handleFollow={handleFollow} />
           {userArticles.length !== 0 ? (
-            userArticles.map((video, key) => (
-              <Video
-                key={key}
-                id={video.id}
-                title={video.title}
-                videoUrl={video.videoUrl}
-                thumbnail={video.imageUrl}
-                ref={null}
-              />
-            ))
+            <div className={styles.content}>
+              {userArticles.map((video, key) => (
+                <Video
+                  key={key}
+                  id={video.id}
+                  title={video.title}
+                  videoUrl={video.videoUrl}
+                  thumbnail={video.imageUrl}
+                  ref={null}
+                />
+              ))}
+            </div>
           ) : (
             <div className={styles.nocontent}>
               <span>작성된 게시글이 없습니다</span>
