@@ -168,8 +168,8 @@ const Challenge: React.FC = () => {
         <div
           className={
             currentIndex === enVideos.length - 1
-              ? styles.navButtonDisabled
-              : styles.navButton
+              ? styles.navButtonDisabledLeft
+              : styles.navButtonLeft
           }
           onClick={showNextVideo}
         >
