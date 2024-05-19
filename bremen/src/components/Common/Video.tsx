@@ -68,6 +68,7 @@ export default function Video({
               ref={videoRef}
               src={`https://bremen-music.s3.ap-northeast-2.amazonaws.com/${videoUrl}`}
               autoPlay
+              muted
             ></video>
           )}
         </div>

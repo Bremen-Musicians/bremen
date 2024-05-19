@@ -7,7 +7,6 @@ import FootProfile from '@/components/Common/FooterProfile';
 import useUserInfoStore from '@/stores/UserInfo';
 import mainLogo from '../../../public/header/mainLogo.png';
 import bell from '../../../public/header/bell.png';
-import message from '../../../public/header/message.png';
 
 const Header = () => {
   const {zustandToken, zustandUserId} = useUserInfoStore();
@@ -23,8 +22,8 @@ const Header = () => {
                 className={styles.img}
                 src={mainLogo}
                 alt="mainLogo"
-                width={100}
-                height={100}
+                width={50}
+                height={50}
               />
               <div>
                 <br />
@@ -64,28 +63,21 @@ const Header = () => {
               <Link href="/user/login">로그인</Link>
             </div>
           )}
-          <div className={styles.bell}>
-            <Link href="/alarm" className={styles.bell}>
-              <Image
-                className={styles.img}
-                src={bell}
-                alt="bell"
-                width={100}
-                height={100}
-              />
-            </Link>
-          </div>
-          <div className={styles.message}>
-            <Link href="/" className={styles.message}>
-              <Image
-                className={styles.img}
-                src={message}
-                alt="message"
-                width={100}
-                height={100}
-              />
-            </Link>
-          </div>
+          {islogin ? (
+            <div className={styles.bell}>
+              <Link href="/alarm" className={styles.bell}>
+                <Image
+                  className={styles.img}
+                  src={bell}
+                  alt="bell"
+                  width={30}
+                  height={30}
+                />
+              </Link>
+            </div>
+          ) : (
+            <div />
+          )}
         </div>
       </div>
     </div>
