@@ -40,6 +40,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 
 		user.agreeUser();
 		//유저 동의
+		user.addRole("ROLE_USER");
+		//권한 설정
 
 		UserResponse userResponse = UserMapper.INSTANCE.userToUserResponse(
 			userService.addUser(user)

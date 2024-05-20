@@ -92,6 +92,7 @@ public class User {
 	private LocalDateTime updateTime;
 
 	@Column(name = "role")
+	@Setter(AccessLevel.PROTECTED)
 	private String role;
 
 	public void addFollower() {
@@ -100,6 +101,10 @@ public class User {
 
 	public void addFollow() {
 		this.setFollowCnt(this.getFollowerCnt() + 1);
+	}
+
+	public void addRole(String role) {
+		this.setRole(role);
 	}
 
 	public void removeFollower() {
