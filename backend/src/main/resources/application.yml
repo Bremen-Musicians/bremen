@@ -1,0 +1,64 @@
+spring:
+  servlet:
+    async:
+      request-timeout: 300000
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+  profiles:
+    include: secret
+  datasource:
+    url: ${database.mariadb.dev.url}
+    username: ${database.mariadb.dev.username}
+    password: ${database.mariadb.dev.password}
+    driver-class-name: org.mariadb.jdbc.Driver
+  jpa:
+    open-in-view: false
+    generate-ddl: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
+  data:
+    redis:
+      host: ${database.redis.host}
+      port: ${database.redis.port}
+  kafka:
+    bootstrap-servers: ${database.kafka.host}
+    consumer:
+      group-id: "consumer"
+
+logging:
+  level:
+    org:
+      springframework:
+        security:
+          DEBUG
+jwt:
+  secret: ${jwt.secret}
+
+server:
+  port: 8080
+  forward-headers-strategy: framework
+springdoc:
+  api-docs:
+    enabled: true
+    version: openapi_3_0
+
+  swagger-ui:
+    path: /swagger-ui/index.html
+    groups-order: DESC
+    doc-expansion: none
+    tags-sorter: alpha
+    operationsSorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+
+cloud:
+  aws:
+    s3:
+      bucket: ${aws.s3.bucket}
+    stack.auto: false
+    region.static: ap-northeast-2
+    accessKey: ${aws.s3.key.access}
+    secretKey: ${aws.s3.key.secret}
