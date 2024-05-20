@@ -73,7 +73,8 @@
 
 # 팀원
 
-|[신온유]([https://github.com/tlsdhsdb](https://github.com/tlsdhsdb))|[전경향]([https://github.com/HappyHyang](https://github.com/HappyHyang))|[백진규]([https://github.com/qorwlsrb01](https://github.com/qorwlsrb01))|[문성현]([https://github.com/seonghyeon-m](https://github.com/seonghyeon-m))|[유현정]([https://github.com/hyunjeong1](https://github.com/hyunjeong1))|
-|---|---|---|---|---|
-|<img style="width:100px" src = "https://avatars.githubusercontent.com/tlsdhsdb"/>|<img style="width:100px" src = "https://avatars.githubusercontent.com/HappyHyang"/>|<img style="width:100px" src = "https://avatars.githubusercontent.com/qorwlsrb01"/>|<img style="width:100px" src = "https://avatars.githubusercontent.com/seonghyeon-m"/>|<img style="width:100px" src = "https://avatars.githubusercontent.com/hyunjeong1"/>|
-|백엔드,인프라|백엔드,인프라|프론트|프론트|프론트|
+| [신온유](https://github.com/tlsdhsdb) | [전경향](https://github.com/HappyHyang) | [백진규](https://github.com/qorwlsrb01) | [문성현](https://github.com/seonghyeon-m) | [유현정](https://github.com/hyunjeong1) |
+| --- | --- | --- | --- | --- |
+| <img style="width:100px" src="https://avatars.githubusercontent.com/tlsdhsdb"/> | <img style="width:100px" src="https://avatars.githubusercontent.com/HappyHyang"/> | <img style="width:100px" src="https://avatars.githubusercontent.com/qorwlsrb01"/> | <img style="width:100px" src="https://avatars.githubusercontent.com/seonghyeon-m"/> | <img style="width:100px" src="https://avatars.githubusercontent.com/hyunjeong1"/> |
+| 백엔드, 인프라 | 백엔드, 인프라 | 프론트 | 프론트 | 프론트 |
+
