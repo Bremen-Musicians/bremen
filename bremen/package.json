@@ -1,0 +1,52 @@
+{
+  "name": "bremen",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "prettify": "prettier --write *.js **/*.js"
+  },
+  "dependencies": {
+    "@ffmpeg/ffmpeg": "^0.12.10",
+    "axios": "^1.6.8",
+    "date-fns": "^3.6.0",
+    "moment": "^2.30.1",
+    "next": "14.2.2",
+    "prettier": "^3.2.5",
+    "react": "^18",
+    "react-datepicker": "^6.9.0",
+    "react-dom": "^18",
+    "react-flatpickr": "^3.10.13",
+    "react-icons": "^5.2.1",
+    "react-intersection-observer": "^9.10.2",
+    "react-quill": "^2.0.0",
+    "react-slick": "^0.30.2",
+    "react-wavesurfer": "^0.8.6",
+    "sass": "^1.75.0",
+    "slick-carousel": "^1.8.1",
+    "styled-components": "^6.1.8",
+    "wavesurfer.js": "^7.7.14",
+    "zustand": "^4.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-datepicker": "^6.2.0",
+    "@types/react-dom": "^18",
+    "@types/react-flatpickr": "^3.8.11",
+    "@typescript-eslint/eslint-plugin": "^6.18.1",
+    "@typescript-eslint/parser": "^6.18.1",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-next": "14.1.3",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.33.2",
+    "typescript": "^5"
+  }
+}

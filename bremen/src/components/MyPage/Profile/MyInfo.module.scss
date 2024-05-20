@@ -1,0 +1,43 @@
+.myprofile {
+    margin: 10px 20px 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.profileimg {
+    width: 30vw;
+    height: 30vw;
+    border-radius: 100%;
+    background-color: #FFFFFF;
+    object-fit: cover;
+}
+
+.counts {
+    color: var(--light-gray-color);
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    width: calc(70vw - 50px);
+    justify-content: space-around;
+
+    div {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+
+        .bold {
+            font-weight: 600;
+        }
+    }
+}
+
+.myname {
+    color: var(--light-gray-color);
+    margin: 10px 20px;
+
+    .nick {
+        font-size: large;
+        font-weight: 600;
+    }
+}

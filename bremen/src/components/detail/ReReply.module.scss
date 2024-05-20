@@ -1,0 +1,60 @@
+.rereply {
+    margin: 20px 10px 20px 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: var(--light-gray-color);
+}
+
+.replytop {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: calc(100vw - 95px);
+}
+
+.rereplier {
+    align-items: center;
+    margin: 0 0 5px;
+}
+
+.modifydelete {
+    align-items: center;
+    margin: 0 0 5px;
+
+    span {
+        cursor: pointer;
+    }
+}
+
+.profileimg {
+    margin: 2px;
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    border-radius: 100%;
+}
+
+.modify {
+    padding: 5px;
+
+    input {
+        padding: 3px;
+        border-radius: 5px;
+        min-height: 30px;
+        width: calc(100vw - 90px);
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    .btn {
+        align-items: center;
+        margin: 0 0 5px;
+
+        span {
+            cursor: pointer;
+        }
+    }
+}

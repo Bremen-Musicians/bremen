@@ -1,0 +1,106 @@
+.start{
+cursor: pointer;
+width: 15.5vmin;
+height: 15.5vmin;
+}
+
+.finish{
+    cursor: pointer;
+    width: 8.5vmin;
+    height: 8.5vmin;
+}
+
+.download{
+    cursor: pointer;
+}
+
+.restart{
+    cursor: pointer;
+    height: 8.5vmin;
+    width: auto;
+}
+
+.stop{
+    cursor: pointer;
+    width: auto;
+    height: 8.5vmin;
+}
+
+.isStarted{
+    background-color: var(--light-gray-color);
+    height: 15.5vmin;
+    width: calc(15.5vmin * 36/19);
+    border-radius: 7.25vmin;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.videoContainer{
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 40px);
+    flex-wrap: wrap;
+}
+
+.state{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    gap : 10px;
+}
+
+.next{
+    height: fit-content;
+    padding: 2vmin;
+    border-radius: 10px;
+}
+.stop{
+    height: fit-content;
+    padding:2vmin;
+}
+.download{
+    height: fit-content;
+    padding: 2vmin;
+    border-radius: 10px;
+}
+
+@media (min-width: 450px) {
+    .start{
+        width: 4.5vw;
+        height: 4.5vw;
+        }
+
+    .finish{
+            width: calc(4.5vw * 31/57);
+            height: calc(4.5vw * 31/57);
+        }
+
+    .restart{
+            cursor: pointer;
+            height: calc(4.5vw * 31/57);
+            width: auto;
+        }
+    
+    .stop{
+            cursor: pointer;
+            width: auto;
+            height: calc(4.5vw * 31/57);
+        }
+        
+    .isStarted{
+            height: 4.5vw;
+            width: calc(4.5vw * 36/19);
+            border-radius: 2.25vw;
+        }
+
+    .videoContainer{
+            height: calc(100vh - 7vmin);
+        }
+}

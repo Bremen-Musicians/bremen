@@ -1,0 +1,105 @@
+.container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20vmin;
+}
+
+.videos{
+    padding-left: calc((0.1vw + 12px) / 4);
+    display: flex;
+    flex-direction: row;
+    gap: calc((0.1vw + 12px) / 4);
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.text{
+    width: 100%;
+    color: white;
+    font-size: 3vmin;
+}
+.desc{
+    width: 100%;
+    color: white;
+    font-size: 2.5vmin;
+}
+.icon{
+    width: 46px;
+    height: 46px;
+}
+
+.buttonGroup{
+    display: flex;
+    padding-bottom: 10vmin;
+    gap: 10vmin
+}
+.buttonDis{
+    height: calc( 30px + 125 / 9 * 1vmin);
+    width: calc( 30px + 125 / 9 * 1vmin);
+    cursor: default;
+    background-color: var( --disabled-button-color);
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1010104D;
+}
+
+.buttonContainer{
+    height: calc( 30px + 125 / 9 * 1vmin);
+    width: calc( 30px + 125 / 9 * 1vmin);
+    background-color: var(--able-button-color);
+    display: flex;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:disabled{
+        cursor: default;
+        background-color: var( --disabled-button-color);
+    }
+   }
+   
+   .buttonImg{
+       height: calc(100 / 12 * 1vmin + 28px);
+       width: calc(100 / 12 * 1vmin + 28px);
+   }
+   
+   .instrumentButton{
+    border-radius: 5px;
+    background-color: var(--origin-blue-color);
+    color: white;
+    padding: 2px;
+    border: transparent;
+   }
+   .detail{
+       font-size: calc( 5 / 3 * 1vmin + 6px );
+       font-weight: bold;
+       width: fit-content;
+       margin: auto;
+   }
+
+   .instrument{
+    display: flex;
+    font-weight: bold;
+    gap: 3vw;
+    margin-left: 2vmin;
+
+   }
+@media (min-width: 450px) {
+.text{
+    font-size: 20px;
+}
+.desc{
+    font-size: 15px;
+}
+.videos{
+    padding-left: calc((12vw + 10px) / 5);
+    gap: calc((12vw + 10px) / 5);
+}
+
+}

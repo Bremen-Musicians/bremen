@@ -1,0 +1,158 @@
+.container{
+    padding-top: 12vh;
+    padding-left: 4vmin;
+    width: 38vw;
+    height: fit-content;
+    display: flex;
+    color: white;
+    flex-direction: column;
+    align-items: center;
+    gap: 3vmin;
+}
+.subTitle{
+    font-size: 5.5vmin;
+}
+.secondContainer{
+    display: flex;
+    width: calc(28vmin + 30px);
+    flex-wrap: wrap;
+}
+
+.content{
+    display: flex;
+    gap: 10px;
+    font-size: 4vmin;
+    margin-top: 2vh;
+    margin-bottom: 1.5vh;
+}
+.buttonContainer{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    height: 15vmin;
+    align-items: center;
+}
+.inputBpm{
+    &[type="number"]::-webkit-outer-spin-button,
+    &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+    padding-left: 10px;
+    font-size: 4vmin;
+    width: 11vw;
+    height: 6vmin;
+    background-color: transparent;
+    border: 1px solid  var(--light-gray-color);
+    color: white;
+}
+
+.inputContent{
+    &[type="number"]::-webkit-outer-spin-button,
+    &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+    padding-left: 3px;
+    font-size: 4vmin;
+    width: 6vw;
+    height: 6vmin;
+    max-width: 10vmin;
+    background-color: transparent;
+    border: 1px solid var(--light-gray-color);
+    color: white;
+}
+
+.button{
+    font-size: 4vmin;
+    border-radius: 10px;
+    width: 24vmin;
+    font-weight: bold;
+    height: 8.5vmin;
+    background-color: var(--light-gray-color);
+    border: none;
+}
+
+.buttonPressed{
+    font-size: 4vmin;
+    border-radius: 20px;
+    width: 24vmin;
+    font-weight: bold;
+    height: 8.5vmin;
+    color: white;
+    border: none;
+    background-color: var(--button-hover-color);
+}
+
+.metronomeImg{
+    position: absolute;
+    width: 58vw;
+    height: 8vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    top: 3vh;
+    left: 4vw;
+}
+
+@media (min-width: 450px) {
+    .container{
+        margin-top: 11vh;
+        width: 42vw;
+        padding: 0;
+    }
+    .metronomeImg{
+        height: 68%;
+        width: 60%;
+        top: 12vh;
+        left: 6.5vw;
+        height: 8vh;
+    }
+    .subTitle{
+        font-size: 2vw;
+    }
+    .content{
+        font-size: 1.3vw;
+    }
+    .inputBpm{
+        width: 4.3vw;
+        height: 1.8vw;
+        font-size: 1.3vw;
+    }
+    .inputContent{
+        width: 2.5vw;
+        height: 1.8vw;
+        font-size: 1.3vw;
+        padding-left: 10px;
+    }
+    .button{
+        font-size: 1.3vw;
+        width: 9.5vw;
+        height: 3.3vw;
+        font-weight: bold;
+        border-radius: 10px;
+    }
+    .buttonPressed{
+        font-size: 1.3vw;
+        width: 9.5vw;
+        height: 3.3vw;
+        font-weight: bold;
+    }
+    .secondContainer{
+        width: calc(30px + 25vw);
+        flex-wrap: nowrap;
+        box-sizing: content-box calc(28vmin + 30px);
+        align-items: center;
+        justify-content: space-around;
+    }
+    .container{
+        width: 30vw;
+    }
+
+    .buttonContainer{
+        height: fit-content;
+        width: 10vw;
+    }
+}

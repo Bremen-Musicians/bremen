@@ -1,0 +1,103 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 80vh;
+    
+}
+.secondCon{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    justify-content: space-evenly;
+    height: 70vh;
+    align-items: center;
+}
+
+.title{
+    color: white;
+  font-size: 5.5vmin;
+  text-align: center;
+  padding-bottom: 3vmin;
+}
+
+.inputTag{
+    width: 54vmin;
+    height: 12vmin;
+    border: transparent;
+    background-color: var(--light-gray-color);
+    border-radius: 10px;
+    font-size: 3.5vmin;
+    padding-left:10px;
+}
+
+.button{
+    width: 15vmin;
+    height: 9vmin;
+    border-radius: 10px;
+    font-size: 3.5vmin;
+    font-weight: bold;
+    border: transparent;
+    background-color: var(--light-gray-color);
+    cursor: pointer;
+}
+
+.vacant{
+    height: 4vmin;
+}
+
+.goSignup{
+    font-size: 3.5vmin;
+    color: white;
+    text-decoration: underline;
+    text-underline-offset: auto;
+    padding-top: 10px;
+}
+.error{
+    font-size: 3.5vmin;
+    color: var(--origin-yellow-color);
+}
+
+.bremen{
+    width: 16vmin;
+    height: 20vmin;
+    position: fixed;
+    left: 50%; /* 추가 */
+    transform: translateX(-50%);
+    bottom :19vmin;
+}
+
+@media (min-width: 450px) {
+    .bremen{
+        display: none;
+    }
+    .title{
+      font-size: 30px;
+      padding-bottom: 10px;
+    }
+    .container{
+        height: 80vh;
+    }
+
+    .inputTag{
+        width: 48vmin;
+        height: 6vmin;
+        font-size: 16px;
+    }
+
+    .button{
+        width: 98px;
+        height: 45px;
+        font-size: 20px;
+    }
+    .vacant{
+        height: 22px;
+    }
+    
+    .goSignup{
+        font-size: 16px;
+    }
+    .error{
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,136 @@
+.firstContainer{
+    height: 15vmin;
+    width: 100%;
+    display:flex;
+    justify-content: center; 
+    position:fixed;
+    top: 0;
+    z-index:2000;
+}
+.Container{
+    width: 100%;
+    background-color: var(--header-background-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 2.5vmin;
+    text-align: center;
+    align-items: center;
+    height: 50px;
+    padding-bottom: 6px;
+}
+.leftContainer{
+    width: 30%;
+    background-color: var(--header-background-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 3vmin;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+    height: 50px; /* 높이 자동 설정 */
+    z-index:1000
+}
+.rightContainer {
+    width: 20%;
+    background-color: var(--header-background-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 2.5vmin;
+    text-align: center;
+    align-items: center;
+    height: 50px; /* 높이 자동 설정 */
+    margin-top:1vw;
+    margin-right:1.5vw;
+    z-index:1000
+}
+@media (min-width: 450px) {
+    .firstContainer{
+        height: 10vmin;
+    }
+    .Container{
+        width: 100%;
+        background-color: var(--header-background-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-size: 2.5vmin;
+        text-align: center;
+        align-items: center;
+        height: 12vmin;
+        padding-bottom: 6px;
+        z-index:1000
+    }
+    .leftContainer{
+        width: 40%;
+        background-color: var(--header-background-color);
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-end;
+        font-size: 3vmin;
+        text-align: center;
+        align-items: center;
+        font-weight: bold;
+        height: 12vmin; /* 높이 자동 설정 */
+        z-index:1000
+    }
+    
+    .rightContainer {
+        width: 18%;
+        background-color: var(--header-background-color);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-size: 3vmin;
+        text-align: center;
+        align-items: center;
+        font-weight: bold;
+        height: 10vmin; /* 높이 자동 설정 */
+        z-index:1000
+    }
+}
+
+.img {
+    width: 60%;
+    height: auto;
+}
+
+.login{
+    color: white;
+    width:100%
+}
+.home{
+    color: var(--origin-pink-color);
+    display:flex;
+    height:90%;
+}
+.space{
+    margin:3px;
+}
+.search{
+    color: var(--origin-yellow-color);
+}
+.upload{
+    color:var(--origin-green-color);
+}
+.challenge{
+    color: var(--origin-blue-color);
+}
+.mypage{
+    color: var(--origin-beige-color);
+    margin-right:1.5vw;
+}
+@media (max-width: 450px) {
+    .search,
+    .upload,
+    .challenge {
+      display: none; /* 버튼을 보이지 않도록 설정 */
+    }
+    .img {
+        width: 100%;
+        height: auto;
+    }
+  }
+  

@@ -1,0 +1,52 @@
+.cell {
+    background-color: var(--header-background-color);
+    border-radius: 10px;
+    margin: 15px 10px 10px;
+    padding: 5px 20px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: baseline;
+    margin: 5px 0;
+    color: var(--light-gray-color);
+}
+
+.reply {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 5px 0;
+    align-items: center;
+    color: var(--light-gray-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;  /* 말줄임 적용 */
+}
+
+.profileimg {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: 100%;
+    background-color: var(--light-gray-color);
+    overflow: hidden;
+    pointer-events: none;
+    
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.videolist {
+    margin: 6px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

@@ -1,0 +1,82 @@
+.firstContainer{
+    height: 24vmin;
+    overflow:hidden;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    position: fixed; /* 추가 */
+    left: 50%; /* 추가 */
+    transform: translateX(-50%);
+    bottom :0;
+}
+
+.shape{
+    width: min(136vh, 136vw);
+    height: 28vmin;
+    border-radius: 50% 50% 0 0;
+    background-color: var(--header-background-color);
+    overflow: hidden;
+    margin-top: 3vmin;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 4vmin;
+}
+
+
+
+.Container{
+    margin-top: 4.5vmin;
+    width: 100vmin;
+    // background-color: var(--header-background-color);
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    font-size: 2.5vmin;
+    text-align: center;
+    align-items: center;
+    height: 12vmin;
+    padding-bottom: 6px;
+}
+
+
+.image{
+    display: flex;
+    // height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    
+}
+.home{
+    color: var(--origin-pink-color);
+}
+.search{
+    color: var(--origin-yellow-color);
+}
+.upload{
+    color:var(--origin-green-color);
+}
+.challenge{
+    color: var(--origin-blue-color);
+}
+.mypage{
+    color: var(--origin-beige-color);
+}
+
+
+@media (min-width: 450px) {
+    .firstContainer{
+        height: 20vmin;
+        overflow: hidden;
+        display: none;
+    }
+
+    .Container{
+        margin-top: 0;
+        padding-top: 0;
+        justify-content: space-between;
+        width: 80vmin;
+    }
+
+}

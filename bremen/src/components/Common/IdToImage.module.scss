@@ -1,0 +1,23 @@
+.container{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: flex-end;
+    gap: 1vmin;
+    font-size: 3.5vmin;
+}
+
+.image{
+    border-radius: 50%;
+    width: 7vmin;
+    height: 7vmin;
+    overflow: hidden;
+    display: flex;
+}
+.imageTag{
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}

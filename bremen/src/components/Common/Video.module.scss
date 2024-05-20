@@ -1,0 +1,93 @@
+.cell {
+    margin: 4px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.video {
+    width: calc(50vw - 14px);
+    height: calc((50vw - 14px) * 16 / 9);
+    background-image: linear-gradient(to bottom, rgba(256,256,256,0), rgba(150,150,150,0.5));
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden; /* Ensure any overflow is hidden */
+}
+
+.videotitle {
+    background-image: linear-gradient(to bottom, rgba(256,256,256,0), rgba(150,150,150,0.5));
+    color: white;
+    margin: 5px;
+    font-size: small;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; // 원하는 라인수
+    -webkit-box-orient: vertical;
+    position: absolute;
+    bottom: 0px;
+}
+
+@media (min-width: 450px) {
+    .cell {
+        margin: 4px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .video {
+        width: calc(22vw - 14px);
+        height: calc((22vw - 14px) * 16 / 9);
+        background-image: linear-gradient(to bottom, rgba(256,256,256,0), rgba(150,150,150,0.5));
+        border-radius: 5px;
+        position: relative;
+        overflow: hidden; /* Ensure any overflow is hidden */
+    }
+    
+    .videotitle {
+        background-image: linear-gradient(to bottom, rgba(256,256,256,0), rgba(150,150,150,0.5));
+        color: white;
+        margin: 5px;
+        font-size: large;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; // 원하는 라인수
+        -webkit-box-orient: vertical;
+        position: absolute;
+        bottom: 0px;
+    }
+}
+
+.thumbnail {
+    width: auto;
+    height: 100%;
+    object-fit: cover; /* Cover the container and crop the overflow */
+    object-position: center center; /* Center the content */
+    
+    /* 필요한 경우 추가적인 스타일을 여기에 추가할 수 있습니다 */
+}
+
+.video {
+    position: relative; /* Set relative positioning for the container */
+    display: inline-block;
+
+    .videoOverlay {
+    //   position: relative; /* Set relative positioning for the overlay */
+      transform: translate(-65%, -65%);
+      position: absolute;
+      top: 70%;
+      left: 105%;
+    }
+
+    video {
+      width: auto; /* Adjust video size as needed */
+      height: 100%; /* Fill the container height */
+      object-fit: cover; /* Cover the container and crop the overflow */
+      object-position: center center; /* Center the content */
+      
+    }
+}
