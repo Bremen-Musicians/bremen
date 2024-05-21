@@ -42,13 +42,15 @@
 
 # 화면소개
 
-![image (1)](https://github.com/SSAFY-A104/back-end/assets/42714724/8fb4baed-3575-465b-9d46-97bd7cb95a79)
-![image (2)](https://github.com/SSAFY-A104/back-end/assets/42714724/69f64707-c5ca-46c8-9cc8-ad1b2706fbaf)
+![image (1)](https://github.com/SSAFY-A104/bremen/assets/42714724/25543444-5869-4d50-ad26-a7c7c2d0b8aa)
+![image (2)](https://github.com/SSAFY-A104/bremen/assets/42714724/1f719c77-b5ef-434f-81de-958afe526bb3)
+
 
 
 # 아키텍쳐
 
-![image (3)](https://github.com/SSAFY-A104/back-end/assets/42714724/8a47a583-217c-4964-a2cd-15765d582175)
+![image (3)](https://github.com/SSAFY-A104/bremen/assets/42714724/0a103e75-db69-46ea-b2d4-321fd0249704)
+
 
 
 # 기술스택
