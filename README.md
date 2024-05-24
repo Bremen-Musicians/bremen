@@ -73,6 +73,19 @@
 | Lombok | 1.18.22 |
 | Springdoc | 2.0.2 |
 
+| Front End | 버전 |
+| --- | --- |
+| Node.js | v20.10.0 |
+| React | 18.2.0 |
+| yarn | 1.22.21 |
+| tailwindCSS | 3.4.1 |
+| recoil | 0.7.7 |
+| eslint | ^8.57.0 |
+| axios | 1.6.8 |
+| react-router-dom | 6.22.3 |
+| vite | 5.1.6 |
+| next | 14.2.2 |
+
 # 팀원
 
 | [신온유](https://github.com/tlsdhsdb) | [전경향](https://github.com/HappyHyang) | [백진규](https://github.com/qorwlsrb01) | [문성현](https://github.com/seonghyeon-m) | [유현정](https://github.com/hyunjeong1) |
